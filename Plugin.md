@@ -20,7 +20,6 @@ http://www.yukunweb.com/2017/10/Vue-instance/
 
 https://juejin.im/entry/59dadb0e518825788a44458a
 
-https://crossoverjie.top/2017/11/05/translation1-12%20cool%20things%20you%20can%20do%20with%20GitHub/?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com
 
 https://funteas.com/topic/5a1ea876fad5cdcf7347bc9a12
 

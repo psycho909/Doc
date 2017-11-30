@@ -318,3 +318,12 @@ new Vue({
 ****
 ## Notice
 > 在IE11以下 `data(){}` 需寫成 `data:function(){}`
+
+## 生命週期
+
+### `created()`
+> 實體建立完成後。資料`$data`已可取得資料，但`$el`尚未建立
+### `mounted()`
+> 元素已掛載，`$el`被建立
+### `updated()`
+> DOM的更新已經完成，View被顯示在畫面上
