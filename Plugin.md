@@ -10,7 +10,6 @@
 > http://imakewebthings.com/waypoints/api/waypoint/<br>
 > 可以使用`waypoint`獲取每個`dom`位置，當畫面到達`dom`時，可以進行一些事件
 
-https://juejin.im/post/5a08e5c55188252abc5dd96f?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com
 
 https://juejin.im/post/59231732a0bb9f005f68cad4
 
