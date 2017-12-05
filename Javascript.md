@@ -515,3 +515,19 @@ document.querySeletor('#div').insertAjacent('beforebegin','<div>123</div>')
 ### `append()`
 > ParentNode.append((節點或字符串))<br/>
 > 可在當前節點最後面插入其他節點內容
+## 視口寬高、位置與滾動高度
+1. `window.innerHeight,window.innerWidth`=>`瀏覽器窗口高度，如果有滾動條則包括`
+1. `window.outerHeight,window.outerWidth`=>`瀏覽器窗口整個高度，包括窗口標題、工具攔、狀態等`
+1. `offsetWidth`=>`一個元素布局寬度。`
+```javascript
+//不包含滾動條
+document.documentElement.clientWidth
+//使用offsetHeight作為Fallback要比clientHeight更好
+
+//元素距離文黨距離
+el.offsetTop
+el.offsetLeft
+
+//滾動
+scrollTop //滾動高度
+```
