@@ -21,8 +21,5 @@ http://ghmagical.com/article/page/id/4Wc70ZVIgOHp
 
 https://juejin.im/post/58bf5f05128fe10060156d2e
 
-http://web.jobbole.com/93178/
-
-https://www.w3cplus.com/javascript/offset-scroll-client.html
 
 https://www.tuicool.com/articles/ziYFveJ?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com
