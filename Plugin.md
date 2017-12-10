@@ -23,11 +23,3 @@ https://www.tuicool.com/articles/ziYFveJ?utm_medium=hao.caibaojian.com&utm_sourc
 www.igeekbar.com/igeekbar/usertag/4031.htm
 
 https://www.w3cplus.com/svg/svg-on-the-web.html
-
-https://juejin.im/entry/5a291fd86fb9a0450002f3b0
-
-https://juejin.im/post/5a27a2e76fb9a0452341c356
-
-https://juejin.im/post/5a22c5535188257bfe45a8ef
-
-https://juejin.im/entry/59f7ed4f5188257ad639db01
