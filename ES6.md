@@ -1,22 +1,13 @@
 # ES6
-- [ES6](#es6)
-    - [<span id="object">ES6遍歷`Object`的新方法</span>](#span-idobjectes6%E9%81%8D%E6%AD%B7object%E7%9A%84%E6%96%B0%E6%96%B9%E6%B3%95span)
-        - [`Object.keys()`](#objectkeys)
-        - [`Object.values()`](#objectvalues)
-        - [`Object.entries()`](#objectentries)
-    - [`For of`](#for-of)
-    - [<span id="assign">`Object.assign`可用來複製Object</span>](#span-idassignobjectassign%E5%8F%AF%E7%94%A8%E4%BE%86%E8%A4%87%E8%A3%BDobjectspan)
-    - [<span id="pad">`pad`字符串填充</span>](#span-idpadpad%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A1%AB%E5%85%85span)
-        - [`padStart`和`padEnd`例子](#padstart%E5%92%8Cpadend%E4%BE%8B%E5%AD%90)
-    - [<span id="use-class">`Class`基礎物件導向</span>](#span-iduse-classclass%E5%9F%BA%E7%A4%8E%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91span)
+
 ## <span id="object">ES6遍歷`Object`的新方法</span>
 ### `Object.keys()`
 > `Object.keys()`是一種跌代對象並返回對向所有key的方法
 ```javascript
 var pop = {
-  tokyo: 37833000,
-  delhi: 24953000,
-  shanghai: 22991000
+    tokyo: 37833000,
+    delhi: 24953000,
+    shanghai: 22991000
 }
 Object.keys(pop)
 //['tokyo', 'delhi', 'shanghai']
@@ -37,7 +28,7 @@ Object.entries(pop)
 > 可使用ES6 `for of`搭配Object.entries(),來遍歷
 ```javascript
 for(let [key,value] of Object.entries(obj)){
-     console.log(`${key} ${value}`)
+    console.log(`${key} ${value}`)
 }
 ```
 ## <span id="assign">`Object.assign`可用來複製Object</span>
@@ -116,4 +107,73 @@ var person2=new newPerson('Joe','22','sleep')
 person2.sayName()
 //可使用自定義的方法
 person2.saySkill()
+```
+## Map和Set
+### Map
+> `Map`是一組鍵值的結構<br/>
+> 例子:假設一個成績表
+```javascript
+var names = ['Michael', 'Bob', 'Tracy'];
+var scores = [95, 75, 85];
+```
+> 给定一个名字，要查找对应的成绩，就先要在names中找到对应的位置，再从scores取出对应的成绩，Array越长，耗时越长。
+>
+> 如果用Map实现，只需要一个“名字”-“成绩”的对照表，直接根据名字查找成绩，无论这个表有多大，查找速度都不会变慢。用JavaScript写一个Map如下：
+```javascript
+var m = new Map([['Michael', 95], ['Bob', 75], ['Tracy', 85]]);
+m.get('Michael'); // 95
+```
+> 初始`Map`需要一個二為數組，或者直接初始化一個空`Map`。
+```javascript
+var m=new Map();//空Map
+m.set('Adam',95);//添加新的key-value
+m.has('Adam')//是否存在key
+m.get('Adam')//67
+m.delete('Adam')//刪除key 'Adam'
+m.get('Adam')//undefined
+```
+### Set
+> `Set`和`Map`类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在`Set`中，没有重复的key
+>
+> 要创建一个`Set`，需要提供一个`Array`作为输入，或者直接创建一个空`Set`：
+```javascript
+var s1=new Set()
+var s2=new Set([1,2,3])
+```
+> 重复元素在Set中自动被过滤
+```javascript
+var s = new Set([1, 2, 3, 3, '3']);
+s; // Set {1, 2, 3, "3"}
+s.add(4)//可通過add(key)方法可以添加元素到Set中，可以重复添加，但不会有效果
+s.delete(3);//通过delete(key)方法可以删除元素
+```
+## 解构赋值
+> 从ES6开始，JavaScript引入了解构赋值，可以同时对一组变量进行赋值。
+>
+> 对数组元素进行解构赋值
+```javascript
+var [x,y,z]=['js','java','php'];
+console.log(x,y,z)//js,java,php
+```
+>从一个对象中取出若干属性，也可以使用解构赋值，便于快速获取对象的指定属性
+```javascript
+var person = {
+    name: '小明',
+    age: 20,
+    gender: 'male',
+    passport: 'G-12345678',
+    school: 'No.4 middle school'
+};
+var {name, age, passport} = person;
+console.log(name,age,passport)//小明,20,G-12345678
+```
+### 使用场景
+> 解构赋值在很多时候可以大大简化代码。例如，交换两个变量x和y的值，可以这么写，不再需要临时变量
+```javascript
+var x=1,y=2;
+[x,y]=[y,x]
+```
+> 快速获取当前页面的域名和路径
+```javascript
+var {hostname:domain, pathname:path} = location;
 ```
