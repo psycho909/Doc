@@ -34,9 +34,9 @@ select database();
 --   列名n 數劇類型n[修飾符]
 -- );
 create table user(
-  id int,
-  name char(20),
-  pwd char(32)
+id int,
+name char(20),
+pwd char(32)
 ) charset utf8;
 -- 查看建表的語句
 show create table tableName;
@@ -128,4 +128,8 @@ CREATE TABLE `user`(
 )
 ENGINE=MyISAM
 DEFAULT CHARACTER SET=utf8;
+```
+### 可查看該table內
+```sql
+describe name;
 ```

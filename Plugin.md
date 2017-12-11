@@ -32,3 +32,7 @@ https://juejin.im/post/5a105bed6fb9a0451e3f61fb
 
 
 http://web.jobbole.com/91071/
+
+https://juejin.im/entry/5a2e47a35188252ae93ae52b
+
+http://www.codeceo.com/article/learn-mysql-database-in-1-hour.html
