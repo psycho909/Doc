@@ -7,6 +7,8 @@
 
 ## <span id="js">JS</span>
 1. Waypoint
+1. <a href="http://idangero.us/swiper/">Swiper</a>
+1. <a href="http://be-fe.github.io/iSlider/index.html">iSlider</a>
 > http://imakewebthings.com/waypoints/api/waypoint/<br>
 > 可以使用`waypoint`獲取每個`dom`位置，當畫面到達`dom`時，可以進行一些事件
 
@@ -30,9 +32,4 @@ https://juejin.im/post/59f93357f265da43305dc90a
 
 https://juejin.im/post/5a105bed6fb9a0451e3f61fb
 
-
-http://web.jobbole.com/91071/
-
 https://juejin.im/entry/5a2e47a35188252ae93ae52b
-
-http://www.codeceo.com/article/learn-mysql-database-in-1-hour.html
