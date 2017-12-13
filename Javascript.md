@@ -531,3 +531,47 @@ el.offsetLeft
 //滾動
 scrollTop //滾動高度
 ```
+## 字符串轉數字
+``` javascript
+parseInt(num) // 默认方式 (没有基数)
+parseInt(num,10) // parseInt 使用基数 (十进制)
+parseFloat(num) // 浮点型
+
+Number(num) // Number 构造函数，建議不要使用
+
+~~num // 按位取反，當碰到非數字時，return 0
+
+num/1 // 被 1 除，碰到非數字時，拋出NaN值
+num*1 // 被 1 乘
+num-0 // 减 0
++num // 一元操作 "+"
+```
+## localStorage && sessionStorage
+> HTML 本地存储提供了两个在客户端存储数据的对象
+* window.localStorage - 存储没有截止日期的数据
+* window.sessionStorage - 针对一个 session 来存储数据（当关闭浏览器标签页时数据会丢失）
+
+```javascript
+// localStorage和sessionStorage的一些方法：
+//存儲
+localStorage.setItem('name','aa')
+// or
+localStorage.name='aa'
+//取回
+localStorage.getItem('name')
+// or
+localStorage.name
+//刪除
+localStorage.removeItem('name')
+```
+## substr, substring 和 slice 方法的分別
+```javascript
+//第一個參數【開始位置】(必填) 第二個參數【子字串長度】
+stringObject.substr(start[,length])
+
+//第一個參數【開始位置】(必填) 第二個參數【子字串結束位置】
+stringObject.substring(start[,end])
+
+//第一個參數【開始位置】(必填) 第二個參數【子字串結束位置】
+stringObject.slice(start[,end])
+```
