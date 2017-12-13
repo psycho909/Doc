@@ -575,3 +575,143 @@ stringObject.substring(start[,end])
 //第一個參數【開始位置】(必填) 第二個參數【子字串結束位置】
 stringObject.slice(start[,end])
 ```
+## Promise && async/await
+### 異步處理
+* 点餐
+* 为所点的午餐付费，并拿到排队单号
+* 等待午餐
+* 当你的午餐准备好了，会叫你的单号提醒你取餐
+* 收到午餐
+```javascript
+// 未使用promise
+// This is officially callback hell
+function combineFiles(file1, file2, file3, printFileCallBack) {
+    let newFileText = ''
+    readFile(string1, (text) => {
+        newFileText += text
+        readFile(string2, (text) => {
+            newFileText += text
+            readFile(string3, (text) => {
+                newFileText += text
+                printFileCallBack(newFileText)
+            }
+        }
+    }
+}
+```
+```javascript
+readFile(file1)
+    .then((file1-data) => { /* do something */ })
+    .then((previous-promise-data) => { /* do the next thing */ })
+    .catch( /* handle errors */ )
+```
+### 使用Promise
+```javascript
+var delay = function(s) {
+    return new Promise(function(resolve, reject) {
+    setTimeout(resolve, s);
+    });
+};
+
+delay().then(function() {
+    console.log(1); // 顯示 1
+    return delay(1000); // 延遲ㄧ秒
+}).then(function() {
+    console.log(2); // 顯示 2
+    return delay(1000); // 延遲一秒
+}).then(function() {
+    console.log(3); // 顯示 3
+});
+```
+```javascript
+var delay=(r,s)=>{
+	return new Promise((res,rej)=>{
+		setTimeout(()=>{
+			res([r,s])
+		},s)
+	})
+}
+var ddelay=(r,s)=>{
+	return new Promise((res,rej)=>{
+		setTimeout(()=>{
+			res([r,s])
+		},s)
+	})
+}
+delay('a',3000).then((v)=>{
+	console.log(v[0],v[1]);// 延遲3秒之後，顯示 a 3000
+	return delay('b',1000);// 延遲一秒之後，告訴後面的函示顯示 b 1000
+}).then((v)=>{
+	console.log(v[0],v[1]);// 顯示 b 1000
+	return ddelay('c',2000);// 延遲2秒之後，告訴後面的函示顯示 c 2000
+}).then((v)=>{
+	console.log(v[0],v[1]);// 顯示 c 1000
+})
+```
+```javascript
+var data1="http://opendata2.epa.gov.tw/AQX.json";
+	var data2="http://opendata.epa.gov.tw/ws/Data/RainTenMin/?format=json&callback=?";
+	var myArr;
+	var p=function(url){
+		return new Promise((res,rej)=>{
+			$.ajax({
+				url:url,
+				dataType:'json',
+				success:function(data){
+					res([data,url]);
+				},
+				error:function(){
+					console.log('ERROR');
+				}
+			})
+		})
+	}
+	p(data2).then((v)=>{
+		console.log(v[1]);
+		console.log(v[0]);
+		return p(data1);
+	}).then((v)=>{
+		console.log(v[1]);
+		console.log(v[0]);
+	}).catch((err)=>{
+		console.log(err);
+	})
+```
+### async / await
+> async 和 await 是建立在 Promise 和 generator上。本质上，允许我们使用 await 这个关键词在任何函数中的任何我们想要的地方进行暂停。
+```javascript
+async function logger() {
+    // pause until fetch returns
+    let data = await fetch('http://sampleapi.com/posts')
+    console.log(data)
+}
+```
+> 另一个好处是，当我们不能使用 promise 时，还可以使用 try 和 catch：
+```javascript
+async function logger ()  {
+    try {
+        let user_id = await fetch('/api/users/username')
+        let posts = await fetch('/api/`${user_id}`')
+        let object = JSON.parse(user.posts.toString())
+        console.log(posts)
+    } catch (error) {
+        console.error('Error:', error)
+    }
+}
+```
+> 我们还可以使用带有循环和条件的 async 函数
+```javascript
+async function count() {
+    let counter = 1
+    for (let i = 0; i ) {
+        counter += 1
+        console.log(counter)
+        await sleep(1000)
+    }
+}
+```
+### 要点和细节
+* async 和 await 建立在 Promise 之上。使用 async，总是会返回一个 Promise。请记住这一点，因为这也是容易犯错的地方。
+* 当执行到 await 时，程序会暂停当前函数，而不是所有代码
+* async 和 await 是非阻塞的
+* 依旧可以使用 Promise helpers，例如 Promise.all( )
