@@ -9,6 +9,8 @@
 1. [apply()、call()使用方式](#apply-call)
 1. [Array常用操作](#use-array)
 1. [DOM API操作](#dom_api)
+1. [Promise && async/await](#promise)
+1. [javascript 函数中的 this 的四种绑定形式](#this)
 --------------
 ## <span id="getjson">Ajax單次調用</span>
 ```javascript
@@ -575,7 +577,7 @@ stringObject.substring(start[,end])
 //第一個參數【開始位置】(必填) 第二個參數【子字串結束位置】
 stringObject.slice(start[,end])
 ```
-## Promise && async/await
+## <span id="promise">Promise && async/await</span>
 ### 異步處理
 * 点餐
 * 为所点的午餐付费，并拿到排队单号
@@ -715,3 +717,142 @@ async function count() {
 * 当执行到 await 时，程序会暂停当前函数，而不是所有代码
 * async 和 await 是非阻塞的
 * 依旧可以使用 Promise helpers，例如 Promise.all( )
+## <span id="this">javascript 函数中的 this 的四种绑定形式</span>
+### 第一種 this的默认绑定
+> 当一个函数没有明确的调用对象的时候，也就是单纯作为独立函数调用的时候，将对函数的this使用默认绑定：绑定到全局的window对象
+```javascript
+function fire(){
+    console.log(this === window);
+}
+fire();// true
+```
+> 没有明确的调用对象的时候，将对函数的this使用默认绑定：绑定到全局的window对象
+```javascript
+function fire () {
+    // 我是被定义在函数内部的函数哦！
+    function innerFire() {
+        console.log(this === window)
+    }
+    innerFire(); // 独立函数调用
+}
+fire(); // 输出true
+```
+> 凡事函数作为独立函数调用，无论它的位置在哪里，它的行为表现，都和直接在全局环境中调用无异
+### 第二種 this的隐式绑定
+> 当函数被一个对象“包含”的时候，我们称函数的this被隐式绑定到这个对象里面了
+```javascript
+var obj={
+    a:1,
+    fire:function(){
+        console.log(this.a)
+    }
+}
+obj.fire();//輸出 1
+```
+> fire函数并不会因为它被定义在obj对象的内部和外部而有任何区别。也就是说在上述隐式绑定的两种形式下，fire通过this还是可以访问到obj内的a属性，这告诉我们:
+1. this是动态绑定的，或者说是在代码运行期绑定而不是在书写期
+1. 函数于对象的独立性， this的传递丢失问题
+```javascript
+// 我是第一段代码
+function fire () {
+    console.log(this.a)
+}
+var obj = {
+    a: 1,
+    fire: fire
+}
+obj.fire(); // 输出1
+
+// 我是第二段代码
+var obj = {
+        a: 1,
+        fire: function () {
+            console.log(this.a)
+        }
+}
+obj.fire(); // 输出1
+```
+> BUG出現 需使用 call / bind 解決
+```javascript
+var obj = {
+    a: 1,    // a是定义在对象obj中的属性
+    fire: function () {
+        console.log(this.a)
+    }
+}
+
+var a = 2;  // a是定义在全局环境中的变量  
+var fireInGrobal = obj.fire;
+fireInGrobal();   // 输出2
+```
+### 在一串对象属性链中，this绑定的是最内层的对象
+> 在隐式绑定中，如果函数调用位置是在一串对象属性链中，this绑定的是最内层的对象
+```javascript
+var obj = {
+    a: 1,
+    obj2: {
+        a: 2,
+        obj3: {
+            a:3,
+            getA: function () {
+                console.log(this.a);
+            }
+        }
+    }
+}
+obj.obj2.obj3.getA();  // 输出3
+```
+### this的显式绑定：(call和bind方法)
+#### fn.call(object)
+> call的基本使用方式： fn.call(object)
+>
+> fn是你调用的函数，object参数是你希望函数的this所绑定的对象。
+>
+> fn.call(object)的作用：
+1. 即刻调用这个函数（fn）
+2. 调用这个函数的时候函数的this指向object对象
+```javascript
+var obj = {
+    a: 1,    // a是定义在对象obj中的属性
+    fire: function () {
+        console.log(this.a)
+    }
+}
+
+var a = 2;  // a是定义在全局环境中的变量  
+var fireInGrobal = obj.fire;
+fireInGrobal();   // 输出2
+fireInGrobal.call(obj); // 输出1
+```
+#### fn.bind(onject);
+```javascript
+var obj = {
+    a: 1,    // a是定义在对象obj中的属性
+    fire: function () {
+        console.log(this.a)
+    }
+}
+
+var a = 2;  // a是定义在全局环境中的变量  
+var fireInGrobal = obj.fire;
+fireInGrobal();   // 输出2
+fireInGrobal.bind(obj)(); // 输出1
+```
+> call和bind的区别是：在绑定this到对象参数的同时：
+1. call将立即执行该函数
+1. bind不执行函数，只返回一个可供执行的函数
+### 總結
+> 在隐式绑定下：函数和只是暂时住在“包含对象“的旅馆里面，可能过几天就又到另一家旅馆住了
+> 
+> 在显式绑定下：函数将取得在“包含对象“里的永久居住权，一直都会”住在这里“
+### new绑定
+> 执行new操作的时候，将创建一个新的对象，并且将构造函数的this指向所创建的新对象
+```javascript
+function foo(a){
+	this.a=a;
+}
+var a1=new foo(1);
+var a2=new foo(2);
+console.log(a1.a);
+console.log(a2.a);
+```
