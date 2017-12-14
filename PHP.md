@@ -230,7 +230,7 @@ echo $mac->getBranding();// Apple @@!
 class Computer{
     // private 在 extends 只會留給之前的class
     private $branding;
-    // private 在 extends 會繼承下去
+    // protected 在 extends 會繼承下去
     protected $power;
 
     public function __constructor(){
@@ -332,3 +332,121 @@ use \Taker\Classroom\Say as Classroom;
 Say::hi();
 Classroom::welcome();
 ```
+## PHP validaing
+```php
+if(filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
+    echo 'email ok!';
+}else{
+    echo 'email errror!!';
+}
+```
+### server variables (back-end)
+```php
+echo $_SERVER['QUERY_STRING']; // section=1%course=20
+echo $_SERVER['PATH_INFO']; // classroom
+echo $_SERVER['SERVER_NAME']; // www.google.com
+echo $_SERVER['DOCUMENT_ROOT']; // /user/local/htodc
+echo $_SERVER['REMOTE_ADDR']; // 175.38.221.3
+echo $_SERVER['HTTP_REFERER']; // https://www.google.com
+echo $_SERVER['HTTP_USER_AGENT']; // Mozilla/5.0 (windows NT 5.1)......
+```
+## PDO (PHP Data Object) 與伺服器聯繫
+```php
+// connect to database program
+$user='taker';
+$pass="password";
+$pdo=new PDO('mysql:host=localhost;dbname=myblog',$user,$pass);
+
+// insert data
+
+$affectedRows=$pdo->exec('
+    INSERT INTO posts (author_id,category_id,title,content,post_time)
+    VALUES (1,10,"10 things you should know","...","2017-10-20 17:00:00")
+');
+
+// select data
+
+$query=$pdo->query('SELECT author_id,title FROM posts');
+while($row=$query->fetch()){
+    echo $row['title'].'<br>';
+}
+```
+### 安全問題解決
+```php
+$user='taker';
+$pass="password";
+$pdo=new PDO('mysql:host=localhost;dbname=myblog',$user,$pass);
+
+// :author_id => 預留一個值
+$sql='SELECT * FROM posts WHERE author_id=:author_id';
+$statement=$pdo->prepare($sql);
+// 把:author_id預留的值，正式放進去
+$statement->bindValue(':author_id',$_POST['author_id']);
+$statement->execute();
+
+// PDO::FETCH_ASSOC -- 關聯數組形式
+while(($result=$statement->fetch(PDO::FETCH_ASSOC)) !== false){
+    // htmlentites() 會把裡面的奇怪字元轉為html代碼
+    echo htmlentities($result['title']).'<br>';
+}
+// ========================
+$results=$statment->fetchAll(PDO::FETCH_ASSOC);
+foreach($results as $key => $result){
+    echo $result['title'];
+}
+```
+### fetch
+* fetch => 一次抓一筆資料
+* fetchAll => 一次全部把資料抓出來
+* PDO::FETCH_ASSOC => 抓到的資料要用array參數去呈現
+## cookies & sessions 記住使用者
+### cookie
+```php
+// cookie 一次只能存儲單一資料，並有存儲數量限制
+// cookie 存儲在電腦端上，有安全性上問題
+setcookie('userid','jack',time()+60*60);
+echo $_COOKIE['userid'];
+```
+### session
+```php
+//自設定 session 使用時間
+ini_set('session.gc_maxlifetime',3600);
+// session 可以存儲多筆資輛
+// session 資訊放在server
+session_start();
+// isset() 判斷有無值
+if(!isset($_SESSION['user_id'])){
+    $_SESSION['user_id']='Jack';
+}
+echo 'hello, '.$_SESSION['user_id'];
+```
+## login 實作步驟
+* user 透過登入頁面填寫 username/password
+    * server 收到 username/password 之後做驗證
+    * 驗證成功，把username存到session裡面(登入成功)
+* user要求看VIP的葉面
+    * server可以透過session，取得相對應的資料給user看
+* user要把電腦還朋友了，按下登出
+    * 從session清除username資訊(登出)
+### header already sent問題出現
+> `session`&`cookie`都要放在頁面最上方，如果沒放在最上方會出現header already sent問題出現
+## cURL
+> 可以直接用PHP跟其他網站溝通或去跑別人網站API的工具
+```php
+$formData=[
+    'name'=>'Taker',
+    'email'=>'ss@gmail.com'
+];
+$c=curl_init('http://www.example.com/test.php');
+curl_setopt($c,CURLOPT_RETURNTRANSFER,true);
+curl_setopt($c,CURLOPT_POST,true);
+curl_setopt($c,CURLOPT_POSTFIELDS,$formData);
+
+$serverOutput=curl_exec($c);
+echo $serverOutput;
+
+curl_close($c);
+
+```
+## composer package管理系統
+1. composer require kint-php/kint => debug工具
