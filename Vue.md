@@ -32,14 +32,14 @@
 Vue.component('myson', {
     template: '<button v-on:click="son_method">子按钮</button>',
     methods: {
-  	// 點擊時觸發事件
-    son_method: function () {
-        this.counter += 1;
- 	    console.log("son");
-        //必須跟模板中的v-on配合使用
-        this.$emit('son_method');
-    }
-  },
+        // 點擊時觸發事件
+        son_method: function () {
+            this.counter += 1;
+            console.log("son");
+            //必須跟模板中的v-on配合使用
+            this.$emit('son_method');
+        }
+    },
 });
 
 // 父组件
@@ -136,37 +136,37 @@ filters:{
 > 可以接受一個混合對象的數組。這些mixins可以像正常的實例對象一樣包含選項。
 ```javascript
 var toggle = {
-  data() {
-    return {
-      isShowing: false
+    data() {
+        return {
+        isShowing: false
+        }
+    },
+    methods: {
+        toggleShow() {
+        this.isShowing = !this.isShowing;
+        }
     }
-  },
-  methods: {
-    toggleShow() {
-      this.isShowing = !this.isShowing;
-    }
-  }
 }
 ```
 ```javascript  
 var Modal = {
-  template: '#modal',
-  mixins: [toggle]
+    template: '#modal',
+    mixins: [toggle]
 };
 
 //相當於
 var Modal = {
-  template: '#modal',
-  data() {
-    return {
-      isShowing: false
+template: '#modal',
+    data() {
+        return {
+        isShowing: false
+        }
+    },
+    methods: {
+        toggleShow() {
+            this.isShowing = !this.isShowing;
+        }
     }
-  },
-  methods: {
-    toggleShow() {
-      this.isShowing = !this.isShowing;
-    }
-  }
 };
 ```
 ## <span id="props">`Props`由外部傳遞內部使用</span>
@@ -203,11 +203,11 @@ data:{
     username:''
 },
 methods: {
-  // getNewName 是接收用的事件
-  getNewName (new_name) {
-    let vm = this
-    vm.username = new_name
-  }
+    // getNewName 是接收用的事件
+    getNewName (new_name) {
+        let vm = this
+        vm.username = new_name
+    }
 }
 ```
 > 內部向外部傳的方法
@@ -216,12 +216,12 @@ data:{
     username:'Chen Ching'
 },
 methods: {
-  updata_username () {
+updata_username () {
     let vm = this
     vm.$emit('updatausername', vm.username)
-    // updatausername 是寫在 HTML 上的事件名稱
-    // vm.username 是預計向外傳的變數
-  }
+        // updatausername 是寫在 HTML 上的事件名稱
+        // vm.username 是預計向外傳的變數
+    }
 },
 ```
 
