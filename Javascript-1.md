@@ -9,6 +9,9 @@
 1. [apply()、call()使用方式](#apply-call)
 1. [Array常用操作](#use-array)
 1. [DOM API操作](#dom_api)
+1. [字符串轉數字](#string_to_number)
+1. [window.localStorage && window.sessionStorage](#localstorage)
+1. [substr, substring 和 slice 方法的分別](#substr_substring_slice)
 1. [Promise && async/await](#promise)
 1. [javascript 函数中的 this 的四种绑定形式](#this)
 --------------
@@ -533,7 +536,7 @@ el.offsetLeft
 //滾動
 scrollTop //滾動高度
 ```
-## 字符串轉數字
+## <span id="string_to_number">字符串轉數字</span>
 ``` javascript
 parseInt(num) // 默认方式 (没有基数)
 parseInt(num,10) // parseInt 使用基数 (十进制)
@@ -548,7 +551,7 @@ num*1 // 被 1 乘
 num-0 // 减 0
 +num // 一元操作 "+"
 ```
-## localStorage && sessionStorage
+## <span id="localstorage">localStorage && sessionStorage</span>
 > HTML 本地存储提供了两个在客户端存储数据的对象
 * window.localStorage - 存储没有截止日期的数据
 * window.sessionStorage - 针对一个 session 来存储数据（当关闭浏览器标签页时数据会丢失）
@@ -566,7 +569,7 @@ localStorage.name
 //刪除
 localStorage.removeItem('name')
 ```
-## substr, substring 和 slice 方法的分別
+## <span id="substr_substring_slice"> substr, substring 和 slice 方法的分別</span>
 ```javascript
 //第一個參數【開始位置】(必填) 第二個參數【子字串長度】
 stringObject.substr(start[,length])
@@ -841,7 +844,7 @@ fireInGrobal.bind(obj)(); // 输出1
 > call和bind的区别是：在绑定this到对象参数的同时：
 1. call将立即执行该函数
 1. bind不执行函数，只返回一个可供执行的函数
-### 總結
+>
 > 在隐式绑定下：函数和只是暂时住在“包含对象“的旅馆里面，可能过几天就又到另一家旅馆住了
 > 
 > 在显式绑定下：函数将取得在“包含对象“里的永久居住权，一直都会”住在这里“
