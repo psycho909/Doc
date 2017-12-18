@@ -149,7 +149,7 @@ class Computer{
     public $power;
 
     //如果要預先處理事情 就得先定義__constructor
-    public function __constructor($cpu,$ram,$hd){
+    public function __construct($cpu,$ram,$hd){
         $this->cpu=$cpu;
         $this->ram=$ram;
         $this->hd=$hd;
@@ -188,7 +188,7 @@ class Computer{
     public $hd;
 
     //如果要預先處理事情 就得先定義__constructor
-    public function __constructor($cpu,$ram,$hd){
+    public function __construct($cpu,$ram,$hd){
         $this->cpu=$cpu;
         $this->ram=$ram;
         $this->hd=$hd;
@@ -233,7 +233,7 @@ class Computer{
     // protected 在 extends 會繼承下去
     protected $power;
 
-    public function __constructor(){
+    public function __construct(){
         $this->trunOff();
     }
 

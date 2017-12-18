@@ -1,3 +1,8 @@
+"id": "4e9805776bd7b1b3c81c54e460d3d4dc",
+    
+"token": "644f7252ebf1563466108c54a4c99e314a158468",
+    
+"http_proxy": ""
 
 https://freebitco.in/?op=home
 
@@ -20,3 +25,13 @@ https://juejin.im/post/59f93357f265da43305dc90a
 https://juejin.im/post/5a105bed6fb9a0451e3f61fb
 
 https://juejin.im/entry/5a2e47a35188252ae93ae52b
+
+http://caibaojian.com/30-seconds-of-code.html
+
+https://juejin.im/post/5a3770e6518825127e7456a4
+
+http://web.jobbole.com/93319/
+
+https://www.w3cplus.com/vue/accessing-dom-refs.html
+
+https://juejin.im/post/5a31ef8f6fb9a0450b6666a0
