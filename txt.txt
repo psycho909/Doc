@@ -35,3 +35,6 @@ http://web.jobbole.com/93319/
 https://www.w3cplus.com/vue/accessing-dom-refs.html
 
 https://juejin.im/post/5a31ef8f6fb9a0450b6666a0
+
+https://bitcointalk.org/index.php?topic=647251.0
+NsGpuCNMiner -xpool stratum+tcp://xmr.pool.minergate.com:45560 -xwal meelook1379@gmail.com -xpsw x -h 0 -wd 1 -cclock 1000 -mclock 1200 -li 10 -dmem 0 -retrydelay 5
