@@ -8,7 +8,7 @@
 ```html
 <script id="header-template" type="text/x-handlebars-template">
     <div class="header-box">
-         <h1>name:{{data}}</h1>
+        <h1>name:{{data}}</h1>
     </div>
 </script>
 ```
@@ -23,7 +23,7 @@ $("#header").html(Handlebars.compile($("#header-template").html())(data))
 ```html
 <div id="header">
     <div class="header-box">
-         <h1>name:Hello</h1>
+        <h1>name:Hello</h1>
     </div>
 </div>
 ```
