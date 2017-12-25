@@ -1,8 +1,8 @@
-"id": "4e9805776bd7b1b3c81c54e460d3d4dc",
-    
-"token": "644f7252ebf1563466108c54a4c99e314a158468",
-    
-"http_proxy": ""
+{
+    "id": "4e9805776bd7b1b3c81c54e460d3d4dc",
+    "token": "d50c8ebd912615ef1a801af2811f3e06e817445a",
+    "http_proxy": ""
+}
 
 https://freebitco.in/?op=home
 
