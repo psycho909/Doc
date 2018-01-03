@@ -47,3 +47,72 @@ const Message = (text) => {
 // Throws "TypeError: Message is not a constructor"
 const helloMessage = new Message('Hello World!');
 ```
+### 首字母大寫
+```javascript
+var firstToUpper=(str,lowerRest=false)=>{
+    return str.slice(0,1)+(lowerRest?str.slice(1).toLowerCase():str.slice(1))
+}
+```
+### 計算數組中值得出現次數
+```javascript
+var countCurrents=(arr,value)=>{
+    return arr.reduce((a,v)=>v===value?a+1:a+0,0)
+}
+```
+
+### 當前URL
+```javascript
+window.location.href
+```
+
+### 數組之間的區別
+```javascript
+var difference=(arr,values)=>arr.filter(v=>!values.includes(v))
+```
+
+#### inlcudes()
+```javascript
+'abcde'.includes('ab') // true
+[1,2,3,4].includes(5) // false
+```
+### 獲取滾動位置
+```javascript
+var getScrollPos=(el=window)=>{
+    return {
+        x:(el.pageXOffset !== undefined)?el.pageXOffset:el.scrollLeft,
+        y:(el.pageYOffset !== undefined)?el.pageYOffset:el.scrollTop
+    }
+}
+```
+
+### 用range初始化數組
+```javascript
+var initialArrayRange=(end,start=0)=>{
+    return Array.apply(null,Array(end-start)).map((v,i)=>i+start)
+}
+```
+
+### Array最後一個的值
+```javascript
+var last=arr=>arr.slice(-1)[0]
+```
+
+### 範圍內隨機整數
+```javascript
+var randomRange=(min,max)=>Math.floor(Math.random()*(max-min+1))+min
+```
+
+### 反轉字符串
+```javascript
+var reverseString=str=>[...str].reverse().join('')
+```
+
+### 數組去重複
+```javascript
+var unique=arr=>[...new Set(arr)]
+```
+
+### 驗證數字
+```javascript
+var vaildNumber=n=>!isNaN(parseFloat(n))&&isFinite(n);
+```
