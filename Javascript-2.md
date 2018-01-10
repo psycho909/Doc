@@ -116,3 +116,28 @@ var unique=arr=>[...new Set(arr)]
 ```javascript
 var vaildNumber=n=>!isNaN(parseFloat(n))&&isFinite(n);
 ```
+
+### Object拷貝
+```javascript
+var auntie = { 
+    name: '陳小美', 
+    ages: 22,
+        bwh: {
+        strength: 34,
+        agility: 25,
+        intelligence: 96
+    },
+    single: true
+};
+
+// 1.for...in 淺拷貝
+var auntie3={};
+for(var v in auntie){
+    auntie3[v]=auntie[v]
+}
+// 轉字串 完全複製
+var str=JSON.stringify(auntie)
+var auntie3=JSON.parse(str)
+// Object.assign() 淺拷貝
+var auntie3=Object.assign({},auntie)
+```
