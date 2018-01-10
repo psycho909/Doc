@@ -37,5 +37,22 @@ https://juejin.im/entry/5a3a113a51882569707821c0
 
 ----
 https://juejin.im/post/5a3e81a251882512b67ae48f
+<<<<<<< HEAD
+http://web.jobbole.com/93319/
+https://www.w3cplus.com/css/aspect-ratio.html
+https://medium.com/@linengine/%E5%A6%82%E4%BD%95%E6%88%90%E7%82%BA%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB-%E7%95%B6%E4%BD%A0%E4%B8%8D%E6%98%AF%E7%9B%B8%E9%97%9C%E7%A7%91%E7%B3%BB-%E4%B8%8D%E6%9C%83%E4%BB%BB%E4%BD%95%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80-2256270ace5c
+https://ithelp.ithome.com.tw/articles/10195056
+https://juejin.im/post/5a490d8051882511793e8a5f
+----
+http://web.jobbole.com/93605/
+https://juejin.im/post/5a4f09096fb9a01c9f5b371b
+https://juejin.im/post/5a4f41cc518825734c5b34ee
+https://juejin.im/post/5a50a9baf265da3e330426cd
+https://juejin.im/post/5a50bc24518825734859c597
+https://juejin.im/entry/5a4ed9e96fb9a01ca47a4ad8
+https://www.w3cplus.com/javascript/how-three-dots-changed-javascript-object-rest-spread-properties.html
+https://juejin.im/post/5a54386af265da3e3b7a6317
+=======
 
 https://ithelp.ithome.com.tw/articles/10195056
+>>>>>>> 06c385feb126bbb779eab229880b67de966b43a5
