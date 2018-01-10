@@ -141,3 +141,27 @@ var auntie3=JSON.parse(str)
 // Object.assign() 淺拷貝
 var auntie3=Object.assign({},auntie)
 ```
+
+## 找DOM Child節點
+```javascript
+childElementCount : 返回子元素（不包括文本节点和注释）的个数
+firstElementChild : 指向第一個子元素; firstChild的元素版
+lastElmentChild : 指向最後 一個子元素; lastChild的元素版
+previousElementSibling : 指向前一個同輩元素; previousSibling的元素版
+nextElementSibling : 指向最後一個同輩元素; nextSibling的元素版
+```
+## addEventListener()的使用
+> `target.addEventListener(type, listener [,{capture: Boolean, bubbling: Boolean, once: Boolean}])`
+* type 表示監聽事件類型的字符串
+* listener 當所監聽的事件類型觸發時,會接收到一個事件通知
+* options(可選)
+    1. capture表示listener會在該類型的事件捕獲階段傳播到該EventTarget時觸發
+    1. once表示listener再添加之後最多只調用一次。如果是true,listener會在其被調用之後自動移除
+    1. passive 表示listener永远不会调用preventDefault()。如果listener仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。
+```javascript
+link.addEventListener('click',function(e){
+    e.preventDefault();
+    console.log('link clicked')
+},{capture:false,once:true})
+//输出一次link clicked!后自动移除listener函数，再次点击无效。
+```
