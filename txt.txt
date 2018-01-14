@@ -30,10 +30,3 @@ https://ithelp.ithome.com.tw/articles/10195056
 ----
 https://gitbook.tw/
 -----
-https://www.w3cplus.com/animation/additive-animation-web-animations-api.html
-https://juejin.im/post/5a5227ce6fb9a01c927e85c4
-http://web.jobbole.com/93338/
-http://datatables.club/reference/option/ajax.html
-https://juejin.im/entry/5a328f1cf265da431f4b19df
-https://juejin.im/post/5a3770e6518825127e7456a4
-https://juejin.im/post/5a08e5c55188252abc5dd96f?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com
