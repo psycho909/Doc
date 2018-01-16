@@ -20,31 +20,9 @@ https://juejin.im/post/5a31ef8f6fb9a0450b6666a0
 https://juejin.im/post/5a3e81a251882512b67ae48f
 https://juejin.im/entry/5a39e6c66fb9a0451b04b067
 https://juejin.im/entry/5a3a113a51882569707821c0
-
-----
-https://juejin.im/post/5a3e81a251882512b67ae48f
-<<<<<<< HEAD
-http://web.jobbole.com/93319/
-https://medium.com/@linengine/%E5%A6%82%E4%BD%95%E6%88%90%E7%82%BA%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB-%E7%95%B6%E4%BD%A0%E4%B8%8D%E6%98%AF%E7%9B%B8%E9%97%9C%E7%A7%91%E7%B3%BB-%E4%B8%8D%E6%9C%83%E4%BB%BB%E4%BD%95%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80-2256270ace5c
-https://ithelp.ithome.com.tw/articles/10195056
 ----
 https://gitbook.tw/
-<<<<<<< HEAD
------
-=======
------
-https://www.w3cplus.com/animation/additive-animation-web-animations-api.html
-https://juejin.im/post/5a5227ce6fb9a01c927e85c4
-http://web.jobbole.com/93338/
-http://datatables.club/reference/option/ajax.html
-https://juejin.im/entry/5a328f1cf265da431f4b19df
-https://juejin.im/post/5a3770e6518825127e7456a4
-https://juejin.im/post/5a08e5c55188252abc5dd96f?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com
-------
-https://juejin.im/entry/5a5b702f6fb9a01cb316250b
-http://web.jobbole.com/93671/
+----
 https://spectrum.ieee.org/static/interactive-the-top-programming-languages-2017
-https://juejin.im/entry/5a3680e0f265da432840f08a
 https://github.com/Chalarangelo/30-seconds-of-code#chain-asynchronous-functions
 https://juejin.im/entry/5a3a113a51882569707821c0
->>>>>>> 396743a6ff5a8982d71f478e66b6cee85a6216df
