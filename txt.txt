@@ -16,13 +16,6 @@ https://juejin.im/post/5a3770e6518825127e7456a4
 http://web.jobbole.com/93319/
 
 https://www.w3cplus.com/vue/accessing-dom-refs.html
-https://juejin.im/post/5a31ef8f6fb9a0450b6666a0
-https://juejin.im/post/5a3e81a251882512b67ae48f
-https://juejin.im/entry/5a39e6c66fb9a0451b04b067
-https://juejin.im/entry/5a3a113a51882569707821c0
 ----
 https://gitbook.tw/
 ----
-https://spectrum.ieee.org/static/interactive-the-top-programming-languages-2017
-https://github.com/Chalarangelo/30-seconds-of-code#chain-asynchronous-functions
-https://juejin.im/entry/5a3a113a51882569707821c0
