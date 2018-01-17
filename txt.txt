@@ -1,21 +1,29 @@
-
-https://juejin.im/post/59231732a0bb9f005f68cad4
-https://juejin.im/post/59f72b72f265da43163c5b09?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com
+﻿一个例子上手SVG动画
 https://aotu.io/notes/2017/05/04/example-for-svg-animation/
+https://www.w3cplus.com/svg/svg-on-the-web.html
+
+
 https://www.tuicool.com/articles/ziYFveJ?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com
 www.igeekbar.com/igeekbar/usertag/4031.htm
 
-https://www.w3cplus.com/svg/svg-on-the-web.html
+Web 开发中的利器 - Webpack
 https://www.ibm.com/developerworks/cn/web/wa-lo-web-develop-edge-tool/index.html?ca=drs-&utm_source=tuicool&utm_medium=referral
+
+Webpack经典入门
 https://juejin.im/post/59f93357f265da43305dc90a
+
+Vue.js新手教学|如何写一个Checklist组件
 https://juejin.im/post/5a105bed6fb9a0451e3f61fb
 
+MySQ基础入门系列之——字符与日期数据处理
 https://juejin.im/entry/5a2e47a35188252ae93ae52b
-http://caibaojian.com/30-seconds-of-code.html
-https://juejin.im/post/5a3770e6518825127e7456a4
-http://web.jobbole.com/93319/
 
-https://www.w3cplus.com/vue/accessing-dom-refs.html
+30秒就能理解的JavaScript优秀代码
+http://caibaojian.com/30-seconds-of-code.html
+
+ajax跨域，这应该是最全的解决方案了
+https://juejin.im/post/5a3770e6518825127e7456a4
+
 ----
 https://gitbook.tw/
 ----
