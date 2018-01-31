@@ -165,3 +165,29 @@ link.addEventListener('click',function(e){
 },{capture:false,once:true})
 //输出一次link clicked!后自动移除listener函数，再次点击无效。
 ```
+## ES6`Object`物件的擴展
+> 在 ES6 中允許在物件中直接給變量，這時候物件的屬性名稱為變數的名稱，物件的屬性值為變數的值，讓我們來看一下這個例子：
+```javascript
+var a='apple';
+var obj={a};
+console.log(obj) // {a: "apple"}
+```
+> 這時候變數的名稱(a)會變成物件的屬性名稱，變數的值("apple")會變成物件的屬性值。
+```javascript
+var a="apple";
+var c="cat";
+var obj={a,c}
+console.log(obj); //{a:'aple',c:'cat'}
+```
+### 物件中的方法也可以簡寫
+```javascript
+var f="fish";
+var p="pug";
+var obj={
+    f,
+    p,
+    eat(){
+        console.log(this.p+' eat '+this.f)
+    }
+}
+```

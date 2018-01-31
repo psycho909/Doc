@@ -219,71 +219,58 @@ for(variable in object){
 ## <span id="js-notice">javascript 注意事項</span>
 ### 使用`if()`判斷時能使用三元運算`x+y?'A':'B'`，就使用三元運算
 ## <span id="fetch">`Fetch`使用</span>
-> `fetch()`方法是一個位於全域window物件的方法，它會被用來執行送出Request(要求)的工作，如果成功得到回應的話，它會回傳一個帶有Response(回應)物件的已實現Promise物件。fetch()的語法結構完全是Promise的語法，十分清楚容易閱讀，也很類似於jQuery的語法:
-```javascript
-fetch(url,{method:'get'})
-.then(function(response){
-    //處理response
-}).catch(function(err){
-    //Error
-})
-```
-> 但要注意的是fetch在只要在伺服器有回應的情況下，都會回傳已實現的Promise物件狀態(只要不是網路連線問題，或是伺服器失連等等)，在這其中也會包含狀態碼為錯誤碼(404, 500...)的情況，所以在使用時你還需要加一下檢查
-```javascript
-fetch(url,{method:'get'})
-.then(function(response){
-    //ok 代表狀態碼在範圍 200-299
-    respones.ok
-    respones.status
-}).catch(function(err){
-    //Error
-})
-```
-> response 常用的是`json`與`text`方法<br>
-> json方法會回傳一個帶有包含JSON資料的物件值的Promise已實現物件。
-```javascript
-fetch(url,{method:'get'})
-.then(function(response){
-    //處理response
-    return response.json()
-}).then(function(j){
-    //返回j是一個Javascript物件
-}).catch(function(err){
-    //Error
-})
-```
+> `fetch的參數有兩個參數`,第一個是`url`,另一個是`Request`對象,包括以下幾種:
 ### Request
-> Request接口定義了通過HTTP請求資源的request格式。參數需要URL、method和headers，同時Request也接受一個特定的body，mode，credentials以及cache hints.
->
-> 最簡單的Request當然是一個URL，可以通過URL來GET一個資源
-```javascript
-var req=new Request("/index.html");
-console.log(req.mehtod)//"GET"
+* `method`:請求方法:`GET`、'POST'
+* `headers`:headers：请求头信息，形式为Headers对象或者ByteString。上述例子就是一个json请求的请求头。
+* `body`: 请求参数：可能是一个 Blob、BufferSource、FormData、URLSearchParams 或者 USVString 对象。注意 GET 或 HEAD 方法的请求不能包含 body 信息。
+*  `mode`:请求的模式。如 cors, no-cors, same-origin, navigate
+* `cach`: 缓存模式，如default, reload, no-cache
 
-var uploadReq=new Request("/uploadImage",{
-    method:"POST",
-    headers:{
-        "Content-Type":"image/png"
-    },
-    body:"image data"
-})
-fetch(uploadReq)
-```
-### Headers 接口
-> Fetch引入了3個接口，分別是Headers、Request以及Response。他們直接對應了相應的HTTP概念，但是基於安全考慮，有些區別，例如支持CORS規則以及保證cookies不能被第三方獲取。
->
-> Headers接口是一個簡單的多映射的名-值表
+### Response
+> 上面我们说了fetch的返回的是一个Promise对象。然后会携带Response 对象。
+#### `Response`對象-屬性:
+* `status(number)`- HTTP请求结果参数，在100–599 范围， 200 为成功
+* `statusText(String)` - 服务器返回的状态报告
+* `ok(boolean)`- 如果返回200表示请求成功则为true
+* `headers(Headers)`- 返回头部信息，下面详细介绍
+* `url(String)` - 请求的地址
+#### `Response`對象-方法:
+* `test()`以`string`的形式生成请求text
+* `json`生成JSON.parse(responseText)的结果
+* `blob`生成一个Blob
+* `arrayBuffer()`生成一个ArrayBuffer
+* `formData`生成格式化的数据，用于其他请求
+#### `Response`對象-其他方法:
+* clone()
+* Response.error()
+* Response.redirect()
+#### `Response`對象-response.headers:
+* has(name) (boolean) 判断是否存在该信息头
+* get(name) (String) 获取信息头的数据
+* getAll(name) (Array) 获取所有头部数据
+* set(name, value)添加headers的内容
+* delete(name) 删除header的信息
+* forEach循环读取header的信息
 ```javascript
-var headers=new Headers({
-    "Content-Type":"text/plain",
-    "Content-Length": content.length.toString(),
-    "X-Custom-Header": "ProcessThisImmediately"
-})
+    const url="https://randomuser.me/api/?results=20";
+
+    fetch(url,{
+        method:'GET'
+    }).then((res)=>{
+        if( res.status == 200 ){
+            console.log(res)
+            return res;
+        }
+    }).then((data)=>{
+        return data.json();
+    }).then((result)=>{
+        console.log(result.results)
+    }).catch((err)=>{
+        console.log(err.message)
+    })
 ```
-> Header的值是可以被檢索的
-```javascript
-console.log(headers.has("Content-Type"))//true
-```
+
 ## <span id="array-from">ES6 Array.from()使用方式</span>
 > 可以將類似Array對象的東西(arguments,NodeList)轉成真的數組形式
 >
