@@ -145,7 +145,10 @@ var auntie3=Object.assign({},auntie)
 ## 找DOM Child節點
 ```javascript
 childElementCount : 返回子元素（不包括文本节点和注释）的个数
-firstElementChild : 指向第一個子元素; firstChild的元素版
+firstElementChild : 指向第一個子元素; firstChild的元素版,但是IE8以下不兼容
+// 兼容的方法
+var obj=oUl.firstElmentChild || oUl.firstChild;
+
 lastElmentChild : 指向最後 一個子元素; lastChild的元素版
 previousElementSibling : 指向前一個同輩元素; previousSibling的元素版
 nextElementSibling : 指向最後一個同輩元素; nextSibling的元素版
