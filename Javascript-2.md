@@ -194,3 +194,17 @@ var obj={
     }
 }
 ```
+## Javascript 寫COOKIE
+```javascript
+// 寫入Cookie
+document.cookie="myName=tom";
+
+// 寫入Cookie，並加入過期時間
+document.cookie="username=bob;expires=Mon,04 Dec 2017 08:18:32 GMT;path=/";
+
+// GMT時間
+new Date().toGMTString();
+
+// 寫入Cookie，設定10秒後失效
+document.cookie="username=bob;max-age=10;path=/";
+```

@@ -1,4 +1,10 @@
 # Node
+## Node套件推薦
+```javascript
+nodemon //nodemon app.js 在update app.js時頁面自動刷新
+body-parser // 可以把前端表單資料傳送到後端去
+```
+
 ## Express
 ```javascript
 npm i -g express
@@ -192,4 +198,11 @@ app.get('/',(req,res)=>{
 ```html
 <% layout('layout') %>
     <div>Hello User</div>
+```
+## Express generator產生器
+```javascript
+npm i express-generator -g
+express -ejs project
+cd project
+npm start
 ```

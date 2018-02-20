@@ -92,3 +92,35 @@ document.body.onmousedown=function(){
   <div class="item-b"></div>
 </div>
 ```
+### CSS3 counter-increment 計數器
+> 在父屬性使用`counter-reset:;`定义我们的计数器变量。我们必须给出任意的名字和可选的开始值。默认的开始值是 0。这个属性是包装器元素。
+>
+> 在子屬性的`:before`或`:after`裡面的`content:;`定義`counter()` 函数,並在在裡面定義运用 `counter-increment` 属性，我们可以递增或者递减计数器的值。该属性还有一个可选的值，用于指定递增/递减量
+>
+> 如有`ul`嵌套可以用`counters()`
+```css
+ol{
+  counter-reset: section;
+  list-style: none;;
+}
+ol li{
+  position: relative;
+}
+ol li:before{
+  content: counters(section,".") " ";
+  position: relative;
+  color:rgb(247, 26, 26);
+  counter-increment: section; 
+}
+```
+```html
+<ol>
+	<li>item</li>
+	<li>item</li>
+	<ol>
+		<li>items</li>
+		<li>items</li>
+		<li>items</li>
+	</ol>
+</ol>
+```
