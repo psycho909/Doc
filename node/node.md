@@ -11,9 +11,33 @@ npm i -g express
 var express=require('express');
 var app=express();
 ```
+### params 讀取路由的資料
+> 可以取得網址路徑上的訊息
+>
+> `params`會去讀取路由的資料
+```javascript
+app.get('/user/:name/:date',function(req,res){
+    // params - 取得指定路徑
+    // http://localhost:3000/user/chen/1020722/
+    var myName=req.params.name; 
+    onsole.log(req.params) // { name: 'chen'.date: '1020722'}
+    console.log(myName) // chen
+})
+```
+### query 抓取網址的參數
+> `query` 抓取網址的參數
+```javascript
+app.get('/user/:name?q=POE&limit=30',function(req,res){
+    // query - 取得網址參數
+    // http://localhost:3000/user/chen?q=POE&limit=30&q=POE
+    var limit=req.query.limit; // 30
+    var q=req.query.q; // POE
+    console.log(req.query) // {limot:30,q:'POE'}
+})
+```
 ### Middleware 中介軟體
 #### use next()
-> `use()`&&`next()`
+> `use()`&&`next()`****
 >
 > 可先設定use()作為守門員處理一些router驗證狀態
 ```javascript
@@ -205,4 +229,31 @@ npm i express-generator -g
 express -ejs project
 cd project
 npm start
+```
+### connect-flash
+> flash是一个暂存器，而且暂存器里面的值使用过一次即被清空，这样的特性很方面用来做网站的提示信息。
+```javascript
+npm i connect-flash --save
+var flash=require('connect-flas');
+app.use(flash())
+```
+### express-session
+> express-session,可以把一些機密資訊記錄在session,然後利用這樣的方式去做溝通
+```javascript
+var session=require('express-session')
+// express-session加密
+app.use(session({
+    secret:'mysupersecret',
+    resave:true,
+    saveUninialized:true
+}))
+```
+> 可以在會員登入頁面使用,再登入後使用`req.session.uid=user.uid;`,之後就可以在登入後的頁面使用`req.session.uid`
+### express-validator
+> express驗證模組
+```javascript
+// 放入要check表單的name
+req.checkBody('content',"內容不能為空").notEmpty();
+var errors=req.validationErrors();
+console.log(errors)
 ```

@@ -36,3 +36,8 @@ http.createServer((req,res)=>{
   "nodemon": "^1.15.1"
 }
 ```
+## Heroku 使用dotenv
+> 使用`dotenv`把重要資料隱藏起來並使用其他方式載入
+1. 在`heroku`主機上面
+1. `setting` -> `Config Variables`管理變數資料
+1. 這樣子就可以透過`process.env`去取得變數
