@@ -320,10 +320,17 @@ new Vue({
 > 在IE11以下 `data(){}` 需寫成 `data:function(){}`
 
 ## 生命週期
-
+### `beforeCreate()`
+> 此刻你無法調用 data 及 methods。
 ### `created()`
 > 實體建立完成後。資料`$data`已可取得資料，但`$el`尚未建立
+> 
+> 此刻已經可以調用 data, computed, methods, watch等數據或函式
 ### `mounted()`
 > 元素已掛載，`$el`被建立
+>
+> 選項物件中的el被新創建的vm.$el替換，並掛載到到 vm 上，並調用mounted這個鉤子。
 ### `updated()`
 > DOM的更新已經完成，View被顯示在畫面上
+>
+> 由於updated被調用時，DOM 已經更新。所以在此時更新數據很可能會導致updated無限循環的被調用。
