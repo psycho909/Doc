@@ -334,3 +334,12 @@ new Vue({
 > DOM的更新已經完成，View被顯示在畫面上
 >
 > 由於updated被調用時，DOM 已經更新。所以在此時更新數據很可能會導致updated無限循環的被調用。
+
+## 比較 Filters 和 Computed
+1. Filters 主要用於簡單的文字格式處理，需要在應用程式中重複使用。
+1. Computed 適合較複雜的資料處理與轉換。
+1. Methods 主要用來觸法狀態的改變，可能意味著會觸發 Computed 或 Filters 重新計算。
+1. Filters 和 Computed 應是純粹的輸入輸出，通常不應該在此修改狀態。
+## Watch vs Computed
+> 雖然在大多數情況下，`Computed` 更合適，但有時仍需要使用 `Watch`。
+> 當你需要響應更改的數據執行非同步或複雜的計算時，Watch 就非常有用。
