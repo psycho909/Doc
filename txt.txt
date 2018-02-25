@@ -51,3 +51,7 @@ https://hackerthemes.com/bootstrap-cheatsheet/
 
 https://juejin.im/post/5a8d59acf265da4e732ed87a
 http://web.jobbole.com/94004/
+
+https://marco79423.net/articles/%E6%B7%BA%E8%AB%87-javascript-%E7%9A%84-promise/
+http://www.barretlee.com/blog/2017/04/27/gulp-and-webpack/
+https://veronicaf.github.io/JS-class/
