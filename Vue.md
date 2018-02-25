@@ -343,3 +343,153 @@ new Vue({
 ## Watch vs Computed
 > 雖然在大多數情況下，`Computed` 更合適，但有時仍需要使用 `Watch`。
 > 當你需要響應更改的數據執行非同步或複雜的計算時，Watch 就非常有用。
+## v-on事件綁定
+## v-bind屬性綁定/樣式綁定
+```html
+<!-- src是屬性 -->
+<img v-bind:src="imgNew">
+<!-- isActive為true,即給 div addClass isActive-->
+<div class="view" v-bind:class=["isActive"]>Class</div>
+<!-- isActive為true,即給 div addClass active-->
+<div class="view" v-bind:class={'active':'isActive'}>Class</div>
+```
+```javascript
+new Vue({
+    el:"#app",
+    data:{
+        isActive:true
+    }
+})
+```
+## v-model雙向綁定
+> 单个复选框，绑定到布尔值
+> 多个复选框，绑定到同一个数组
+```html
+<!-- checkbox -->
+<input type="checkbox" id="jack" value="jack" v-model="checkedName">
+<label for="jack">jack</label>
+<input type="checkbox" id="John" value="John" v-model="checkedName">
+<label for="John">John</label>
+<div>{{checkedName}}</div>
+<!-- radio -->
+<input type="radio" id="one" name="number" v-bind:value="one" v-model="picked">
+<label for="one">One</label>
+<input type="radio" id="two" name="number" value="two" v-model="picked">
+<label for="two">Qwo</label>
+<div>{{picked}}</div>
+<!-- select -->
+<select v-model="selected">
+<option disabled value="">selected</option>
+<option value="A">A</option>
+<option value="B">B</option>
+</select>
+<span>{{selected}}</span>
+```
+```javascript
+new Vue({
+    el:"#app",
+    data:{
+        checkedName:[],
+        checkedName:[],
+        picked:'',
+        selected:'',
+        one:'ONE',
+        msg:'Hello'
+    }
+})
+```
+### v-model修饰符
+1. `v-model.number=""`，可以自动将用户的输入值转为数值类型
+1. `v-model.trim=""`，如果要自动过滤用户输入的首尾空白字符
+1. `v-model.lazy=""`，更改 input 內的值並不會馬上變更 model 的資料，而是等到滑鼠移到輸入框外，觸發 change 事件才更新
+## 父組件向子組件傳數據(1) / props
+> 第一步先在子組件，props自定義屬性
+```javascript
+export default {
+    name: 'Header-view',
+    data() {
+        return {
+            title: 'Title'
+        }
+    },
+    // 父組件 向 子組件傳參
+    // 第一步: props
+    props: {
+        msg:{   // 自定義屬性
+            type:String,
+            default:'我是誰?'
+        }
+    }
+}
+```
+> 第二步在父組件使用子組件自定義的屬性傳參
+```html
+<HeaderView msg="父組件向子組件傳參"></HeaderView>
+```
+## 父組件向子組件傳數據(2) / props
+> 第一步先在子組件，props自定義屬性
+```javascript
+export default {
+    name: 'Header-view',
+    data() {
+        return {
+            title: 'Title'
+        }
+    },
+    // 父組件 向 子組件傳參
+    // 第一步: props
+    props: {
+        msg:{   // 自定義屬性
+            type:String,
+            default:'我是誰?'
+        }
+    }
+}
+```
+> 第二步在父組件使用子組件自定義的屬性傳參
+```html
+<HeaderView v-bind:msg="title"></HeaderView>
+```
+```javascript
+export default {
+  name: 'App',
+  components: {
+    ListView,
+    HeaderView
+  },
+  data() {
+    return {
+      title:'Vue入門學習'
+    }
+  }
+}
+```
+## 子組件給父組件傳遞數據 / $emot
+> 子組件 --> 父組件，使用自定義事件
+>
+> 先在子組件自定義事件
+
+```javascript
+// 先在子組件自定義事件
+methods:{
+	addData:function(){
+		// 將輸入框數 傳遞給父組件
+		// 觸發myMsg事件，並且傳遞參數
+		this.$emit("myMsg",this.newStr)
+	}
+}
+```
+> 在父組件當中做一個事件的綁定
+```html
+<!-- 子組件向父組件傳參 -->
+<!-- 在父組件當中做一個事件的綁定 -->
+<ListView v-on:myMsg="getData"></ListView>
+```
+```javascript
+methods:{
+	getData(msg){
+		this.msg=msg;
+		console.log('App.vue: '+msg)
+	}
+}
+```
