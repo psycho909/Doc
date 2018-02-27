@@ -319,21 +319,28 @@ new Vue({
 ## Notice
 > 在IE11以下 `data(){}` 需寫成 `data:function(){}`
 
-## 生命週期
+## Lifecycle生命週期
 ### `beforeCreate()`
-> 此刻你無法調用 data 及 methods。
+1. 在初始化vue instance並開啟整個Lifecycle後，資料綁定與事件配置之前。目前階段還無法調用$data。
+1. 此刻你無法調用 data 及 methods。
+1. 應用場景：loading進頁面的事件
 ### `created()`
-> 實體建立完成後。資料`$data`已可取得資料，但`$el`尚未建立
-> 
-> 此刻已經可以調用 data, computed, methods, watch等數據或函式
+1. vue instance創建完成建立完成後。資料`$data`已可取得資料，屬性與事件也已綁定好，目前階段尚未掛載el，DOM也尚未生成。
+1. 此刻已經可以調用 data, computed, methods, watch等數據或函式
+### `beforeMount()`
+1. 在掛載el開始之前。目前階段是相關render函式首次被調用，尚未被DOM給綁定。
 ### `mounted()`
-> 元素已掛載，`$el`被建立
->
-> 選項物件中的el被新創建的vm.$el替換，並掛載到到 vm 上，並調用mounted這個鉤子。
+1. el被剛創建好的vm.$el替換取代，並且掛載到vm上。目前階段已被DOM綁定。
+1. 應用場景：對後端發出請求或讀取新資料
+### `beforeUpdate()`
+1. 在資料更新時調用，Virtual DOM重新render與patch之前，可以在這個階段變更資料狀態。目前階段還不會繪製view。
 ### `updated()`
-> DOM的更新已經完成，View被顯示在畫面上
->
-> 由於updated被調用時，DOM 已經更新。所以在此時更新數據很可能會導致updated無限循環的被調用。
+1. DOM的更新已經完成，View被顯示在畫面上
+1. 由於updated被調用時，DOM 已經更新。所以在此時更新數據很可能會導致updated無限循環的被調用。
+### `beforeDestroy()`
+1. 在vue instance被銷毀前調用。目前階段還可以完全使用這個vue instance。
+### `destroyed()`
+1. vue instance銷毀後可以調用，調用後這個vue instance底下的資料與樣板會解除綁定，事件會取消監聽，所有子元件也會被銷毀。
 
 ## 比較 Filters 和 Computed
 1. Filters 主要用於簡單的文字格式處理，需要在應用程式中重複使用。
@@ -492,4 +499,114 @@ methods:{
 		console.log('App.vue: '+msg)
 	}
 }
+```
+## Vue.extend 和 Vue.component差別
+1. 個人理解是：Vue.extend({})是Vue.component({})的核心，換句話說：
+    1. 在實體化 Component 時會用到 Extend。
+    1. Vue.component 是一個語法糖，使我們不需透過 Extend 和其他程序來實體化 Vue Instance 的子類別。
+## Vue.nextTick
+> 可以使用Vue.nextTick取得更新後的 DOM。
+## Slot
+> 基本上分為三種 slot
+1. Single Slot
+1. Named Slot
+1. Scoped Slot
+### Single Slot
+```html
+<my-component>
+    <div>This is not slot</div>
+</my-component>
+<template id="signle-slot">
+    <div class="box">
+        <slot>Hello from child</slot>
+    </div>
+</template>
+```
+```javascript
+Vue.component('my-component',{
+    template:'#my-component'
+})
+```
+### Named Slot
+```html
+<name-slot>
+    <div slot="header">HHHeader</div>
+    <div slot="footer">FFFooter</div>
+</name-slot>
+<template id="name-slot">
+    <div class="box">
+        <slot name="header">Header</slot>
+        <slot>This is content</slot>
+        <slot name="footer">Footer</slot>
+    </div>
+</template>
+```
+```javascript
+Vue.component('name-slot',{
+    template:'#name-slot'
+})
+```
+### Scoped Slot
+```html
+<div id="app">
+    <scope-slot v-bind:items="items">
+        <template scope="props" slot="item">
+            <span>{{props.text}}</span>
+        </template>
+    </scope-slot>
+</div>
+<template id="scope-slot">
+    <div class="box">
+        <h1>Scope Slot</h1>
+        <p>內容</p>
+        <slot name="item" v-for="item in items" v-bind:text="item.text"></slot>
+    </div>
+</template>
+```
+```javascript
+Vue.component('scope-slot',{
+    props:['items'],
+    template:'#scope-slot'
+})
+var app=new Vue({
+    el:'#app',
+    data:{
+        items: [
+            { id: 1, text: '項目 1' },
+            { id: 2, text: '項目 2' },
+            { id: 3, text: '項目 3' }
+        ]
+    }
+})
+```
+### Slot-Scope
+```html
+<ul>
+    <scope-slot v-bind:items="itemsList">
+        <li slot-scope="props" slot="item">{{props.id}}.{{props.text}}</li>
+    </scope-slot>
+</ul>
+<template id="scope-slot">
+    <div class="box">
+        <h1>Scope Slot</h1>
+        <p>內容</p>
+        <slot name="item" v-for="item in items" v-bind:text="item.text" v-bind:id="item.id"></slot>
+    </div>
+</template>
+```
+```javascript
+Vue.component('scope-slot',{
+    props:['items'],
+    template:'#scope-slot'
+})
+var app=new Vue({
+    el:'#app',
+    data:{
+        itemsList: [
+            { id: 1, text: '項目 1' },
+            { id: 2, text: '項目 2' },
+            { id: 3, text: '項目 3' }
+        ]
+    }
+})
 ```
