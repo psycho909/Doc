@@ -610,3 +610,33 @@ var app=new Vue({
     }
 })
 ```
+## transition動畫效果
+> 淡入、淡出
+```css
+/*
+Vue過度效果
+<transition name="detail"></transition>
+
+進入
+.detail-enter           過度開始時的狀態
+.detail-enter-to        過度結束的狀態
+.detail-enter-active    過度的時間、延遲、曲線函數
+
+離開
+.detail-leave           過度開始時的狀態
+.detail-leave-to        過度結束的狀態
+.detail-leave-active    過度的時間、延遲、曲線函數
+*/
+.detail-enter-active,
+.detail-leave-active {
+    transition: 2s all;
+}
+.detail-enter,
+.detail-leave-to{
+    opacity: 0;
+}
+.detail-enter-to,
+.detail-leave {
+    opacity: 1;
+}
+```
