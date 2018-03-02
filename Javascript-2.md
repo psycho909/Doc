@@ -29,7 +29,7 @@ Cat.prototype.sayCatName = ()=> {
 };
 
 const cat = new Cat('Mew');
-cat.sayCatName(); // undefined
+cat.sayCatName(); // Mew
 ```
 ### 定义事件回调函数
 ```javascript

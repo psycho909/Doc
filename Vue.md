@@ -640,3 +640,14 @@ Vue過度效果
     opacity: 1;
 }
 ```
+## 方法一:使用 Vue 可觀察到的陣列方法
+> push()、pop()、shift()、unshift()、splice()、sort()、reverse()
+## 方法二：使用 vm.$set
+```javascript
+methods: {
+    changeAnimal () {
+        // 利用 vm.$set(array, index, value) 方法
+        this.$set(this.animals, 0, this.animal)
+    }
+}
+```

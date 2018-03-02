@@ -49,12 +49,8 @@ https://www.w3cplus.com/react/create-the-first-react-component.html
 http://caibaojian.com/firstchild.html
 https://hackerthemes.com/bootstrap-cheatsheet/
 
-https://juejin.im/post/5a8d59acf265da4e732ed87a
-http://web.jobbole.com/94004/
-
-https://marco79423.net/articles/%E6%B7%BA%E8%AB%87-javascript-%E7%9A%84-promise/
 http://www.barretlee.com/blog/2017/04/27/gulp-and-webpack/
-https://veronicaf.github.io/JS-class/
+
 -------
 https://juejin.im/entry/5a911b725188257a846250c1
 https://juejin.im/entry/5a90fe13f265da4e8a3205f0
