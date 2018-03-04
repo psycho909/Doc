@@ -124,3 +124,26 @@ ol li:before{
 	</ol>
 </ol>
 ```
+### img圖片去做到自適應
+```html
+<div class="img-wrapper">
+    <img :src="food.picture" alt="" class="food-img">
+</div>
+```
+```scss
+.img-wrapper{
+  position: relative;
+  width: 100%;
+  height: 0;
+  // 高度如何撐開
+  // 在定位中，使用padding-top或padding-bottom設置為100%，其實盒子高度會根據盒子高度進行計算
+  padding-top:100%; 
+  .food-img{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+  }
+}
+```

@@ -651,3 +651,64 @@ methods: {
     }
 }
 ```
+## $refs綁定DOM元素
+> ref屬性就是用來綁定某個dom元素或某個組件，然後再this.$ref裡面
+```html
+<ul class="menu-wrapper" ref="menuScroll">
+    <li class="list"></li>
+    <li class="list"></li>
+    <li class="list"></li>
+</ul>
+```
+```javascript
+this.$refs.menuScroll.getElementsByClassName('list')
+```
+## 使用擴展套件時或需要獲取DOM元素的注意事項
+> 例如better-scroll
+```javascript
+created(){
+    // 調用滾動的初始化方法
+    // this.initScroll() //無法調用
+    // 開始時,DOM元素還沒有渲染,即高度是問題
+    // 在獲取到數據後，並DOM已經被渲染，表示列表高度是沒問題的
+}
+```
+## vm.$nextTick()
+> 將回調延遲到下次DOM更新循環之後執行
+```javascript
+created(){
+    //nextTick()
+    that.$nextTick(()=>{
+        // DOM已經更新
+        that.initScroll()
+    })
+}
+```
+## Vue.set(target,key,value) 設置新的字段
+```javascript
+// this.food 裡面沒有 count
+Vue.set(this.food,'count',1);
+```
+### 父組件是可以調用子組件的方法
+> 子組件
+```javascript
+// 子組件
+methods:{
+    // 父組件是可以調用子組件的方法
+    showView(){
+        this.showFlag=true;
+    }
+}
+```
+> 父組件
+```html
+<child ref="childView"></child>
+```
+```javascript
+// 父組件
+methods:{
+    showDetail(){
+        this.$refs.childView.showView();
+    }
+}
+```
