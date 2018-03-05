@@ -640,17 +640,6 @@ Vue過度效果
     opacity: 1;
 }
 ```
-## 方法一:使用 Vue 可觀察到的陣列方法
-> push()、pop()、shift()、unshift()、splice()、sort()、reverse()
-## 方法二：使用 vm.$set
-```javascript
-methods: {
-    changeAnimal () {
-        // 利用 vm.$set(array, index, value) 方法
-        this.$set(this.animals, 0, this.animal)
-    }
-}
-```
 ## $refs綁定DOM元素
 > ref屬性就是用來綁定某個dom元素或某個組件，然後再this.$ref裡面
 ```html
@@ -712,5 +701,22 @@ methods:{
     }
 }
 ```
+<<<<<<< HEAD
 ## keep-alive
 > 包裹住動態組件時，會緩存不活動的組件實力，而不是銷毀他們
+=======
+## data為什麼畫面沒有隨資料更新
+1. 方法一：利用 splice 達到響應式變化
+1. 方法二：利用 vm.$set 達到響應式變化
+## 方法一:使用 Vue 可觀察到的陣列方法
+> push()、pop()、shift()、unshift()、splice()、sort()、reverse()
+## 方法二：使用 vm.$set
+```javascript
+methods: {
+    changeAnimal () {
+        // 利用 vm.$set(array, index, value) 方法
+        this.$set(this.animals, 0, this.animal)
+    }
+}
+```
+>>>>>>> 5f08763bfcb73c7f8a14d53a03a5bfa0e14b9664
