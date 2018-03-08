@@ -846,3 +846,33 @@ var a2=new foo(2);
 console.log(a1.a);
 console.log(a2.a);
 ```
+## js中的各种宽高以及位置总结
+## JS 寬度 && 高度，可读不可写属性
+### clientWidht && clientHeight
+> 该属性指的是元素的可视部分宽度和高度，即padding+content，如果没有滚动条，即为元素设定的高度和宽度，如果出现滚动条，滚动条会遮盖元素的宽高，那么该属性就是其本来宽高减去滚动条的宽高
+1. 不包含border和滾動條寬度
+### offsetWidth && offsetHeight
+> 这一对属性指的是元素的border+padding+content的宽度和高度，该属性和其内部的内容是否超出元素大小无关，只和本来设定的border以及width和height有关
+1. 此元素包含了border+padding+content及滾動條
+### clientTop和clientLeft
+> 这一对属性是用来读取元素的border的宽度和高度的。
+1. 只會獲取該元素的border寬高
+### offsetLeft && offsetTop
+> 所谓offsetParent指的是当前元素的离自己最近的具有定位的（position:absolute或者position：relative）父级元素（不仅仅指的是直接父级元素，只要是它的父元素都可以），该父级元素就是当前元素的offsetParent，如果从该元素向上寻找，找不到这样一个父级元素，那么当前元素的offsetParent就是body元素。而offsetLeft和offsetTop指的是当前元素，相对于其offsetParent左边距离和上边距离，即当前元素的border到包含它的offsetParent的border的距离。
+1. 該元素的top或left距離+margin的距離
+## JS 寬度 && 高度，可读可写属性
+### scrollHeight && scrollWidth
+> 顾名思义，这两个属性指的是当元素内部的内容超出其宽度和高度的时候，元素内部内容的实际宽度和高度，需要注意的是，当元素其中内容没有超过其高度或者宽度的时候，该属性是取不到的。
+1. 元素内部内容的实际宽度和高度不含border及滾動條寬度
+### obj.style.width && obj.style.height
+## Event 對象的
+### clientX && clientY
+> clientX和clientY，这对属性是当事件发生时，鼠标点击位置相对于浏览器（可视区）的坐标，即浏览器左上角坐标的（0,0），该属性以浏览器左上角坐标为原点，计算鼠标点击位置距离其左上角的位置，
+1. 瀏覽器左上角(0,0)
+1. 不管浏览器窗口大小如何变化，都不会影响点击位置的坐标。
+### offsetX && offsetY
+> 这一对属性是指当事件发生时，鼠标点击位置相对于该事件源的位置，即点击该div，以该div左上角为原点来计算鼠标点击位置的坐
+1. 該元素的左上角(0,0)
+### pageX && pageY
+> 顾名思义，该属性是事件发生时鼠标点击位置相对于页面的位置，通常浏览器窗口没有出现滚动条时，该属性和event.clientX及event.clientY是等价的，但是当浏览器出现滚动条的时候，pageX通常会大于clientX，因为页面还存在被卷起来的部分的宽度和高度。
+1. 但是当浏览器出现滚动条的时候，pageX通常会大于clientX
