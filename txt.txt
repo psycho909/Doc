@@ -41,6 +41,3 @@ https://www.w3cplus.com/react/create-the-first-react-component.html
 理解 Gulp 和 Webpack
 http://www.barretlee.com/blog/2017/04/27/gulp-and-webpack/
 ----------
-https://scotch.io/tutorials?hFR%5Bcategory%5D%5B0%5D=Tutorials&dFR%5B_tags%5D%5B0%5D=vue
-
-https://www.w3cplus.com/vue/components-props-slots.html
