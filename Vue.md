@@ -717,3 +717,227 @@ methods: {
     }
 }
 ```
+### Vue Router
+## 子路由
+```html
+<!-- Hi template -->
+<template>
+    <div>
+        <h2>{{ msg }}</h2>
+        <router-view></router-view>
+    </div>
+</template>
+<script>
+    export default {
+        name:'hi',
+        data(){
+            return {
+                msg:'Hi Page'
+            }
+        }
+    }
+</script>
+```
+```html
+<template>
+    <div>
+        <h2>{{ msg }}</h2>
+    </div>
+</template>
+<script>
+    export default {
+        name:'hi',
+        data(){
+            return {
+                msg:'Hi-1 Page'
+            }
+        }
+    }
+</script>
+
+```
+```javascript
+{
+    path:'/Hi',
+    name:'Hi',
+    component:Hi,
+    children:[
+        {path:'/',component:Hi},
+        {path:'Hi1',component:Hi1},
+        {path:'Hi2',component:Hi2},
+    ]
+}
+```
+### 參數傳遞
+> `name`要與router裡面配置的name一樣，`params`則是傳遞的參數
+```html
+<!-- $route $=>只要是在Vue組件內引用都可以使用$去引用 -->
+<router-link :to="{name:'hi1',params:{username:'Chen'}}">Hi-1</router-link>
+```
+```html
+<!-- hi template -->
+<h2>{{ msg }} - {{ $route.params.username }}</h2>
+```
+### 單頁面多router區域
+```html
+<router-view></router-view>
+<router-view name="left"></router-view>
+<router-view name="right"></router-view>
+```
+```javascript
+{
+    path: '/',
+    name: 'Count',
+    // 多個頁面的component 要變成 components
+    components: {
+        default:Count,
+        left:Left,
+        right:Right
+    }
+}
+```
+### URL傳遞參數
+```html
+<router-link to="/Params/198/tktasdsadwqe">Params</router-link>
+```
+```javascript
+{
+    path:'/params/:newsId/:newsTitle',
+    component:Params
+}
+```
+```html
+<p>newId {{ $route.params.newsId }}</p>
+```
+### redirect重定向 / redirect重定向並傳參數
+```html
+<router-link to="/GoHome">GoHome</router-link>
+<router-link to="/goParams/20181023/GoGOGOGOGOG">GoHome</router-link>
+```
+```javascript
+{
+    path:'/GoHome',
+    redirect:'/'
+},{
+    path:'/goParams/:newsId/:newsTitle',
+    redirect:'/params/:newsId/:newsTitle'
+}
+```
+### 別名方式重新定向 alias
+```html
+<router-link to="/Hi1">Go Hi1</router-link>
+<router-link to="/jspang">Go jspang</router-link>
+```
+```javascript
+{
+    path:'/hi1',
+    component:Hi1,
+    alias:'/jspang'
+}
+```
+> 小坑，不能在首頁使用alias
+### router 切換的動畫效果
+```html
+<transition name="fade" mode="out-in">
+    <router-view></router-view>
+</transition>
+```
+```css
+.fade-enter{
+    opacity: 0px;
+}
+.fade-leave{
+    opacity: 1px;
+}
+.fade-enter-active{
+    transition:all .3s;
+}
+.fade-leave-active{
+    opacity: 0;
+    transition:all .3s;
+}
+```
+### mode的作用和404頁面處理
+> mode的作用
+1. mode:'history' -> 可以把/#/去掉
+1. mode:'hash' -> 可以增加/#/
+> 404頁面處理
+```html
+<!-- 404 Page -->
+<template>
+    <div>{{msg}}</div>
+</template>
+<script>
+    export default {
+        data() {
+            return {
+                msg: '404 page'
+            }
+        }
+    }
+</script>
+
+```
+```javascript
+{
+    path:'*',
+    component:Error
+}
+```
+### router鉤子函數
+> 進入路由之前 & 離開路由之前
+1. 在路由JS配置
+```javascript
+// 在路由JS配置只能使用beforeEnter
+{
+    path:'/params/:newsId/:newsTitle',
+    component:Params,
+    beforeEnter:(to,from,next)=>{
+        // 此設置可以在路由進入之前設置一個防線
+        console.log(to)
+        console.log(from)
+        next() // 允許跳轉
+        // next({path:'/'}) // 跳轉道首頁
+    }
+}
+```
+2. 在模板JS配置
+```javascript
+<script>
+    export default {
+        data() {
+            return {
+                msg: 'Params page'
+            }
+        },
+        beforeRouteEnter:(to,from,next)=>{
+            console.log('準備進入路由')
+            next()
+        },
+        beforeRouteLeave:(to,from,next)=>{
+            console.log('準備離開路由')
+            next()
+        }
+    }
+</script>
+```
+### 編程式導航
+> 可用於判斷用戶名是否正確再用methods去處理
+```html
+<button @click="goBack">後退</button>
+<button @click="goGo">前進</button>
+<button @click="goHome">返回首頁</button>
+```
+```javascript
+methods: {
+    goBack(){
+        this.$router.go(-1)
+    },
+    goGo(){
+        this.$router.go(1)
+    },
+    goHome(){
+        this.$router.push('/')
+    }
+}
+```
