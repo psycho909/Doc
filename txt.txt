@@ -41,15 +41,3 @@ https://www.w3cplus.com/react/create-the-first-react-component.html
 理解 Gulp 和 Webpack
 http://www.barretlee.com/blog/2017/04/27/gulp-and-webpack/
 ----------
-https://www.w3cplus.com/vue/component-data-and-props-part3.html
----------
-https://juejin.im/entry/5aae5ace6fb9a028b86dccd9
-https://juejin.im/post/5aa939776fb9a028d0432710
-https://juejin.im/post/5aab40bef265da23826dba61
-https://juejin.im/post/5aaa37c8f265da23945f365c
-http://web.jobbole.com/86489/
-http://web.jobbole.com/85399/
-http://blog.csdn.net/qy1387/article/details/7819466
-https://www.w3cplus.com/javascript/es6-variable-declaration-with-var-let-and-const.html
-http://www.codeceo.com/12-useful-javascript-tips.html
-https://juejin.im/post/5aae65546fb9a028cf324192
