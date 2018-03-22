@@ -147,3 +147,38 @@ ol li:before{
   }
 }
 ```
+### 支援手機直式&&橫式
+```css
+/*orientation: portrait   直式*/
+@media screen and  (orientation:portrait) {
+    /*
+        css ...
+    */
+}
+/*orientation: landscape  橫式*/
+@media screen and  (orientation:landscape) {
+    /*
+        css ...
+    */
+}
+```
+```javascript
+	window.addEventListener("orientationchange",onOrientationchange ,false);
+	function onOrientationchange() {
+		if (window.orientation === 180 || window.orientation === 0) {
+			/*orientation: portrait 直式*/
+			$("#orientation").hide();
+		}
+		if (window.orientation === 90 || window.orientation === -90 ){
+			/*orientation: landscape 橫式*/
+			$("#orientation").show();
+		}
+	}
+```
+### Facebook分享時注意事項
+```html
+    <meta property="og:title" content="Hahow 好學校"> <!-- 分享的標題  -->
+    <meta property="og:description" content="Hahow 好學校課程幕資中，RWD課程熱烈招生中"> <!-- 分享的內容敘述 -->
+    <meta property="og:url" content=""> <!-- 分享的網頁連結 -->
+    <meta property="og:image" content="http://www.joostrap.com/images/homepage_multiple_devices.jpg"> <!--分享在FB的縮圖 -->
+```
