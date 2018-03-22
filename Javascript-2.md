@@ -208,3 +208,67 @@ new Date().toGMTString();
 // 寫入Cookie，設定10秒後失效
 document.cookie="username=bob;max-age=10;path=/";
 ```
+## 數組去重
+```javascript
+var arr1 = [1,2,1,3,4],
+arr2 = [3,4,5,1,2,3,6];
+var result=[];var arr=[]
+arr=arr2.reduce((prev,curr)=>{
+	prev.push(curr)
+	return prev
+},arr1)
+for(var i=0;i<arr.length;i++){
+	var index=arr[i];
+	if(result.indexOf(index) === -1){
+		result.push(index)
+	}
+}
+```
+## 扁平化數組
+```javascript
+var more_arr=[[1, 2],[3, 4, 5], [6, 7, 8, 9],10];
+// [].concat(...more_arr);
+// [].concat.apply([],more_arr)
+var newArr=more_arr.reduce((prev,curr)=>{
+	return prev.concat(curr)
+})
+```
+## 找出重複數組個數
+```javascript
+var arr1 = [1,2,1,3,4],
+arr2 = [3,4,5,1,2,3,6];
+var arr=[];
+arr=[...arr1,...arr2]
+var obj={};
+arr.forEach((item,index)=>{
+	if(obj[item]){
+		obj[item]++
+	}else{
+		obj[item]=1
+	}
+})
+```
+## 找出重複OBJ個數
+```javascript
+var openData=[
+	[1,7,0],
+	[3,8,9],
+	[4,5,8],
+	[6,4,1],
+	[3,6,1]
+];
+var obj={},arr=[],k;
+openData.forEach((item,index)=>{
+	for(var i=0;i<item.length;i++){
+		arr.push(item[i])	
+	}
+})
+for(var i=0;i<arr.length;i++){
+	var index=arr[i]
+	if(obj[index]){
+		obj[index]++
+	}else{
+		obj[index]=1
+	}
+}
+```

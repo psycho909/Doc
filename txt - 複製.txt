@@ -1,5 +1,0 @@
-﻿http://web.jobbole.com/82346/
-https://www.w3cplus.com/javascript/merge-flatten-an-array-of-arrays-in-javascript.html
-http://web.jobbole.com/86581/
-http://www.codeceo.com/javascript-dom-events.html
-https://www.w3cplus.com/css3/css-grid-flexbox-solving-real-world-problems.html
