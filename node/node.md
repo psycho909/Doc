@@ -257,3 +257,54 @@ req.checkBody('content',"內容不能為空").notEmpty();
 var errors=req.validationErrors();
 console.log(errors)
 ```
+### body-parser 取得表單資料
+```javascript
+// 增加 body 解析
+// 獲取前端傳送到後端的資料
+// 解析 JSON 格式
+app.use(bodyParser.json())
+// 解析 表單 模式
+app.use(bodyParser.urlencoded(
+    {extended:false}
+))
+
+app.post('/searchList',(req,res,next)=>{
+    console.log(req.body)
+})
+```
+## 使用 Postman
+### 傳統表單
+```javascript
+// http://localhost:3000/searchList
+// 選擇 POST
+// Body
+// x-www-form-urlencoded
+```
+### AJAX 表單
+```javascript
+// http://localhost:3000/searchList
+// 選擇 POST
+// Body
+// raw
+// JSON
+```
+## Router進階管理
+```javascript
+// 在 router 資料夾
+// user.js
+var express=require('express');
+var router=express.Router();
+
+router.get('/edit-profile',function(req,res){
+    res.send('profile')
+})
+
+router.get('/photo',function(req,res){
+    res.send('photo');
+})
+module.exports=router;
+
+// app.js
+var user=require('./routes/user');
+app.use('/user',user)
+```
