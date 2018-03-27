@@ -272,3 +272,11 @@ for(var i=0;i<arr.length;i++){
 	}
 }
 ```
+## 使用reduce找出重複數量
+```javascript
+var cars = ['BMW','Benz', 'Benz', 'Tesla', 'BMW', 'Toyota'];
+var carrList=cars.reduce((obj,name)=>{
+    obj[name]=obj[name]?++obj[name]:1;
+    return obj
+},{})
+```
