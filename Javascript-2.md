@@ -280,3 +280,50 @@ var carrList=cars.reduce((obj,name)=>{
     return obj
 },{})
 ```
+## Promise
+1. 先宣告一個 函式
+    1. 內有 new Promise
+    1. 包含 resolve:成功
+    1. 包含 reject: 失敗
+1. 使用 Promise 函式
+    1. 使用 then : 接收成功的訊息
+    1. catch: 接收失敗的訊息
+```js
+var runPromise=function(someone,timer,success){
+    console.log(someone+' 開始奔跑!')
+    // Promise 從這開始
+    return new Promise(function(resolve,reject){
+        if(success){
+            setTimeout(function(){
+                resolve(someone+' '+(timer/1000)+'秒 抵達終點!')
+            },timer)
+            
+        }else{
+            reject(new Error(someone+' 失敗!'))
+        }
+    })
+}
+runPromise('Ming',2000,true).then(function(res){
+    console.log(res)
+    return runPromise('胖虎',2000,false)
+})
+.then(function(res){
+    console.log(res)
+})
+.catch(function(res){
+    console.log(res)
+        })
+```
+### Promise.all()
+> 同時處理多個函式，全部執行後，一同回傳
+```js
+Promise.all([runPromise('Ming',2000,true),runPromise('胖虎',2000,true)])
+.then((res)=>{
+    console.log(res)
+})
+.catch((err)=>{
+    console.log(err)
+})
+```
+### Promise.race()
+> 類似比較速度，回傳速度最快的那個函式

@@ -308,3 +308,44 @@ module.exports=router;
 var user=require('./routes/user');
 app.use('/user',user)
 ```
+## dotenv
+```javascript
+// index
+require('dotenv').config()
+// 在跟目錄下建立 .env
+gmailUser=meelook1379@gmail.com
+// index
+process.env.gameilUser // meelook1379@gmail.com
+```
+## connect-flash 資料暫存設計
+```javascript
+// app.js
+var cookieParser = require('cookie-parser');
+var session=require('express-session');
+var flash=require('connect-flash');
+
+app.use(cookieParser());
+app.use(session({
+  secret:'mysupercat',
+  resave:true,
+  saveUninitialized:true
+}))
+app.use(flash());
+
+// contact.js
+router.get('/',csrfProtection, function(req, res) {
+    res.render('contact',{
+        csrfToken:req.csrfToken(),
+        errors:req.flash('errors')
+    });
+});
+
+if(req.body.username == ''){
+    // 因為資料錯誤
+    // 所以想暫存在一個記憶體上面，寫一個屬性 errors
+    // 在使用他時就會清除掉
+    req.flash('errors','姓名不可為空')
+
+    res.redirect('/contact')
+}
+```
