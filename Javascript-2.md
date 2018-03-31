@@ -280,6 +280,48 @@ var carrList=cars.reduce((obj,name)=>{
     return obj
 },{})
 ```
+## replace去掉所有
+```javascript
+var str='<script>alert('123')</script>'
+str.replace(/\//ig,'');
+str.replace(/script/ig,'');
+```
+## JSON.stringify排列
+```javascript
+JSON.stringify(data,null,4)
+```
+## JSON.stringify傳參數
+```javascript
+var str_json=JSON.stringify(data,['name','age'])
+```
+## JSON.stringify 處理參數
+```javascript
+var data = [
+    {name: "悟空", sex:1, age: 30},
+    {name: "八戒", sex:0, age: 20},
+    {name: "唐僧", sex:1, age: 30}
+];
+
+var str_json = JSON.stringify(data,function (key, value) {
+    if(key==="sex"){
+        return ["男生","女生"][value];
+    }
+    return value;
+});
+```
+## 千位數小數點
+```javascript
+Number.prototype.formatMoney = function(c, d, t){
+var n = this, 
+    c = isNaN(c = Math.abs(c)) ? 2 : c, 
+    d = d == undefined ? "." : d, 
+    t = t == undefined ? "," : t, 
+    s = n < 0 ? "-" : "", 
+    i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
+    j = (j = i.length) > 3 ? j % 3 : 0;
+    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+};
+```
 ## Promise
 1. 先宣告一個 函式
     1. 內有 new Promise
