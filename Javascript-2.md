@@ -369,3 +369,9 @@ Promise.all([runPromise('Ming',2000,true),runPromise('胖虎',2000,true)])
 ```
 ### Promise.race()
 > 類似比較速度，回傳速度最快的那個函式
+### HTML不產生快取問題
+```html
+<meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+```
