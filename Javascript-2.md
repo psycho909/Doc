@@ -375,3 +375,30 @@ Promise.all([runPromise('Ming',2000,true),runPromise('胖虎',2000,true)])
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="expires" content="0" />
 ```
+### 分頁製作
+1. 總共有幾頁
+1. 目前第幾頁
+1. 每頁多少數量
+1. 當前頁面資料
+```javascript
+// 分頁
+var totalResult=articles.length; // 目前總長度
+var perpage=3; // 每頁三筆資料
+var pageTotal=Math.ceil(totalResult/perpage); // 總頁數
+var currentPage=1; //當前頁數
+
+// 判斷 如果當前頁數 大於總頁數時
+if(currentPage > pageTotal){
+    currentPage=pageTotal;
+}
+var minItem=(currentPage * perpage)-perpage+1; // 最小
+var maxItem=(currentPage * perpage); // 最大
+
+var data=[];
+articles.forEach((item,i)=>{
+    var itemNum=i+1;
+    if( itemNum >= minItem && itemNum <= maxItem){
+        data.push(item)
+    }
+})
+```
