@@ -116,6 +116,10 @@ git merge amazing_new_feature
 ## 刪除分支
 ```git
 git branch -d amazing_new_feature
+// 删除本地分支，如果本地还有未合并的代码，则不能删除
+git branch -d qixiu/feature
+// 强制删除本地分支
+git branch -D qixiu/feature 
 ```
 ## 文件更動
 > 刪除文件實需要使用`git rm` 檔名 來通知倉庫刪除文件
@@ -129,6 +133,21 @@ git push origin master
 git add -u
 git commit -m "XXX"
 git push origin master
+```
+## 撤销 commit
+```js
+// 会将提交记录回滚，代码不回滚
+git reset b14bb52
+
+// 会将提交记录和代码全部回滚
+git reset --hard b14bb52
+
+// 将部分代码文件回滚
+git checkout -- files
+```
+## 查看操作记录
+```js
+git reflog
 ```
 ## Git常用指令
 ```javascript
