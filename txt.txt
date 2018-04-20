@@ -56,16 +56,18 @@ JavaScript常用DOM操作方法和函数
 http://caibaojian.com/javascript-api-collection.html?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com
 https://www.iloveimg.com/zh_cn
 
-https://juejin.im/entry/5abde2a5f265da238f12a80d
+
 https://www.cnblogs.com/chyingp/p/express-multer-file-upload.html
 
 
-https://juejin.im/post/5ad080836fb9a028d9379345
-
-
-
+一起学 Node.js
 https://github.com/nswbmw/N-blog
+
+Mongoose初步学习
 https://juejin.im/post/5ad080836fb9a028d9379345
 
+node实现登录图片验证码
 https://juejin.im/post/5ad82856f265da50463e3ae7
+
+
 https://pjchender.blogspot.tw/2017/05/vue-vue-reactivity.html
