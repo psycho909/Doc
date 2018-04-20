@@ -399,8 +399,8 @@ var currentPage=1; //當前頁數
 if(currentPage > pageTotal){
     currentPage=pageTotal;
 }
-var minItem=(currentPage * perpage)-perpage+1; // 最小
-var maxItem=(currentPage * perpage); // 最大
+var minItem=(currentPage * perpage)-perpage+1; // 最小 1
+var maxItem=(currentPage * perpage); // 最大 3
 
 var data=[];
 articles.forEach((item,i)=>{
