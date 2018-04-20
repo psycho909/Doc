@@ -110,6 +110,14 @@ var reverseString=str=>[...str].reverse().join('')
 ### 數組去重複
 ```javascript
 var unique=arr=>[...new Set(arr)]
+
+var years=[2016,2016,2016,2017,2017,2018,2018,2019]
+var res=[];
+for(var i=0;i<years.length;i++){
+    if(res.indexOf(years[i]) === -1){
+        res.push(years[i])
+    }
+}
 ```
 
 ### 驗證數字
