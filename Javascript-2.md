@@ -410,3 +410,9 @@ articles.forEach((item,i)=>{
     }
 })
 ```
+## rem 自適應增加
+```js
+var htmlwidth=document.documentElement.clientWidth || document.body.clientWidth;
+var htmlDom=document.getElementByTagName('html')[0];
+htmlDom.style.fontSize=htmlwidth/20+'px'; // 320/20=16;
+```
