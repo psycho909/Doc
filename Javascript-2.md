@@ -416,3 +416,48 @@ var htmlwidth=document.documentElement.clientWidth || document.body.clientWidth;
 var htmlDom=document.getElementByTagName('html')[0];
 htmlDom.style.fontSize=htmlwidth/20+'px'; // 320/20=16;
 ```
+## 去除某物件屬性重複值
+```js
+const arr = [
+  {name:'alex',value:10},
+  {name:'alex',value:20},
+  {name:'tom',value:30},
+  {name:'tom',value:40}
+];
+const set = new Set();
+const result = arr.filter(item => !set.has(item.name) ? set.add(item.name) : false);
+console.log(result); 
+// [{name: "alex", value: 10}, {name: "tom", value: 30}]
+```
+## 去除重複的物件
+```js
+const arr = [
+  {name:'a', value:10},
+  {name:'a', value:20},
+  {name:'a', value:20},
+  {name:'b', value:30},
+];
+const result = [...new Set(arr.map(item => JSON.stringify(item)))].map(item => JSON.parse(item));
+console.log(result); 
+// [{name: "a", value: 10}, {name: "a", value: 20}, {name: "b", value: 30}]
+```
+## 取得重複的物件
+```js
+const arr = [
+  {name:'a', value:10},
+  {name:'a', value:20},
+  {name:'a', value:20},
+  {name:'b', value:30},
+  {name:'b', value:40},
+  {name:'b', value:40}
+];
+const set = new Set();
+const result = arr.filter(item => {
+  if (set.has(JSON.stringify(item))) {
+    return true;
+  } else {
+    set.add(JSON.stringify(item));
+  }
+});
+//[{name: "a", value: 20}, {name: "b", value: 40}]
+```
