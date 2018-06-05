@@ -1,4 +1,8 @@
-﻿db9d2643a9f68e612bf2a44049ce6872895e7ede
+﻿token
+e56362ceeb4feb913ba79a8613c629ee42d65dc2
+
+GIST ID
+b99c1468a8a3afaa4b3d1aa5e89d35c9
 
 一个例子上手SVG动画
 
