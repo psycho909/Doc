@@ -1,13 +1,4 @@
-﻿token
-79b8376039829fd3b52c746575e56d68f2de73dd
-
-{
-    "id": "6878c02b561743e05965bf02051bb548",
-    "token": "79b8376039829fd3b52c746575e56d68f2de73dd",
-    "http_proxy": ""
-}
-
-123
+https://gogoshark.com/learn/33-sites-selected-by-gogoshark-that-web-designer-and-marketing-must-know/
 
 一个例子上手SVG动画
 
