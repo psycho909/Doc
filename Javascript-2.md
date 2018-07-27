@@ -461,10 +461,53 @@ const result = arr.filter(item => {
 });
 //[{name: "a", value: 20}, {name: "b", value: 40}]
 ```
-## 驗證 Email
+### 驗證 Email
 ```js
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
 ```
+### 将下面数组转成对象，key/value 对应里层数组的两个值 
+
+```javascript
+const objLikeArr = [["name", "Jim"], ["age", 18], ["single", true]]; 
+
+const fromPairs = pairs => pairs.reduce((res, pair) => (
+    (res[pair[0]] = pair[1]), res), {});
+fromPairs(objLikeArr); 
+
+```
+
+### 将多层数组转换成一层数组 
+
+```javascript
+var nestedArr = [1, 2, [3, 4, [5, 6]]];
+var flatten=arr=>arr.reduce((flat,next)=>{
+    return flat.concat(Array.isArray(next)?flatten(next):next)
+},[])
+flatten(nestedArr)
+```
+
+### 生成由隨機整數組成的數組，數組長度和元素大小可自定義 
+
+```javascript
+var genNumArr=(length,limit)=>(
+	Array.from({length},_=>Math.floor(Math.random()*limit))
+)
+genNumArr(10,100)
+```
+
+### 從長度為 100 萬的隨機整數組成的數組中取出偶數，再把所有數字乘以 3 
+
+```javascript
+var bigArr = genNumArr(1e6, 100)
+var isOdd=num=>num % 2 == 0
+var triple=num=>num * 3
+bigArr.forEach((v,i)=>{
+    if(isOdds(v)){
+        results.push(triples(v))
+    }
+})
+```
+

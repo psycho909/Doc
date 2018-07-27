@@ -15,7 +15,7 @@
 1. [Promise && async/await](#promise)
 1. [javascript 函数中的 this 的四种绑定形式](#this)
 --------------
-## <span id="getjson">Ajax單次調用</span>
+## Ajax單次調用
 ```javascript
 $.getJSON(url).
     done(function(daTa){
@@ -25,7 +25,7 @@ $.getJSON(url).
     always(function(){s
     })
 ```
-## <span id="multi-getjson">Ajax多次調用</span>
+## Ajax多次調用
 ```javascript
 var firstData = $.get('http://example.com/first-api/');
 var secondData = $.get('http://example.com/second-api/');
@@ -35,7 +35,7 @@ $.when(firstPromise, secondPromise).done(function(firstData, secondData) {
 });
 ```
 
-## <span id="rest-parameters">`展開運算子`與`其餘參數` `...rest`</span>
+## 展開運算子與其餘參數...rest
 > 展開運算子(Spread Operator)與其餘參數(Rest parameters)是ES6中的其中一種新特性。也是懶人必學的Javascript新語法之一。這兩種特性的語法是一樣的，都是(`...`)三個點，我們常常在文字聊天時，這個(`...`)常用來代表了"無言"、"無窮的想像"或"後面其他的"的意思。<br>
 >1. 符號是三個點(`...`)
 >1. 使用於陣列
@@ -523,7 +523,7 @@ el.offsetLeft
 //滾動
 scrollTop //滾動高度
 ```
-## <span id="string_to_number">字符串轉數字</span>
+# 字符串轉數字
 ``` javascript
 parseInt(num) // 默认方式 (没有基数)
 parseInt(num,10) // parseInt 使用基数 (十进制)
@@ -538,7 +538,7 @@ num*1 // 被 1 乘
 num-0 // 减 0
 +num // 一元操作 "+"
 ```
-## <span id="localstorage">localStorage && sessionStorage</span>
+## localStorage && sessionStorage
 > HTML 本地存储提供了两个在客户端存储数据的对象
 * window.localStorage - 存储没有截止日期的数据
 * window.sessionStorage - 针对一个 session 来存储数据（当关闭浏览器标签页时数据会丢失）
@@ -567,7 +567,7 @@ stringObject.substring(start[,end])
 //第一個參數【開始位置】(必填) 第二個參數【子字串結束位置】
 stringObject.slice(start[,end])
 ```
-## <span id="promise">Promise && async/await</span>
+## Promise && async/await
 ### 異步處理
 * 点餐
 * 为所点的午餐付费，并拿到排队单号
@@ -833,7 +833,7 @@ fireInGrobal.bind(obj)(); // 输出1
 1. bind不执行函数，只返回一个可供执行的函数
 >
 > 在隐式绑定下：函数和只是暂时住在“包含对象“的旅馆里面，可能过几天就又到另一家旅馆住了
-> 
+>
 > 在显式绑定下：函数将取得在“包含对象“里的永久居住权，一直都会”住在这里“
 ### new绑定
 > 执行new操作的时候，将创建一个新的对象，并且将构造函数的this指向所创建的新对象
