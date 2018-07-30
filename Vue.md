@@ -964,6 +964,8 @@ created(){
 
 ## Vue postcss設定
 
+> 1.  在` .postcssrc.js`設定
+
 ```javascript
 // .postcssrc.js
 // 增加
@@ -979,7 +981,32 @@ created(){
 }
 ```
 
+> 2. 在`package.josn`設定
+
+```js
+// 增加 autoprefixer 會自動去讀取
+"browserslist": [
+    "> 1%",
+    "last 5 versions",
+    "Firefox >= 45",
+    "ios >= 8",
+    "Safari >= 8",
+    "ie >= 8"
+]
+```
+
 ## Vue bulid後的問題
+
+### 增加對IE 11支持
+
+```js
+// 安裝
+npm i --save babel-polyfill
+// main.js
+import 'babel-polyfill'
+```
+
+
 
 ### POSTCSS失效問題
 
