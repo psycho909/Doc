@@ -1,18 +1,7 @@
-# Vue 使用
-1. [`on()`&`emit()`](#emit)
-1. [獲取當下DOM屬性](#domattr)
-1. [`Computed`使用](#computed)
-1. [Filters使用](#filters)
-1. [Mixins使用](#mixins)
-1. [Props使用](#props)
-1. [`emit`使用](#emit)
-1. [Vue.$set](#set)
-1. [Vue Slot使用](#slot)
-1. [Vue 動態組件 :is](#is)
 ## 快速創建一個專案
 > `vue init webpack <name>` -> `npm install`
 ----------
-## <span id="emit">使用於父子組件通信`$on(eventName)`和`$emit(eventName)`</span>
+## 使用於父子組件通信`$on(eventName)`和`$emit(eventName)`
 ----------
 > `$on(eventName)`監聽事件
 > `$emit(eventName)`可用於觸發事件 
@@ -53,7 +42,7 @@ new Vue({
 });
 ```
 
-## <span id="domattr">獲取當下的DOM屬性</span>
+## 獲取當下的DOM屬性
 ```javascript
 //可獲取dom所有屬性
 method:{
@@ -68,7 +57,7 @@ method:{
     }
 }
 ```
-## <span id="computed">Computed使用</span>
+## Computed使用
 > `computed`使用於計算屬性
 ```javascript
 computed:{
@@ -80,7 +69,7 @@ computed:{
 ```html
 <div class="text">{{tipCompu}}</div>
 ```
-## <span id="filters">Filters使用</span>
+## Filters使用
 > `filter`只是格式化並顯示在畫面上，並不會去改掉預設資料，而`computed`則是會產生一個新的屬性出來。
 >
 > 如果要寫複雜的`filter`函數，以`computed`寫為主
@@ -132,7 +121,7 @@ filters:{
     }
 }
 ```
-## <span id="mixins">Mixins使用</span>
+## Mixins使用
 > 可以接受一個混合對象的數組。這些mixins可以像正常的實例對象一樣包含選項。
 ```javascript
 var toggle = {
@@ -169,7 +158,7 @@ template: '#modal',
     }
 };
 ```
-## <span id="props">`Props`由外部傳遞內部使用</span>
+## `Props`由外部傳遞內部使用
 > 由`外部元件`傳入`內部元件`
 ```javascript
 //外層元件傳入 接收方法使用v-bind
@@ -186,7 +175,7 @@ Vue.component('mymain',function(){
     porps:['my_listdata']
 })
 ```
-## <span id="emit">`emit`由內部傳遞外部</span>
+## `emit`由內部傳遞外部
 > 一開始需要一個事件接收器<br>
 > 外部元件接收
 ```html
@@ -225,7 +214,7 @@ updata_username () {
 },
 ```
 
-## <span id="set">Vue.$set</span>
+## Vue.$set
 > 假設資料結構並非一開始所定義的，可以使用 `$set` 來加入新增的屬性。
 ```javascript
     data:{
@@ -239,7 +228,7 @@ updata_username () {
     //可在info裡設置sex
 ```
 
-## <span id="slot">Vue slot使用</span>
+## Vue slot使用
 > 使用`slot`插槽使`組件`可以更靈活的使用
 ```html
 <!-- Child -->
@@ -284,7 +273,7 @@ Vue.component('container',{
     template:'#container
 })
 ```
-## <span id="is">Vue 動態組件 :is</span>
+## Vue 動態組件 :is
 ```html
 <div id="app">
     <div class="form-group">
@@ -351,7 +340,7 @@ new Vue({
 > 雖然在大多數情況下，`Computed` 更合適，但有時仍需要使用 `Watch`。
 > 當你需要響應更改的數據執行非同步或複雜的計算時，Watch 就非常有用。
 ## v-on事件綁定
-## v-bind屬性綁定/樣式綁定
+### v-bind屬性綁定/樣式綁定
 ```html
 <!-- src是屬性 -->
 <img v-bind:src="imgNew">
@@ -409,7 +398,9 @@ new Vue({
 1. `v-model.number=""`，可以自动将用户的输入值转为数值类型
 1. `v-model.trim=""`，如果要自动过滤用户输入的首尾空白字符
 1. `v-model.lazy=""`，更改 input 內的值並不會馬上變更 model 的資料，而是等到滑鼠移到輸入框外，觸發 change 事件才更新
-## 父組件向子組件傳數據(1) / props
+## 組件之間傳遞數據
+
+### 父組件向子組件傳數據(1) / props
 > 第一步先在子組件，props自定義屬性
 ```javascript
 export default {
@@ -433,7 +424,7 @@ export default {
 ```html
 <HeaderView msg="父組件向子組件傳參"></HeaderView>
 ```
-## 父組件向子組件傳數據(2) / props
+### 父組件向子組件傳數據(2) / props
 > 第一步先在子組件，props自定義屬性
 ```javascript
 export default {
@@ -471,7 +462,7 @@ export default {
   }
 }
 ```
-## 子組件給父組件傳遞數據 / $emot
+### 子組件給父組件傳遞數據 / $emit
 > 子組件 --> 父組件，使用自定義事件
 >
 > 先在子組件自定義事件
@@ -706,7 +697,7 @@ methods:{
 ## data為什麼畫面沒有隨資料更新
 1. 方法一：利用 splice 達到響應式變化
 1. 方法二：利用 vm.$set 達到響應式變化
-## 方法一:使用 Vue 可觀察到的陣列方法
+### 方法一:使用 Vue 可觀察到的陣列方法
 > push()、pop()、shift()、unshift()、splice()、sort()、reverse()
 ## 方法二：使用 vm.$set
 ```javascript
@@ -717,8 +708,8 @@ methods: {
     }
 }
 ```
-### Vue Router
-## 子路由
+## Vue Router
+### 子路由
 ```html
 <!-- Hi template -->
 <template>
@@ -941,3 +932,87 @@ methods: {
     }
 }
 ```
+## Vue EventBus 進行 組件間通信傳遞
+
+```javascript
+// 先創建一個 bus.js
+import Vue from 'vue'
+export default new Vue();
+
+// 把bus.js 設定成全局 使用
+// 進入 main.js
+import Bus from './bus'
+Vue.prototype.bus=bus;
+
+========================================
+// 要從 Parent 的值 傳入 Child
+// 進入 Parent.vue
+mounte(){
+    this.bus.$emit('tomsg',"Hello msg")
+}
+
+// 進入 Child.vue
+// 在頁面初始化前使用
+created(){
+    this.bus.$on("tomsg",function(data){
+        console.log(data) // Hello msg
+    })
+}
+```
+
+
+
+## Vue postcss設定
+
+```javascript
+// .postcssrc.js
+// 增加
+"autoprefixer": {
+    browsers:[
+        "> 1%",
+        "last 5 versions",
+        "Firefox >= 45",
+        "ios >= 8",
+        "Safari >= 8",
+        "ie >= 8"
+    ]
+}
+```
+
+## Vue bulid後的問題
+
+### POSTCSS失效問題
+
+```js
+// build/webpkac.prod.config.js
+// 把 OptimizeCSSPlugin 相關的註解調
+
+// OptimizeCSSPlugin 功能
+//壓縮提取出來的CSS，並且進行css的復用以解決extract-text-webpack-plugin將css處理後會出現的css重複的情況
+
+```
+
+
+
+### 路徑問題
+
+```javascript
+// build/utils
+if (options.extract) {
+    return ExtractTextPlugin.extract({
+        use: loaders,
+        fallback: 'vue-style-loader',
+        // 增加這行
+        publicPath:"../../"
+    })
+} else {
+    return ['vue-style-loader'].concat(loaders)
+}
+
+// config/index
+build:{
+    // 更改
+    assetsPublicPath:"./"
+}
+```
+
