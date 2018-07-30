@@ -1043,3 +1043,36 @@ build:{
 }
 ```
 
+## 使用axios post到PHP問題
+
+> 默認情況下,js將JavaScript對象序列化為JSON。要以應用程序/ x-www-form-urlencoded格式發送數據,您可以使用以下選項之一。
+
+```js
+// 第一種
+// 使用 URLSearchParems() API但會遇到版本問題，需使用babel-polyfill
+var data=new URLSearchParams();
+data.append('name',vm.name)
+data.append('email',vm.email)
+this.axios.post(api,data)
+.then((data)=>{
+    console.log(data)
+})
+.catch((error)=>{
+    console.log(error)
+})
+
+// 第二種
+// 使用 qs.js
+// 作用是能把json格式的直接轉成data所需的格式
+npm i --save qs.js
+// main.js
+import qs from 'qs'
+Vue.prototype.qs=qs
+// ajax
+data:{
+    this.qs.stringify({
+		name:vm.name
+    })
+}
+```
+
