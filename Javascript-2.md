@@ -511,3 +511,22 @@ bigArr.forEach((v,i)=>{
 })
 ```
 
+## 類數組
+
+```js
+var arrayLike = {
+    0: 'zhangsan',
+    1: 'lisi',
+    2: 'zhaoliu',
+    length: 3
+}
+// 無法使用 push... 方法
+// 需透過 Array.prototype.push.call(arrayLike,"PUSH")
+
+// 或通過以下方法轉型成Array
+Array.prototype.slice.call(arrayLike)
+Array.prototype.splice.call(arrayLike,0)
+Array.from(arrayLike)
+Array.prototype.concat.apply([],arrayLike)
+```
+
