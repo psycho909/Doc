@@ -491,7 +491,63 @@ methods:{
 	}
 }
 ```
+### Vue EventBus 進行 組件間通信傳遞
+
+```javascript
+// 先創建一個 bus.js
+import Vue from 'vue'
+export default new Vue();
+
+// 把bus.js 設定成全局 使用
+// 進入 main.js
+import Bus from './bus'
+Vue.prototype.bus=bus;
+
+========================================
+// 要從 Parent 的值 傳入 Child
+// 進入 Parent.vue
+mounte(){
+    this.bus.$emit('tomsg',"Hello msg")
+}
+```
+
+### Vue EventBus在router間傳遞的問題
+
+> 因為vue-router在切換時，先加載新的組件，等新的組件渲染好但是還沒掛在前，銷毀舊的組件，然後再掛載組件
+
+在路由切換時，執行的方法依次是： 
+
+* 新組件： beforeCreate 
+
+* 新組件： created 
+
+* 新組件： beforeMount 
+
+* 舊組件： beforeDestroy 
+
+* 舊組件： destroy 
+
+* 新組件： mounted 
+
+  所以，新組件只要在舊組件beforeDestroy之前，$on事件就能成功接收到。 
+
+```js
+// 接收
+created(){
+    this.bus.$on('something',data=>{
+        consoe.log(data)
+    })
+}
+// 傳遞
+destory(){
+	this.bus.$emit('something','daya')
+}
+```
+
+
+
 ## Vue.extend 和 Vue.component差別
+
 1. 個人理解是：Vue.extend({})是Vue.component({})的核心，換句話說：
     1. 在實體化 Component 時會用到 Extend。
     1. Vue.component 是一個語法糖，使我們不需透過 Extend 和其他程序來實體化 Vue Instance 的子類別。
@@ -669,7 +725,7 @@ created(){
 // this.food 裡面沒有 count
 Vue.set(this.food,'count',1);
 ```
-### 父組件是可以調用子組件的方法
+## ref 父組件是可以調用子組件的方法
 > 子組件
 ```javascript
 // 子組件
@@ -932,24 +988,6 @@ methods: {
     }
 }
 ```
-## Vue EventBus 進行 組件間通信傳遞
-
-```javascript
-// 先創建一個 bus.js
-import Vue from 'vue'
-export default new Vue();
-
-// 把bus.js 設定成全局 使用
-// 進入 main.js
-import Bus from './bus'
-Vue.prototype.bus=bus;
-
-========================================
-// 要從 Parent 的值 傳入 Child
-// 進入 Parent.vue
-mounte(){
-    this.bus.$emit('tomsg',"Hello msg")
-}
 
 // 進入 Child.vue
 // 在頁面初始化前使用
@@ -966,7 +1004,7 @@ created(){
 
 > 1.  在` .postcssrc.js`設定
 
-```javascript
+​```javascript
 // .postcssrc.js
 // 增加
 "autoprefixer": {
