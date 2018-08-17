@@ -154,6 +154,20 @@ WHERE `post_time`>`2017-10-30 16:00:00` AND `category_id`=2;
 SELECT * FROM `posts`
 WHERE `category_id`=8 OR `category_id`=2;
 ```
+### NULL
+
+```sql
+// 判斷非NULL
+SELECT * FROM `posts`
+WHERE `category_id`=8 OR `category_id` is not null
+
+// 判斷NULL
+SELECT * FROM `posts`
+WHERE `category_id`=8 OR `category_id` is null
+```
+
+
+
 ## ORDER BY
 
 >  語句默認按照升序對記錄進行排序。  

@@ -699,7 +699,39 @@ Vue過度效果
 ```javascript
 this.$refs.menuScroll.getElementsByClassName('list')
 ```
+### ref 父組件是可以調用子組件的方法
+
+> 子組件
+
+```javascript
+// 子組件
+methods:{
+    // 父組件是可以調用子組件的方法
+    showView(){
+        this.showFlag=true;
+    }
+}
+```
+
+> 父組件
+
+```html
+<child ref="childView"></child>
+```
+
+```javascript
+// 父組件
+methods:{
+    showDetail(){
+        this.$refs.childView.showView();
+    }
+}
+```
+
+
+
 ## 使用擴展套件時或需要獲取DOM元素的注意事項
+
 > 例如better-scroll
 ```javascript
 created(){
@@ -724,29 +756,6 @@ created(){
 ```javascript
 // this.food 裡面沒有 count
 Vue.set(this.food,'count',1);
-```
-## ref 父組件是可以調用子組件的方法
-> 子組件
-```javascript
-// 子組件
-methods:{
-    // 父組件是可以調用子組件的方法
-    showView(){
-        this.showFlag=true;
-    }
-}
-```
-> 父組件
-```html
-<child ref="childView"></child>
-```
-```javascript
-// 父組件
-methods:{
-    showDetail(){
-        this.$refs.childView.showView();
-    }
-}
 ```
 ## keep-alive
 > 包裹住動態組件時，會緩存不活動的組件實力，而不是銷毀他們
