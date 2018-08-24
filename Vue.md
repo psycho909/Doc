@@ -509,6 +509,14 @@ Vue.prototype.bus=bus;
 mounte(){
     this.bus.$emit('tomsg',"Hello msg")
 }
+
+// 進入 Child.vue
+// 在頁面初始化前使用
+created(){
+    this.bus.$on("tomsg",function(data){
+        console.log(data) // Hello msg
+    })
+}
 ```
 
 ### Vue EventBus在router間傳遞的問題
@@ -998,22 +1006,58 @@ methods: {
 }
 ```
 
-// 進入 Child.vue
-// 在頁面初始化前使用
-created(){
-    this.bus.$on("tomsg",function(data){
-        console.log(data) // Hello msg
-    })
+## Vue bulid後的問題
+
+### 增加自定義路徑
+
+```js
+// build/webpack.base.conf.js
+resolve:{
+    extensions: ['.js', '.vue', '.json'],
+        alias:{
+            'static':path.resolve(__dirname,'../static')
+        }
 }
+```
+
+### 開發前後使用API位置
+
+```js
+// config
+// dev.env.js dev時
+API_PATH:'"http://localhost/brand/dist/data/brand_api.php"'
+// prod.env.js build後
+API_PATH:'"../event/api/brand_api.php"'
+```
+
+> 使用
+
+```js
+var api=process.env.API_PATH;
 ```
 
 
 
-## Vue postcss設定
+### Vue使用SASS
 
-> 1.  在` .postcssrc.js`設定
+```npm
+npm i --save-dev node-sass sass-loader
+```
 
-​```javascript
+```html
+// 在頁面使用
+<style lang="scss">
+    
+</style>
+```
+
+
+
+### Vue postcss設定
+
+> 1. 在` .postcssrc.js`設定
+
+```js
 // .postcssrc.js
 // 增加
 "autoprefixer": {
@@ -1041,8 +1085,6 @@ created(){
     "ie >= 8"
 ]
 ```
-
-## Vue bulid後的問題
 
 ### 增加對IE 11支持
 
