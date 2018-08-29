@@ -1,9 +1,15 @@
-# CSS注意
-1. [RWD Youtube](#rwd)
-1. [User-Select](#user-select)
-1. [Flex-grow 9999 Hack](#flex-grow-hack)
---------------------
-<h2 id="rwd">RWD Youtube</h2>
+## CSS變量
+
+`.box`如果有變量設定`--color`時顏色為orange，沒有則red
+
+```css
+box{
+    --color:orange;
+    background-color:--var(--color,red);
+}
+```
+
+RWD Youtube
 --------------------
 > 使用`padding-bottom`去撐高
 ```css
@@ -51,7 +57,7 @@
     overflow: hidden;
   }
 ```
-<h2 id="user-select">阻止用戶選中</h2>
+阻止用戶選中
 ------------
 ```css
 .select{
@@ -70,7 +76,7 @@ document.body.onmousedown=function(){
   return false
 }
 ```
-## <span id="flex-grow-hack">Flex-gorw 9999 Hack</span>
+Flex-gorw 9999 Hack
 > 可讓 item-a & item-b 自適應欄位
 ```css
 .container{
@@ -92,7 +98,7 @@ document.body.onmousedown=function(){
   <div class="item-b"></div>
 </div>
 ```
-### CSS3 counter-increment 計數器
+## CSS3 counter-increment 計數器
 > 在父屬性使用`counter-reset:;`定义我们的计数器变量。我们必须给出任意的名字和可选的开始值。默认的开始值是 0。这个属性是包装器元素。
 >
 > 在子屬性的`:before`或`:after`裡面的`content:;`定義`counter()` 函数,並在在裡面定義运用 `counter-increment` 属性，我们可以递增或者递减计数器的值。该属性还有一个可选的值，用于指定递增/递减量
@@ -124,7 +130,7 @@ ol li:before{
 	</ol>
 </ol>
 ```
-### img圖片去做到自適應
+## img圖片去做到自適應
 ```html
 <div class="img-wrapper">
     <img :src="food.picture" alt="" class="food-img">
@@ -147,7 +153,7 @@ ol li:before{
   }
 }
 ```
-### 支援手機直式&&橫式
+## 支援手機直式&&橫式
 ```css
 /*orientation: portrait   直式*/
 @media screen and  (orientation:portrait) {
@@ -175,7 +181,7 @@ ol li:before{
 		}
 	}
 ```
-### Facebook分享時注意事項
+## Facebook分享時注意事項
 ```html
     <meta property="og:title" content="Hahow 好學校"> <!-- 分享的標題  -->
     <meta property="og:description" content="Hahow 好學校課程幕資中，RWD課程熱烈招生中"> <!-- 分享的內容敘述 -->

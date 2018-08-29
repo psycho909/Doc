@@ -100,7 +100,7 @@ grid-column-gap:5rem;
   grid-column:span 2;
 }
 ```
-### 網格線命名
+## 網格線命名
 > 通過`grid-template-rows`和`grid-template-columns`定義網格時，網格線可以被命名，網格線名稱可以設置網格項目位置。
 ```css
 .grid{
@@ -108,7 +108,19 @@ grid-column-gap:5rem;
   grid-template-columns:[col-1 ]1fr [col-2] 1fr [col-3] 1fr [col-4];
 }
 ```
+### 使用命名
+
+```css
+.grid{
+     grid-template-columns:[start] minmax(20px,1fr) [wrapper-start] repeat(12,minmax(0,100px)) [wrapper-end] minmax(20px,1fr) [end];
+}
+.grid__media{
+    gird-column:wrapper-start / 9;
+}
+```
+
 ### 通過網個線名稱設置網格項目位置
+
 ```css
 .item-b:nth-child(1){
     grid-row-start:row-1;
@@ -117,7 +129,7 @@ grid-column-gap:5rem;
     grid-column-end:col-3;
 }
 ```
-### 通過網個區域命名和定位網格項目
+## 通過網個區域命名和定位網格項目
 > 可使用區域名稱快速配置網格軌道
 
 |header|header|header|
@@ -165,7 +177,7 @@ grid-column-gap:5rem;
     <div class="grid item-c footer">footer</div>
 </div>
 ```
-### 隱式網格
+## 隱式網格
 > 當網格項目確認在顯示網格之外時就會創建隱式網格，當沒有足夠的空間或顯示的網格軌道來設置網格項目時，此時網格項目就會自動創建隱式網格。
 >
 > 多出個`row`網格皆以110px大小顯示。
@@ -176,14 +188,14 @@ grid-column-gap:5rem;
   grid-auto-rows:110px;
 }
 ```
-### 網格默認流方向
+## 網格默認流方向
 > 網格默認流方向`row`
 ```css
 grid-auto-flow:column;
 ```
-### 網格項目對齊方式
+## 網格項目對齊方式
 > 可使用`flex`中的`justify-content`和`aligns-content`進行對齊
-### 彈性網格設定
+## 彈性網格設定
 > 網格有兩個非常有用的特性來適應可用空間的變化。這兩個屬性叫`auto-fit`和`auto-fill`：<br>
 > `auto-fit`會嚐試在不導致列溢出的情況下，放至最大數量的重複元素
 ```css

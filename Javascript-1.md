@@ -1,20 +1,4 @@
 # Javascript
-1. [Ajax單次調用](#getjson)
-1. [Ajax多次調用](#multi-getjson)
-1. [展開運算子與其餘參數 ...rest](#rest-parameters)
-1. [ES6模塊的使用`import`&`export`](#import-export)
-1. [javascript 注意事項](#js-notice)
-1. [Fetch](#fetch)
-1. [ES6 Array.from()使用方式](#array-from)
-1. [apply()、call()使用方式](#apply-call)
-1. [Array常用操作](#use-array)
-1. [DOM API操作](#dom_api)
-1. [字符串轉數字](#string_to_number)
-1. [window.localStorage && window.sessionStorage](#localstorage)
-1. [substr, substring 和 slice 方法的分別](#substr_substring_slice)
-1. [Promise && async/await](#promise)
-1. [javascript 函数中的 this 的四种绑定形式](#this)
---------------
 ## Ajax單次調用
 ```javascript
 $.getJSON(url).
@@ -876,3 +860,12 @@ console.log(a2.a);
 ### pageX && pageY
 > 顾名思义，该属性是事件发生时鼠标点击位置相对于页面的位置，通常浏览器窗口没有出现滚动条时，该属性和event.clientX及event.clientY是等价的，但是当浏览器出现滚动条的时候，pageX通常会大于clientX，因为页面还存在被卷起来的部分的宽度和高度。
 1. 但是当浏览器出现滚动条的时候，pageX通常会大于clientX
+
+## 滾動條狀態
+
+1. window.pageYOffset
+   1. IE Chrome FF  兼容性好
+2. window.scrollY
+   1. IE 不兼容
+3. document.documentElement.scrollTop
+   1. IE Chrome FF 可兼容
