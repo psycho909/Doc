@@ -119,7 +119,9 @@ https://codepen.io/onionegg/pen/jvqQXr/?utm_source=Google&utm_medium=keyword&utm
 
 > 先從使用行為，產生出漏斗，進行優化漏斗，再從漏斗看最終完成達到哪個轉換
 
-## 標準事件
+## FB標準事件
+
+https://www.facebook.com/business/help/402791146561655?helpref=faq_content
 
 | 網站動作     | 簡介                                                         | 標準事件程式碼                                            |
 | ------------ | ------------------------------------------------------------ | --------------------------------------------------------- |
@@ -132,3 +134,46 @@ https://codepen.io/onionegg/pen/jvqQXr/?utm_source=Google&utm_medium=keyword&utm
 | 購買         | 追蹤購買次數或完成結帳流程次數（例如進入「感謝您」或確認頁面） | fbq('track', 'Purchase', {value:'0.00', currency:'USD'}); |
 | Lead         | 追蹤用戶對您優惠透露出感興趣的時機（例如提交表單、註冊試用版、進入定價頁面） | fbq('track', 'Lead');                                     |
 | 完成註冊     | 追蹤完成註冊表單的時機（例如完成訂閱、註冊服務）             | fbq('track', 'CompleteRegistration');                     |
+
+## GA標準事件
+
+https://developers.google.com/gtagjs/reference/event?hl=zh-cn
+
+```js
+gtag('event', 'sign_up', {
+  'method' : 'Google'
+});
+```
+
+| 事件名稱              | 參數                                                         | 發送時間                                                     |
+| --------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `add_payment_info`    |                                                              | 當用戶添加結算信息時                                         |
+| `add_to_cart`         | `value, currency, items`                                     | 當用戶將商品添加到購物車時                                   |
+| `add_to_wishlist`     | `value, currency, items`                                     | 當用戶將商品添加到心願單時                                   |
+| `begin_checkout`      | `value, currency, items, coupon`                             | 當用戶開始結帳時                                             |
+| `checkout_progress`   | `value, currency, items, coupon,checkout_step, checkout_option` | 當用戶完成結帳步驟時                                         |
+| `exception`           | `description, fatal`                                         | 當出現錯誤時                                                 |
+| `generate_lead`       | `value, currency, transaction_id`                            |                                                              |
+| `login`               | `method`                                                     | 當用戶登錄到網站時                                           |
+| `page_view`           |                                                              | 當用戶加載某個網頁時。發送到 Google Analytics（分析）“網站”數據視圖。 |
+| `purchase`            | `transaction_id, value, currency, tax,shipping, items, coupon` | 當用戶完成購買時                                             |
+| `refund`              | `transaction_id, value, currency, tax,shipping, items`       | 當商品已退款時                                               |
+| `remove_from_cart`    | `value, currency, items`                                     | 當用戶從購物車移除商品時                                     |
+| `screen_view`         | `screen_name`                                                | 當用戶加載新屏幕或新內容時。發送到 Google Analytics（分析）“應用”數據視圖。 |
+| `search`              | `search_term`                                                | 當用戶在網站上執行搜索操作時                                 |
+| `select_content`      | `items, promotions, content_type,content_id`                 | 當用戶點擊產品或一個或多個產品的產品鏈接時                   |
+| `set_checkout_option` | `checkout_step, checkout_option`                             | 當用戶在指定結帳步驟中選擇了一個選項值時                     |
+| `share`               | `method, content_type, content_id`                           | 當用戶分享內容時                                             |
+| `sign_up`             | `method`                                                     | 當用戶使用 Google 帳號、電子郵件地址或通過其他方式進行註冊時 |
+| `timing_complete`     | `name, value`                                                | 當[定時活動](https://developers.google.com/analytics/devguides/collection/gtagjs/user-timings?hl=zh-cn)完成時 |
+| `view_item`           | `items`                                                      | 當用戶瀏覽產品或商品詳情時                                   |
+| `view_item_list`      | `items`                                                      | 當用戶瀏覽商品列表/商品詳情時                                |
+| `view_promotion`      | `promotions`                                                 | 當用戶點擊內部宣傳活動時                                     |
+| `view_search_results` | `search_term`                                                | 當用戶查看搜索結果時                                         |
+
+### 示範
+
+1. 觀看產品:view_item
+2. 加入購物:add_to_cart
+3. 開始結帳:begin_checkout
+4. 購買成功:purches
