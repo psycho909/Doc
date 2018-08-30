@@ -560,7 +560,38 @@ destory(){
     1. 在實體化 Component 時會用到 Extend。
     1. Vue.component 是一個語法糖，使我們不需透過 Extend 和其他程序來實體化 Vue Instance 的子類別。
 ## Vue.nextTick
+> 應用場景：需要在視圖更新之後，基於新的視圖進行操作。 
+>
 > 可以使用Vue.nextTick取得更新後的 DOM。
+```html
+ <div id="app">
+  <input ref="input" v-show="inputShow">
+  <button @click="show">show</button>  
+ </div>
+```
+
+```js
+new Vue({
+  el: "#app",
+  data() {
+   return {
+     inputShow: false
+   }
+  },
+  methods: {
+    show() {
+      this.inputShow = true
+      this.$nextTick(() => {
+        this.$refs.input.focus()
+      })
+    }
+  }
+})
+
+```
+
+
+
 ## Slot
 > 基本上分為三種 slot
 1. Single Slot
