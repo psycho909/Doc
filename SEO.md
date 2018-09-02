@@ -183,9 +183,54 @@ gtag('event', 'sign_up', {
 | `view_promotion`      | `promotions`                                                 | 當用戶點擊內部宣傳活動時                                     |
 | `view_search_results` | `search_term`                                                | 當用戶查看搜索結果時                                         |
 
-### 示範
+### 常用事件示範
 
 1. 觀看產品:view_item
 2. 加入購物:add_to_cart
 3. 開始結帳:begin_checkout
 4. 購買成功:purches
+
+### 自訂事件
+
+```js
+// 事件類別 event_category
+// 事件動作 active
+// 事件標籤 event_label
+gtag('event','下載電子書',{
+    "event_category":"點及鏈結",
+    "event_label":"下載密集電子書",
+    "value":10
+})
+```
+
+> 目標 > 設定目標 > 自訂目標
+
+1. 類別 => event_category
+2. 動作 => active
+3. 標籤 => event_label
+4. 價值 => value
+
+#### 自訂目標示範
+
+##### 完成註冊動作
+
+1. 目標詳情
+
+   > /register-success.html
+
+2. 程序
+
+   > 選擇步驟
+
+   1. 開始註冊 | /register.html
+   2. 註冊成功 | /register-success.html
+
+#### 自訂目標查看
+
+1. 即時 => 轉換
+2. 轉換 => 目標 => 總覽
+
+### 整合GA廣告效果
+
+1. 追蹤資訊 -> 資料收集 -> 打開
+2. 就會把收集的使用者使用習慣整合到Google Ad 裡面
