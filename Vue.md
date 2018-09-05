@@ -230,6 +230,9 @@ updata_username () {
 
 ## Vue slot使用
 > 使用`slot`插槽使`組件`可以更靈活的使用
+1. 父組件在使用子組件`slot`，並在子組件內定義`template`，並定義`slot-scope`
+2. 在子組件已定義的`slot`綁定`自定義屬性`
+
 ```html
 <!-- Child -->
 <template id="content">
@@ -247,7 +250,7 @@ updata_username () {
         <content>
             <!-- 自定義scope -->
             <!-- 從Child的slot name 獲取 slot -->
-            <template scope="props" slot="slot-content">
+            <template slot-scope="props" slot="slot-content">
                 <article>
                     <div>{{props.item.title}}</div>
                 </article>
@@ -272,8 +275,8 @@ Vue.component('content',{
 Vue.component('container',{
     template:'#container
 })
-```
 ## Vue 動態組件 :is
+
 ```html
 <div id="app">
     <div class="form-group">
