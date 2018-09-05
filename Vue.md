@@ -227,57 +227,9 @@ updata_username () {
     vm.$set(vm.info,"sex","male");
     //可在info裡設置sex
 ```
-
-## Vue slot使用
-> 使用`slot`插槽使`組件`可以更靈活的使用
-1. 父組件在使用子組件`slot`，並在子組件內定義`template`，並定義`slot-scope`
-2. 在子組件已定義的`slot`綁定`自定義屬性`
-
-```html
-<!-- Child -->
-<template id="content">
-    <main>
-        <h1>TiTLE</h1>
-        <p>Content</p>
-        <!-- 定義slot name -->
-        <!-- 使用v-bind綁定 一個自定義屬性item -->
-        <slot name="slot-content" :item="val" v-for="val in artlist"></slot>
-    </main>
-</template>
-<!-- Parent -->
-<template id="container">
-    <div class="container">
-        <content>
-            <!-- 自定義scope -->
-            <!-- 從Child的slot name 獲取 slot -->
-            <template slot-scope="props" slot="slot-content">
-                <article>
-                    <div>{{props.item.title}}</div>
-                </article>
-            </template>
-        </content>
-    </div>
-</template>
-```
-```javascript
-Vue.component('content',{
-    template:'#content',
-    data:function(){
-        return {
-            artlist:[
-                {title:'Firefox'},
-                {title:'Edge'},
-                {title:'IE'}
-            ]
-        }
-    }
-})
-Vue.component('container',{
-    template:'#container
-})
 ## Vue 動態組件 :is
 
-```html
+​```html
 <div id="app">
     <div class="form-group">
         <input type="radio" name="drive" id="bus" value="bus" v-model="currentView">
@@ -294,7 +246,7 @@ Vue.component('container',{
     <mycomponent :is="currentView"></mycomponent>
 </div>
 ```
-```javascript
+​```javascript
 new Vue({ 
     el: "#app", 
     data: { 
@@ -342,7 +294,7 @@ new Vue({
 ## Watch vs Computed
 > 雖然在大多數情況下，`Computed` 更合適，但有時仍需要使用 `Watch`。
 > 當你需要響應更改的數據執行非同步或複雜的計算時，Watch 就非常有用。
-## v-on事件綁定
+## 事件綁定
 ### v-bind屬性綁定/樣式綁定
 ```html
 <!-- src是屬性 -->
@@ -397,7 +349,7 @@ new Vue({
     }
 })
 ```
-### v-model修饰符
+### 修饰符
 1. `v-model.number=""`，可以自动将用户的输入值转为数值类型
 1. `v-model.trim=""`，如果要自动过滤用户输入的首尾空白字符
 1. `v-model.lazy=""`，更改 input 內的值並不會馬上變更 model 的資料，而是等到滑鼠移到輸入框外，觸發 change 事件才更新
@@ -669,6 +621,58 @@ var app=new Vue({
 })
 ```
 ### Slot-Scope
+
+> 使用`slot`插槽使`組件`可以更靈活的使用
+1. 父組件在使用子組件`slot`，並在子組件內定義`template`，並定義`slot-scope`
+2. 在子組件已定義的`slot`綁定`自定義屬性`
+
+#### 用法1
+
+```html
+<!-- Child -->
+<template id="content">
+    <main>
+        <h1>TiTLE</h1>
+        <p>Content</p>
+        <!-- 定義slot name -->
+        <!-- 使用v-bind綁定 一個自定義屬性item -->
+        <slot name="slot-content" :item="val" v-for="val in artlist"></slot>
+    </main>
+</template>
+<!-- Parent -->
+<template id="container">
+    <div class="container">
+        <content>
+            <!-- 自定義scope -->
+            <!-- 從Child的slot name 獲取 slot -->
+            <template slot-scope="props" slot="slot-content">
+                <article>
+                    <div>{{props.item.title}}</div>
+                </article>
+            </template>
+        </content>
+    </div>
+</template>
+```
+```javascript
+Vue.component('content',{
+    template:'#content',
+    data:function(){
+        return {
+            artlist:[
+                {title:'Firefox'},
+                {title:'Edge'},
+                {title:'IE'}
+            ]
+        }
+    }
+})
+Vue.component('container',{
+    template:'#container
+})
+```
+#### 用法2
+
 ```html
 <ul>
     <scope-slot v-bind:items="itemsList">
@@ -799,7 +803,28 @@ created(){
 // this.food 裡面沒有 count
 Vue.set(this.food,'count',1);
 ```
+## 數組改變監測
+
+### 替換方法
+
+- push()
+- pop()
+- shift()
+- unshift()
+- splice()
+- sort()
+- reverse()
+
+這些方法會改變原來的 array，並自動觸發 view 的更新。
+
+### 替換array
+
+- filter()
+- concat()
+- slice()
+
 ## keep-alive
+
 > 包裹住動態組件時，會緩存不活動的組件實力，而不是銷毀他們
 ## data為什麼畫面沒有隨資料更新
 1. 方法一：利用 splice 達到響應式變化
@@ -1197,5 +1222,87 @@ data:{
 		name:vm.name
     })
 }
+```
+
+## Vue Axios跨域問題CROS
+
+> ### 修改前
+
+```js
+  this.axios.get('http://data.taipei/youbike').then((response) => {
+    console.log(response.data)
+  })
+```
+
+### Vue cli 2.x
+
+> 修改`config/index.js`
+
+```js
+proxyTable: {
+  '/api': {                        // 自訂 local 端的位置
+    target: 'http://jsonplaceholder.typicode.com',  // 遠端 URL Domain
+    changeOrigin: true,
+    pathRewrite: {
+      '^/api': ''
+    }
+  }
+},
+```
+
+### Vue cli 3.x
+
+> 在`vue.config.js`配置
+
+```js
+devServer:{
+	proxy:{
+            '/api':{
+                target:"http://jsonplaceholder.typicode.com",
+                changeOrigin:true,
+                pathRewrite:{
+                    '^/api':''
+                }
+            }
+        }
+}
+```
+
+### 修改後
+
+經過這樣設定後，`http://jsonplaceholder.typicode.com/todos/1` 網域內的資源，都會在 local 端以 `/api` 的形式被代理，也就是說，像 `http://data.taipei/youbike` 這樣的遠端資源，我們就可以在 local 端用 `/api/todos/1` 來取得。
+
+所以，再回到 `App.vue`，這裏將原本的 `http://jsonplaceholder.typicode.com/todos/1` 改成 `/api/todos/1`，像這樣:
+
+```js
+  this.axios.get('/api/todos/1').then((response) => {
+    console.log(response.data)
+  })
+```
+
+### 範例
+
+> `https://pool.viabtc.com/user/api/e573c6ac371821077c0fded1cb5d3fdc/`
+
+```js
+devServer:{
+        proxy:{
+            '/user':{
+                target:"https://pool.viabtc.com/",
+                secure:false,
+                changeOrigin:true,
+                pathRewrite:{
+                    '^/user':''
+                }
+            }
+        }
+    }
+```
+
+```js
+var api="/user/user/api/e573c6ac371821077c0fded1cb5d3fdc/";
+			this.axios.get(api).then((res) => {
+				console.log(res)
+			})
 ```
 
