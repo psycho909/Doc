@@ -286,6 +286,41 @@ new Vue({
 ### `destroyed()`
 1. vue instance銷毀後可以調用，調用後這個vue instance底下的資料與樣板會解除綁定，事件會取消監聽，所有子元件也會被銷毀。
 
+### 注意事項
+
+1.  **ajax請求最好放在created裡面**，因為此時已經可以訪問this了，請求到數據就可以直接放在data裡面。
+2.  這裡也碰到過幾次，面試官問：ajax請求應該放在哪個生命週期。
+3.  **關於dom的操作要放在mounted裡面**，在mounted前面訪問dom會是undefined。
+4.  每次進入/離開組件都要做一些事情，用什麼鉤子：
+
+-   不緩存：
+
+    進入的時候可以用`created`和`mounted`鉤子，離開的時候用`beforeDestory`和`destroyed`鉤子,`beforeDestory`可以訪問`this`，`destroyed`不可以訪問`this`。
+
+-   緩存了組件：
+
+    緩存了組件之後，再次進入組件不會觸發`beforeCreate`、`created` 、`beforeMount`、 `mounted`，**如果你想每次進入組件都做一些事情的話，你可以放在activated進入緩存組件的鉤子中**。
+
+    同理：離開緩存組件的時候，`beforeDestroy`和`destroyed`並不會觸發，可以使用`deactivated`離開緩存組件的鉤子來代替
+
+## 觸發鉤子的完整順序
+
+將路由導航、`keep-alive`、和組件生命週期鉤子結合起來的，觸發順序，假設是從a組件離開，第一次進入b組件：
+
+1.  `beforeRouteLeave`:路由組件的組件離開路由前鉤子，可取消路由離開。
+2.  `beforeEach`: 路由全局前置守衛，可用於登錄驗證、全局路由loading等。
+3.  `beforeEnter`: 路由獨享守衛
+4.  `beforeRouteEnter`: 路由組件的組件進入路由前鉤子。
+5.  `beforeResolve`:路由全局解析守衛
+6.  `afterEach`:路由全局後置鉤子
+7.  `beforeCreate`:組件生命週期，不能訪問`this`。
+8.  `created`:組件生命週期，可以訪問`this`，不能訪問dom。
+9.  `beforeMount`:組件生命週期
+10.  `deactivated`: 離開緩存組件a，或者觸發a的`beforeDestroy`和`destroyed`組件銷毀鉤子。
+11.  `mounted`:訪問/操作dom。
+12.  `activated`:進入緩存組件，進入a的嵌套子組件(如果有的話)。
+13.  執行`beforeRouteEnter`回調函數`next`。
+
 ## 比較 Filters 和 Computed
 1. Filters 主要用於簡單的文字格式處理，需要在應用程式中重複使用。
 1. Computed 適合較複雜的資料處理與轉換。
