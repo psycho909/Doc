@@ -866,7 +866,7 @@ Vue.set(this.food,'count',1);
 1. 方法二：利用 vm.$set 達到響應式變化
 ### 方法一:使用 Vue 可觀察到的陣列方法
 > push()、pop()、shift()、unshift()、splice()、sort()、reverse()
-## 方法二：使用 vm.$set
+### 方法二：使用 vm.$set
 ```javascript
 methods: {
     changeAnimal () {
@@ -1016,10 +1016,12 @@ methods: {
 }
 ```
 ### mode的作用和404頁面處理
-> mode的作用
+#### mode的作用
+
 1. mode:'history' -> 可以把/#/去掉
 1. mode:'hash' -> 可以增加/#/
-> 404頁面處理
+#### 404頁面處理
+
 ```html
 <!-- 404 Page -->
 <template>
@@ -1099,6 +1101,20 @@ methods: {
     }
 }
 ```
+
+### export引入
+
+```js
+// xxx.js
+var x1=a;
+var x2=b;
+export {x1,x2}
+
+// xxx.vue
+import {x1,x2} form ./xxx.js
+```
+
+
 
 ## Vue bulid後的問題
 

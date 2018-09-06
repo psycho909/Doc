@@ -43,7 +43,7 @@
 ```javascript
 npm install vuex --save
 ```
-### 1.Vuex Store
+### Vuex Store
 > 創建`Vuex.store`(倉庫)開始，在`src`下創建一個`store`的文件，並新建一個`store.js`，在這個文件中將包函我們所需要的store
 >
 > 每一個Vuex應用的核心就是`store`(倉庫)。`store`基本上就是一個容器，他包含著你的應用中大部分的狀態(`state`)。Vuex和單純的全局對像有以下兩點不同:
@@ -156,3 +156,88 @@ store.getters
 > Vuex 允許我們在 store 中定義getters（可以認為是 store 的計算屬性）。就像計算屬性一樣，getters的返回值會根據它的依賴被緩存起來，且只有當它的依賴值發生了改變才會被重新計算
 >
 > `getter`放在`computed`的屬性裡
+
+## 使用方式
+
+### state
+
+```vue
+<div>{{$store.state.name}}</div>
+```
+
+```js
+<div>{{getname}}</div>
+
+import {mapeState} from 'vuex'
+
+computed:{
+    ...mapState(['name']),
+    getname(){
+		return this.name
+	}
+}
+```
+
+### getters
+
+```html
+<div>{{$store.getters.getname}}</div>
+```
+
+```js
+<div>{{getName}}</div>
+
+import {mapeGetters} from 'vuex'
+computed:{
+    ...mapGetters(['getname']),
+    getName(){
+        return this.getname;
+    }
+},
+```
+
+### mutations
+
+```js
+methods:{
+    changeName(v){
+        this.$store.commit('CHANGENAME',v)
+    }
+}
+```
+
+```js
+import {mapMutations} from 'vuex'
+
+methods:{
+    ...mapMutations(['CHANGENAME']),
+    changeName(v){
+        this.CHANGENAME(v)
+    }
+}
+```
+
+### actions
+
+```js
+methods:{
+    changeName(v){
+        this.$store.dispatch('changename',v)
+    }
+}
+```
+
+```js
+import {mapActions} from 'vuex'
+
+methods:{
+    ...mapActions(['changename']),
+    changeName(v){
+        this.changename(v)
+            .then((res)=>{
+            
+       		})
+    }
+}
+```
+
