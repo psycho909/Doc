@@ -329,6 +329,32 @@ new Vue({
 ## Watch vs Computed
 > 雖然在大多數情況下，`Computed` 更合適，但有時仍需要使用 `Watch`。
 > 當你需要響應更改的數據執行非同步或複雜的計算時，Watch 就非常有用。
+## Watch
+
+```js
+watch:{
+    item:{
+        handel(newValue,oldValue){
+            
+        },
+        immediate:true,
+        deep:true
+    }
+}
+```
+
+### handle
+
+返回變更前跟後的資料
+
+### immediate
+
+`immediate:true`代表如果在 wacth 裡聲明了 firstName 之後，就會立即先去執行裡面的handler方法，如果為 `false`就跟我們以前的效果一樣，不會在綁定的時候就執行
+
+### deep
+
+watch 裡面還有一個屬性 `deep`，默認值是 `false`，代表是否深度監聽，可以監聽``data`裡面的`obj`變化
+
 ## 事件綁定
 ### v-bind屬性綁定/樣式綁定
 ```html

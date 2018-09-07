@@ -1,5 +1,103 @@
 # VueRouter
 
+## this.$router && this.$route 
+
+### $router
+
+1.  meta
+2.  跳頁功能
+
+### $route
+
+1.  params
+2.  query
+3.  fullPath
+4.  path
+
+## 動態路由
+
+```html
+<router-link :to="{path:'home',params:{userId:'name'}},query:{id:2}">Home</router-link>
+```
+
+>   http://192.168.66.112:8080/#/about/welcome/bbb?id=2
+
+```html	
+$route.query.id
+$route.params:userId
+```
+
+```js
+{
+    path:"/about",
+    name:"about",
+    component:About,
+    children:[
+        {
+            path:"welcome/:userId",
+    		name:"welcome",
+    		component:Welcome
+        }
+    ]
+}
+```
+
+## 路由Meta資料
+
+>   可以透過自定義Meta資料作為過濾路由時識別使用
+
+```js
+{
+    path:"/about",
+    name:"about",
+    component:About,
+    meta:{
+		requiresAuth:true
+    },
+    children:[
+        {
+            path:"welcome/:userId",
+    		name:"welcome",
+    		component:Welcome
+        }
+    ]
+}
+```
+
+```js
+router.beforeEach((to,from,next)=>{
+    if(to.matched.some(record)=>record.meta.requiresAuth){
+        let isLogin=true
+        console.log("check auth")
+        if(isLogin == false && from.path != '/login'){
+            next({
+                path:'/login',
+                query:{redirect:to.fullPath}
+            })
+        }else{
+            next()
+        }
+    }else{
+        next()
+    }
+})
+```
+
+### $router.push() && $router.replace() && $router.go()
+
+### $router.push()
+
+>   可達到跳頁功能
+
+```js
+this.$router.push('home')
+this.$router.push({name:'home'})
+```
+
+### router.replace(location) = = = window.history.replaceState
+
+### $router.go(n) = = = window.history.go
+
 ## Vue-Router導航守衛
 
 有的時候，我們需要通過路由來進行一些操作，比如最常見的登錄權限驗證，當用戶滿足條件時，才讓其進入導航，否則就取消跳轉，並跳到登錄頁面讓其登錄。
