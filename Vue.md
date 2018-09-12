@@ -260,8 +260,8 @@ new Vue({
 });
 ```
 ****
-## Notice
-> 在IE11以下 `data(){}` 需寫成 `data:function(){}`
+## Vue <Template> </Template>
+> 可做不可見的包裹元素
 
 ## Lifecycle生命週期
 ### `beforeCreate()`
@@ -1128,7 +1128,7 @@ methods: {
 }
 ```
 
-### export引入
+## export引入
 
 ```js
 // xxx.js

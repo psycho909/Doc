@@ -1,3 +1,15 @@
+## 不產生快取
+
+```html
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<!-- IE可能不見得有效 -->
+<META HTTP-EQUIV="EXPIRES" CONTENT="0">
+<!-- 設定成馬上就過期 -->
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+```
+
+
+
 ## Header 添加 讓網頁搜尋的到
 
 ```html

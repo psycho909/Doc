@@ -111,3 +111,19 @@ class App extends React.Component {
 ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
+## React.Fragment
+
+>   可做不可見的包裹元素
+
+```react
+<React.Fragment>
+    <p>1</p>
+	<p>2</p>
+</React.Fragment>
+```
+
+```react
+<p>1</p>
+<p>2</p>
+```
+
