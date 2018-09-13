@@ -1301,7 +1301,9 @@ data:{
 }
 ```
 
-## Vue Axios跨域問題CROS
+## proxyTable
+
+### Vue Axios跨域問題CROS
 
 > ### 修改前
 
@@ -1381,5 +1383,63 @@ var api="/user/user/api/e573c6ac371821077c0fded1cb5d3fdc/";
 			this.axios.get(api).then((res) => {
 				console.log(res)
 			})
+```
+
+## Vue Cli 3.x
+
+## 建立`vue.config.js`
+
+在根目錄自行建立`vue.config.js`
+
+```JS
+module.expors={
+    
+}
+```
+
+
+
+## 路徑修改
+
+```js
+module.expors={
+    baseUrl:'./', // 檔案路徑修改
+    productionSourceMap:false, // 不產生map檔案
+}
+
+```
+
+## `env`使用
+
+在根目錄建立:
+
+1.  開發用:`.env.development`
+2.  生產用:`.env.production`
+
+```js
+// 名稱一定得命名 VUE_APP_XXX
+VUE_APP_API=../api/brand_api.php
+```
+
+```js
+// 使用
+process.env.VUE_APP_API
+```
+
+### proxy
+
+```js
+// 在vue.config.js建立
+deServer:{
+    proxy:{
+        '/api':{
+            target:"",
+            changeOrigin:true,
+            pathRewrite:{
+            	"^/api":""
+            }
+        }
+    }
+}
 ```
 

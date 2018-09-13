@@ -48,7 +48,9 @@ $.ajax({
 
 
 
-### Template產生
+## Template產生
+
+### Mock.Random
 
 ```js
 
@@ -100,6 +102,44 @@ var template = {
         return this.title
     }
 }
+```
+
+### Rondom.image
+
+```js
+Random.image()
+// => "http://dummyimage.com/125x125"
+Random.image('200x100')
+// => "http://dummyimage.com/200x100"
+Random.image('200x100', '#fb0a2a')
+// => "http://dummyimage.com/200x100/fb0a2a"
+Random.image('200x100', '#02adea', 'Hello')
+// => "http://dummyimage.com/200x100/02adea&text=Hello"
+Random.image('200x100', '#00405d', '#FFF', 'Mock.js')
+// => "http://dummyimage.com/200x100/00405d/FFF&text=Mock.js"
+Random.image('200x100', '#ffcc33', '#FFF', 'png', '!')
+// => "http://dummyimage.com/200x100/ffcc33/FFF.png&text=!"
+```
+
+### Text
+
+```js
+paragraph-> centence -> word -> title
+#中文
+Random.cparagraph()
+Random.cparagraph( len )
+Random.cparagraph( min, max )
+#随机生成一段中文文本
+Random.csentence()
+Random.csentence( len )
+Random.csentence( min, max )
+# 随机生成一个汉字
+Random.cword()
+Random.cword( pool )
+Random.cword( length )
+Random.cword( pool, length )
+Random.cword( min, max )
+Random.cword( pool, min, max )
 ```
 
 
