@@ -869,3 +869,77 @@ console.log(a2.a);
    1. IE 不兼容
 3. document.documentElement.scrollTop
    1. IE Chrome FF 可兼容
+
+# 不能使用箭頭函數的地方
+
+1.**定義字面量方法**
+
+```js
+const calculator = {
+    array: [1, 2, 3],
+    sum: () => {
+        console.log(this === window); // => true
+        return this.array.reduce((result, item) => result + item);
+    }
+};
+console.log(this === window); // => true
+//////////////////////////////////////////////////////////
+const calculator = {
+    array: [1, 2, 3],
+    sum() {
+        console.log(this === calculator); // => true
+        return this.array.reduce((result, item) => result + item);
+    }
+};
+```
+
+2.**定義原型方法**
+
+```js
+function Cat(name) {
+    this.name = name;
+}
+
+Cat.prototype.sayCatName = () => {
+    console.log(this === window); // => true
+    return this.name;
+};
+/////////////////////////////
+function Cat(name) {
+    this.name = name;
+}
+
+Cat.prototype.sayCatName = function () {
+    console.log(this === cat); // => true
+    return this.name;
+};
+```
+
+3.定義事件回調函數
+
+```js
+const button = document.getElementById('myButton');
+button.addEventListener('click', () => {
+    console.log(this === window); // => true
+    this.innerHTML = 'Clicked button';
+});
+/////////////////////////////////////
+const button = document.getElementById('myButton');
+button.addEventListener('click', function() {
+    console.log(this === button); // => true
+    this.innerHTML = 'Clicked button';
+});
+```
+
+4.定義構造函數
+
+```js
+const Message = (text) => {
+    this.text = text;
+};
+//////////////////
+const Message = function(text) {
+    this.text = text;
+};
+```
+
