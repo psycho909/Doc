@@ -530,3 +530,75 @@ Array.from(arrayLike)
 Array.prototype.concat.apply([],arrayLike)
 ```
 
+## 分頁製作
+
+### 分頁組件的構成
+
+```
+《上一頁》《下一頁》 2 個 ： 2
+《首頁》《尾頁》 2 個 ： 2
+ 省略號 2 個 ： 2
+ 當前頁 1 個 ： 1
+ 當前頁左右各2個 ：2 * 2
+```
+
+```js
+var around=2;
+var baseCount = 2 + 2 + 2 + 1 + 2 * around;
+```
+
+### 怎麼使用baseCount
+
+```
+除掉兩邊的上一頁、下一頁兩個按鈕，中間部分一共有11 - 2 = 9個元素
+當total < 9 是不需要省略號的
+```
+
+### 省略號的作用
+
+#### 只出現在後面
+
+```
+當cur <= 首頁(1) + 省略號最小值(2) + cur左邊的值(2)的時候，前面並不會出現省略號，僅在後面出現省略號
+startPosition = 1 + 2 + 2
+```
+
+#### 只出現在前面
+
+```
+endPosition = 尾頁(total) - 省略號最小值(2) - cur右邊的值(2)。
+cur大於等於endPosition時只在前面出現省略號。
+```
+
+### 其他的位置怎麼顯示
+
+```
+分析完省略號的位置，其他的就超級簡單了，還記得剛才那個很重要的baseCount嗎，還是用它。
+剛才得到的baseCount是11，因為上一頁和下一頁一直都會存在。我們可以先不用管這倆，只看中間實際用到的9個位置。
+我們可以看到當省略號只出現在後面時，中間可用位置的最後兩個一定是 ... 和  total。所以這個省略號前面的還剩下9 - 2  = 7個，給這個變量也取個名字叫surplus，就從1開始顯示到surplus就好了。也是同樣的道理，當省略號只出現在前面時，前面的兩個位置一定是 1 和 ...。所以後面就是從 (total-surplus) 一直到 total 了。
+還有就是兩邊都出現省略號，前面兩個肯定是1 和 ...，後面兩個又肯定是**... 和  total**。中間是cur以及其左右兩邊的各around個。
+```
+
+```js
+const makeResult=(total,cur,around=2)=>{
+            let result=[]
+            let baseCount=around * 2+1+2+2+2 // 總共元素個數 11
+            let surplus=baseCount-4
+            let startPosition=1+2+around;
+            let endPosition=total-2-around;
+
+            if(total <= baseCount-2){ //全部顯示 不出現省略號
+                result =  Array.from({length: total}, (v, i) => i + 1);
+            }else{
+                if( cur <= startPosition){
+                    result=[...Array.from({length:surplus},(v,i)=>i+1),'...',total]
+                }else if( cur > endPosition){
+                    result=[1,'...',...Array.from({length:surplus},(v,i)=> total-surplus+i+1 )]
+                }else{
+                    result=[1,'...',...Array.from({length:around*2+1},(v,i)=> cur-around+i ),'...',total]
+                }
+            }
+            return result;
+        }
+```
+
