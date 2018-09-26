@@ -1,3 +1,8 @@
+## props，state與render函數的關係
+
+1. 當組件的state或者props發生改變的時候，render函數就會重新執行
+2. 當父組件的render函數被運行時，他的子組件的render都將被重新運行一次
+
 ## 父組件通過屬性的形式向子組件傳遞參數
 
 ```react
@@ -51,6 +56,10 @@ handleOnDelete(){
 
 ## ref
 
+> ref是幫助我們直接獲取DOM元素的時候使用，但盡量不要去使用
+
+> 不建議使用ref，react建議數據驅動的方式編寫代碼，盡量不要直接去操作DOM
+
 ### basic
 
 ```react
@@ -81,7 +90,7 @@ class App extends React.Component{
 }
 ```
 
-### Callback Ref
+### ES6 Ref
 
 ```react
 class App extends React.Component {
@@ -100,7 +109,7 @@ class App extends React.Component {
         <h3>Value: {this.state.value}</h3>
         <form onSubmit={this.handleSubmit}>
         	// callback ref
-          <input type="text" ref={e => this.textInput = e} />
+          <input type="text" ref={(input) => {this.textInput = input}} />
           <button>Submit</button>
         </form>
       </div>
@@ -127,3 +136,65 @@ ReactDOM.render(<App />, document.getElementById("root"));
 <p>2</p>
 ```
 
+## PropTypes
+
+```js
+improt PropTypes from 'prop-types'
+
+TodoItem.propTypes={
+    test:PropTypes.string.isRequired,
+    content:PropTypes.string,
+    item:PropTypes.oneOfType([PropTypes.number,PropTypes.string]),
+}
+TodoItem.defaultProps={
+    test:"Hello World"
+}
+```
+
+## 生命週期
+
+> 生命週期函數只在某一個函數組件會自動執行的函數
+
+### Mounting
+
+#### componentWillMount
+
+> 在組件即將被掛載到頁面時候自動執行
+
+#### componentDidMount
+
+> 組件被掛載到頁面之後，自動被執行
+
+### Updation
+
+#### shouldComponentUpdate
+
+> 組件被更新之前，它會自動被執行
+
+> rteturn true 會執行更新，rteturn  false不會執行更新
+
+#### componentWillUpdate
+
+> 組件被更新之前，它會自動執行，但是他在`shouldComponentUpdate`之後被執行，如果`shouldComponentUpdate`返回`true`才執行，如果返回`false`不會執行更新
+
+#### componentDidUpdate
+
+> 組件更新完成之後，他會被執行
+
+### componentWillReceiveProps
+
+> 當一個組件從父組件接收了參數。
+>
+> 只要父組件的render函數被重新執行了，子組件這個生命週期函數就會被執行。
+
+
+
+> 如果這組件第一次存在於父組件中，不會執行。
+>
+> 如果這個組件之前已經存在於父組件中，才會執行。
+
+### Unmounting
+
+#### componentWillUnmount
+
+> 當這個組件即將被從頁面中剔除的時候，會被執行
