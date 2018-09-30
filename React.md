@@ -163,15 +163,25 @@ TodoItem.defaultProps={
 
 #### componentDidMount
 
-> 組件被掛載到頁面之後，自動被執行
+> 組件被掛載到頁面之後，自動被執行一次，之後就不會再重新被重複執行
+
+> ajax請求使用此生命週期
 
 ### Updation
 
-#### shouldComponentUpdate
+#### shouldComponentUpdate(nextProps,nextState)
 
 > 組件被更新之前，它會自動被執行
 
 > rteturn true 會執行更新，rteturn  false不會執行更新
+
+##### nextProps
+
+> 接下來props會變化成怎樣
+
+##### nextState
+
+> 接下來state會變化成怎樣
 
 #### componentWillUpdate
 
@@ -198,3 +208,19 @@ TodoItem.defaultProps={
 #### componentWillUnmount
 
 > 當這個組件即將被從頁面中剔除的時候，會被執行
+
+
+
+## Reduce
+
+Action Creaters-=> Store => Reducers
+
+Store <= Reducers
+
+Store => React Componets
+
+React Components => Acton Creaters
+
+
+
+reducer 可以接收state，但是絕不能修改state
