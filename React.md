@@ -221,6 +221,78 @@ Store => React Componets
 
 React Components => Acton Creaters
 
+### 創建store
+
+> 建立`store資料夾`，創建`index.js`，並創建`reducers.js`
+
+```js
+// App.js
+import store from './store/index'
+```
+
+```js
+// /store/index.js
+import { createStore } from 'redux'
+import reducers from './reducers.js'
+
+const store=createStore(reducers)
+
+export default store
+```
+
+```js
+// /store/reducers
+const defaultState={
+    inputValue:"",
+    list:[]
+}
+
+export default (state=defaultState,action)=>{
+    return state
+}
+```
+
+### 使用store
+
+```js
+// App.js
+
+constructor(props){
+    super(props)
+    // store.getState()，可以獲取store的資料
+    this.state=store.getState();
+    
+    // 訂閱store，每次store變更時會調動handleStorageChange
+    store.subscribe(this.handleStorageChange.bind(this))
+}
+handleInputChange(e){
+    const action={
+        type:"change_input_value",
+        value:e.target.value
+    }
+    // dispatch action
+    store.dispatch(action)
+}
+handleStorageChange(){
+    this.setState(store.getState())
+}
+```
+
+```js
+// ./store/reducers.js
+
+// reducer 可以接收state，但是絕不能修改state
+export default (state=defaultState,action)=>{
+    if(action.type === "change_input_value"){
+        // 使用深拷貝
+        const newState=JSON.parse(JOSN.stringify(state))
+        newState.inputValue=action.value
+        return newState
+    }
+    return state
+}
+```
 
 
-reducer 可以接收state，但是絕不能修改state
+
+#### reducer 可以接收state，但是絕不能修改state
