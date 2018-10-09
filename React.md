@@ -29,6 +29,8 @@ this.state={
 
 ## 子組件通過props接受父組件傳遞過來的參數 
 
+### 第一種
+
 ```react
 // Father
 this.state={
@@ -53,6 +55,32 @@ handleOnDelete(){
     <span onClick={this.handleOnDelete.bind(this)}>{this.props.item}</span>
 </div>
 ```
+
+### 第二種
+
+```js
+// Father
+this.state={
+    data:[1,2,3]
+}
+handleOnDelete(index){
+    console.log(index)
+}
+<div>
+    {
+        this.state.data.map((item,index)=>(
+        	<Child item={item} index={index} delete={this.handleOnDelete.bind(this)} key={index} />
+        ))
+    }
+</div>
+
+// Child
+<div>
+    <span onClick={(index)=>{this.props.delete(index)}}>{this.props.delete(index)}</span>
+</div>
+```
+
+
 
 ## ref
 
@@ -119,6 +147,23 @@ class App extends React.Component {
 
 ReactDOM.render(<App />, document.getElementById("root"));
 ```
+
+## 無狀態組件
+
+當一個普通組件只有`render`時，完全可通過一個無狀態組件來替換掉普通的組件
+
+1. 性能好
+2. 無邏輯操作時
+
+```react
+const TodoListUI=(props)=>{
+    return (
+    	<div>{props.name}</div>
+    )
+}
+```
+
+
 
 ## React.Fragment
 
