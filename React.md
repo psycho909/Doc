@@ -341,3 +341,102 @@ export default (state=defaultState,action)=>{
 
 
 #### reducer 可以接收state，但是絕不能修改state
+
+### 創建actionCreator,actionTypes
+
+```js
+// 創建 actionTypes.js
+export const SEARCH_FOCUS="search_focus"
+```
+
+```js
+import {SEARCH_FOCUS} from './store/actionTypes'
+// 必須返回對象
+export const searchFocus=()=>({
+    type:SEARCH_FOCUS
+})
+```
+```js
+// './store/reducer'
+import {SEARCH_FOCUS} from './store/actionTypes'
+export default (state=defaultState,action)=>{
+    if(actio.type === SEARCH_FOCUS){
+        
+    }
+    return state
+}
+```
+
+
+
+```js
+// App.js
+import {searchFocus} from './store/actionCreator'
+handleSearchFocus(){
+    store.dispatch(searchFocus())
+}
+```
+
+
+
+### react-redex使用
+
+```
+npm i -S react-redex
+```
+
+```js
+// App.js
+import {Provider} from 'react-redux'
+import store from './store/index.js'
+
+// Provider下的組件都可以使用store
+<Provider store={store}>
+    <Header>
+</provider>
+```
+
+```js
+// Header
+import {connect} from 'react-redux'
+const Header=(props)=>{
+    return (
+    	<div>
+        	{props.name}
+        	<input onClick={props.handleInputBlur}>
+        </div>
+    )
+}
+const mapStateToProps=(state)=>{
+    return {
+        name:header.state.name
+	}
+}
+const mapDispatchToProps=(dispatch)=>{
+    return {
+        handleInputBlur(){
+            const action={
+                type:"search_blur"
+            }
+            dispatch(action)
+        }
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Header)
+```
+
+
+
+### reducer拆分使用
+
+```js
+// 建立分支 header/store/reudcer.js
+// 主要 store/reducer.js
+import {combinReducer} from 'redux'
+import headerReducer from 'header/store/reudcer.js'
+export default combinReducer({
+    header:headerReducer
+})
+
+```
+
