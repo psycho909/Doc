@@ -440,3 +440,105 @@ export default combinReducer({
 
 ```
 
+## react-router-dom
+
+```js
+npm i -S react-router-dom
+```
+
+```js
+// App.js
+import {BrowserRouter,Route} from 'react-router-dom'
+import Home from './pages/home/'
+<div className="App">
+  <Provider store={store}>
+     <div>
+        <Header/>
+        <BrowserRouter>
+            <div>
+                <Route path="/" exact render={()=> <div>Home</div>}></Route>
+                <Route path="/" exact  component={Home}></Route>
+                <Route path="/detail" exact render={()=> <div>detail</div>}></Route>
+            </div>
+     	</BrowserRouter>
+     </div>
+   </Provider>
+</div>
+                                                    
+// Home
+<Link to="/detail"></Link>
+```
+
+`exact`完完全全跟路徑相等時，才顯示
+
+`BowserRouter`代表著一個路由
+
+`Route`代表著一個路由規則
+
+`Link`替代`a`做頁面跳轉
+
+### 動態路由
+
+```js
+// Home
+<Link to="/detail/1"></Link>
+
+// App.js
+<Route path="/detail/:id" exact render={()=> <div>detail</div>}></Route>
+                                        
+// page獲取id
+this.props.match.params.id
+```
+
+```js
+// Home
+<Link to="/detail?id="></Link>
+
+// App.js
+<Route path="/detail/" exact render={()=> <div>detail</div>}></Route>
+                                        
+// page獲取id
+this.props.location.search
+// ?id=1
+```
+
+### 路由導向
+
+```js
+import {Redirect} from 'react-router-dom'
+
+<Redirect to="/" />
+```
+
+## react-loadable(異步組件)
+
+```js
+npm i -S react-loadable
+```
+
+```js
+// detail/loadable.js
+import Loadable from 'react-loadable';
+
+const LoadableComponent = Loadable({
+    // 加載哪個組件
+    loader: () => import('./index'),
+    // 臨時顯示的組件
+    loading(){
+        return <div>正在加載</div>
+    },
+});
+
+export default ()=><LoadableComponent/>;
+
+// App
+import Detail from './pages/detail/loadable'
+```
+
+### param失效
+
+```js
+import {withRouter} from 'react-router-dom'
+export default connect(mapState,mapDispatch)(withRouter(Detail));
+```
+
