@@ -543,3 +543,36 @@ import {withRouter} from 'react-router-dom'
 export default connect(mapState,mapDispatch)(withRouter(Detail));
 ```
 
+## React使用SCSS
+
+### 開以webpack config功能
+
+```js
+npm run eject
+
+npm install sass-loader node-sass --save-dev
+```
+
+### **Edit Webpack Config**
+
+**config/webpack.config.dev.js**
+
+```js
+{
+  test: /\.css$/,
+  .....
+  .... 
+}
+```
+
+```js
+{
+  test: /\.scss$/,
+  .....
+  {
+      loader: require.resolve('sass-loader'),
+  },
+  .... 
+}
+```
+
