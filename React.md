@@ -467,6 +467,8 @@ import Home from './pages/home/'
 </div>
                                                     
 // Home
+import {Link} from 'react-router-dom'
+
 <Link to="/detail"></Link>
 ```
 
