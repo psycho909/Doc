@@ -350,6 +350,7 @@ export const SEARCH_FOCUS="search_focus"
 ```
 
 ```js
+// 創建 actionCreator
 import {SEARCH_FOCUS} from './store/actionTypes'
 // 必須返回對象
 export const searchFocus=()=>({
