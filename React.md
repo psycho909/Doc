@@ -466,10 +466,11 @@ import Home from './pages/home/'
    </Provider>
 </div>
                                                     
-// Home
+// Header
 import {Link} from 'react-router-dom'
 
-<Link to="/detail"></Link>
+<Link to="/detail">detail</Link>
+<NavLink exact={true} to="/">首頁</NavLink>
 ```
 
 `exact`完完全全跟路徑相等時，才顯示
@@ -479,6 +480,18 @@ import {Link} from 'react-router-dom'
 `Route`代表著一個路由規則
 
 `Link`替代`a`做頁面跳轉
+
+#### `Navlink`
+
+activeClassName（string）：設置選中樣式，默認值為 active；
+
+activeStyle（object）：當元素被選中時, 為此元素添加樣式；
+
+exact（bool）：為 true 時, 只有當地址完全匹配 class 和 style 才會應用；
+
+strict（bool）：為 true 時，在確定位置是否與當前 URL 匹配時，將考慮位置 pathname 後的斜線；
+
+isActive（func）：判斷鏈接是否激活的額外邏輯的功能；
 
 ### 動態路由
 
