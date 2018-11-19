@@ -614,33 +614,6 @@ const User=(props)=>{
 }
 ```
 
-
-
-### 動態路由
-
-```js
-// Home
-<Link to="/detail/1"></Link>
-
-// App.js
-<Route path="/detail/:id" exact render={()=> <div>detail</div>}></Route>
-                                        
-// page獲取id
-this.props.match.params.id
-```
-
-```js
-// Home
-<Link to="/detail?id="></Link>
-
-// App.js
-<Route path="/detail/" exact render={()=> <div>detail</div>}></Route>
-                                        
-// page獲取id
-this.props.location.search
-// ?id=1
-```
-
 ### `redirect`路由導向
 
 1. 用法1
