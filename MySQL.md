@@ -15,11 +15,23 @@
 1. row
 1. column
 ## keys
+
+### `primary key`
+
 > `primary key`獨特性資料、資料不能重複、不能是NULL值、通常把id欄位當作`primary key`
 >
 > 一個table裡只能有一個`primary key`
 >
 > `foreign key`table之間串聯使用
+### `unique`
+
+> 唯一的
+
+### `primarykey`vs`unique`
+
+1. `primary key`不可為NULL	
+2. `unique`可為NULL
+
 ## data type
 ### `INT`數字型態
 > `INT`存數字型態
@@ -62,9 +74,12 @@ USE `my_blog`;
 
 ```sql
 CREATE TABLE person (
+    id int primary key auto_increment,
 	name VARCHAR(20),
     phone VARCHAR(20),
-    age INT
+    age INT,
+    gender enum("M","F") not null,
+    create_date date default "2001-01-01"
 )
 ```
 ## 驗證創建table的column
