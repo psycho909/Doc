@@ -1,4 +1,14 @@
 # MySQL
+
+## 基本指令
+
+1. 顯示所有database => `show databases; `
+2. 創建database => `create database <name>; `
+
+3. 刪除database => `drop database <name>; `
+4. 使用database => `use <database_name>; `
+5. 查看當前使用database => `select database(); `
+
 ## 架構
 1. database
 1. table
@@ -26,6 +36,9 @@
 * TIME
     * HH:MM:SS
 ### `VARCHAR(M)`純字串
+
+### `ENUM`選擇型字串類型`size ENUM("M","F")`
+
 ### 資料表`constranints`
 1. `primary key`一個資料表只能有一個，不能有重複的值出現並且一定要有值，不能是NULL
 1. `Not NULL`限制該欄位一定要填
@@ -35,24 +48,35 @@
 ## `SQL`指令
 ### 建立database
 ```sql
-CREATE DATABASE IF NOT EXISTS `my_blog`
-DEFAULT CHARACTER SET utf8
-COLLATE utf8_general_ci;
+CREATE DATABASE`my_blog`
 ```
 ### 使用database
 ```sql
 USE `my_blog`;
 ```
+## 顯示當前database下所有table
+
+`show tables;`
+
 ### 建立table
+
 ```sql
-CREATE TABLE IF NOT EXISTS `my_blog`.`users`(
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `username` VARCHAR(255) NOT NULL,
-    `password` VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`id`))
-ENGINE=InnoDB
+CREATE TABLE person (
+	name VARCHAR(20),
+    phone VARCHAR(20),
+    age INT
+)
 ```
+## 驗證創建table的column
+
+`desc <table _name>;`
+
+## 刪除table
+
+`drop table <table_name>;`
+
 ## 增刪改查 Query
+
 1. SELECT
 1. INSERT
 1. UPDATE
