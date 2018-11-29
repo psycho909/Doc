@@ -424,3 +424,15 @@ DELIMITER ; -- 恢復結束符號
 `UPPER("hello world")` => HELLO WORLD
 
 `LOWER("HELLO WORLD")` => hello world
+
+## 規則排序、模糊搜索、限制數量
+
+`order by` =>  默認降序、desc升序
+
+`limit` =>  `limit 5` => 返回前5個
+
+`limit` =>  `limit 0,3` => 從0開始返回3個
+
+`like` = > 模糊查詢 => `where last_name like "%w%"` => 查有包含有w字
+
+`like` = > 模糊查詢 => `where last_name like "__w"` => 前有長度2個字後面有w
