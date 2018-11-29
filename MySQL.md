@@ -403,3 +403,24 @@ $
 DELIMITER ; -- 恢復結束符號
 ```
 
+## 字符串處理
+
+`concat(A," ",B)` => A B
+
+`concat_ws("-",A,B)` => A-B => 分隔符號功能
+
+`substring("Helloworld",1,4)` => 從第1個字到第4個字 => Hell
+
+`substring("Helloworld",4)` => 從第4個字開始沒有結束 => loworld
+
+`substring("Helloworld",-3)` => 從後第3個字開始沒有結束 => rld
+
+`replace("Helloworld","world","Mysql")` => HelloMysql
+
+`reverse("Helloworld")` => dlrowolleH
+
+`char_length("Helloworld")` => 10
+
+`UPPER("hello world")` => HELLO WORLD
+
+`LOWER("HELLO WORLD")` => hello world
