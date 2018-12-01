@@ -436,3 +436,50 @@ DELIMITER ; -- 恢復結束符號
 `like` = > 模糊查詢 => `where last_name like "%w%"` => 查有包含有w字
 
 `like` = > 模糊查詢 => `where last_name like "__w"` => 前有長度2個字後面有w
+
+## 數據聚合處理
+
+### `count()` 對統計出來的數量
+
+```sql
+select count(*) from demo.employee
+```
+
+### `distinct()` 統計唯一值，去掉重複值在統計
+
+```sql
+SELECT distinct title FROM demo.employee;
+SELECT count(distinct title) FROM demo.employee;
+```
+
+### `group by`數據整合
+
+> 篩選重複的title，並統計出數量
+
+```sql
+SELECT title,count(first_name) FROM demo.employee group by title;
+```
+
+### `MAX()&MIN()`求最大值和最小值
+
+```sql
+SELECT max(salary),title FROM demo.employee group by title ;
+```
+
+### `SUM()和AVG()求和和平均值`
+
+```sql
+SELECT sum(salary) FROM demo.employee;
+SELECT sum(salary),avg(salary) FROM demo.employee group by title;
+```
+
+### `HAVING`可以對聚合的數據進行過濾
+
+> `where`是對整個數據在聚合先進行過濾
+>
+> `having` 則是可以對數據聚合後再進行過濾
+
+```sql
+SELECT title,count(*) FROM demo.employee group by title having title="Software Engineer";
+```
+
