@@ -39,6 +39,8 @@ res.cookie('name','mary',{
 > 在每次進入頁面(app.js)時，就隨機產生id傳送過去
 >
 > 在每次登入頁面時，就隨機產生id傳送過去
+>
+> [要求物件](https://expressjs.com/zh-tw/4x/api.html#req) (`req`)、[回應物件](https://expressjs.com/zh-tw/4x/api.html#res) (`res`)
 ```javascript
 // app.js
 var session=require('express-session');
