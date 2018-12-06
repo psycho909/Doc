@@ -699,3 +699,20 @@ GROUP BY reviews.reviewer_id
 order by AVG desc
 ```
 
+## 中文編碼
+
+> 創建時使用utf8
+
+```sql
+create database test default charset=utf8 collate=uf8_general_ci
+```
+
+> 修改未使用utf8 database和table
+
+```sql
+alter database test1 charset utf8 collate utf8_general_ci
+alter table user convert to character set utf8
+```
+
+
+
