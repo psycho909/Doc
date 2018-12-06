@@ -675,3 +675,27 @@ CREATE TABLE orders(
 );
 ```
 
+## 多對多表查詢
+
+> 有 book,reviewers,reviews
+
+```sql
+select
+	first_name,
+	last_name,
+	count(rating) as count,
+	min(ifnull(rating,0)) as min,
+	max(ifnull(rating,0)) as max,
+	convert(ifnull(avg(rating),0),decimal(3,2)) as AVG,
+	if(count(rating) > 0,'active','inactive') as new_status,
+	CASE
+		when count(rating) > 0 then "active"
+		else "inactive"
+	end as status
+from reviewers
+left join reviews
+	on reviewers.id = reviews.reviewer_id
+GROUP BY reviews.reviewer_id
+order by AVG desc
+```
+
