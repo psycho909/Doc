@@ -103,3 +103,20 @@ TweenMax.to('#title',5,{text:"Hello World"})
         TweenMax.to('#txt',5,{text:"Hello World",delay:2})
 ```
 
+## fromTo
+
+```sql
+TweenMax.fromTo('#ball', 0.75,
+                {
+                    backgroundColor: 'rgb(255, 39, 46)',
+                    scale: 2,
+                    x: 100
+                },
+                {
+                    backgroundColor: 'rgb(200, 39, 46)',
+                    scale:1,
+                    x:10
+                }
+            );
+```
+
