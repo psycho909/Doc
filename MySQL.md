@@ -483,3 +483,236 @@ SELECT sum(salary),avg(salary) FROM demo.employee group by title;
 SELECT title,count(*) FROM demo.employee group by title having title="Software Engineer";
 ```
 
+## SQL邏輯運算符
+
+### `Equal` `not equal`
+
+```sql
+select * from demo.employee where salary = 8000;
+select * from demo.employee where not salary = 8000;
+```
+
+### `LIKE` `Not Like`
+
+```sql
+select * from demo.employee where first_name like "%Jack%";
+select * from demo.employee where first_name not like "%Jack%";
+```
+
+### `greater than` `less than`
+
+```sql
+select * from demo.employee where salary >= 6000;
+```
+
+### `and` `or`
+
+```sql
+select * from demo.employee where salary > 6000 and first_name like "H%";
+select * from demo.employee where salary > 6000 or first_name like "H%";
+```
+
+### `between`
+
+```sql
+select * from demo.employee where salary >= 6000 and salary <= 8000
+
+select * from demo.employee where salary between 6000 and 8000;
+```
+
+### `in` `not in`
+
+```sql
+select * from demo.employee where salary = 3000 or salary = 6000 or salary = 8000;
+
+select * from demo.employee where salary in (3000,6000,8000);
+select * from demo.employee where salary not in (3000,6000,8000);
+```
+
+### `case statement`
+
+```sql
+select first_name,last_name,title,salary,
+    case
+        when salary >= 7000 then "height"
+        else "low"
+    end as tag
+from demo.employee
+order by salary desc
+
+select *,
+    case
+        when title like "%Engineer%" then 1
+        when title like "%Architect%" then 2
+        else 3
+    end as tag
+from demo.employee
+```
+
+## 內置函數(補充)
+
+### 字符串
+
+#### `LEFT()` `right()`
+
+```sql
+select left("Mysql",2),right('mysql',2)
+// my //ql
+```
+
+#### `length()` 字符串長度
+
+```sql
+select length('mysql')
+// 5
+```
+
+#### `ltrim()` `rtrim()` `trim()`去除空格
+
+```sql
+select ltrin('  mysql'),rtrim('mysql  '),trim(' mysql ');
+// mysql
+select trim(leading '$' from "$$mysql$$");
+// mysql$$
+select trim(trailing '$' from "$$mysql$$");
+// $$mysql
+```
+
+#### `replace()`
+
+```sql
+select replace('$$mysql$$','$','');
+```
+
+##  table 對 其他 table查詢
+
+### 透過id關聯查詢
+
+```sql
+select * from orders 
+where customer_id=(select id from customers where email = "roj@gmail.com");
+```
+
+### `FOREIGN KEY()`約束關聯字段
+
+```sql
+-- 使用foreign key()限制數據
+-- 如下:
+-- 限制 customer_id 一定要跟 customers表的id一樣
+CREATE TABLE customers(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    ...
+);
+CREATE TABLE orders(
+customer_id INT,
+...,
+FOREIGN KEY(customer_id) REFERENCES customers(id)
+);
+```
+
+### `inner join`
+
+> 把 `customers`表跟`orders`表之間`重合`的部分去設置一個filter
+
+```sql
+select first_name,last_name,SUM(amount)from customers inner join orders on customers.id=orders.customer_id GROUP BY customer_id
+```
+
+### `left join`
+
+> 把 `customers`表跟`orders`表之間`重合`的部分並包含了`左邊`的訊息去設置一個filter
+>
+> IFNULL(如果是NULL,為0)
+
+```sql
+// orders 沒匹配到的會顯示NULL
+select first_name,last_name,
+	CASE
+		when SUM(amount) is NULL THEN 0
+		else SUM(amount)
+	end as total
+from customers 
+left join orders 
+on customers.id=orders.customer_id 
+GROUP BY customer_id
+order by total desc
+```
+
+```sql
+select first_name,last_name,IFNULL(SUM(amount),0) as total
+from customers 
+left join orders 
+on customers.id=orders.customer_id 
+GROUP BY customer_id
+order by total desc
+```
+
+### `right join`
+
+> 把 `customers`表跟`orders`表之間`重合`的部分並包含了`右邊`的訊息去設置一個filter
+
+```sql
+select *
+from customers 
+right join orders 
+on customers.id=orders.customer_id 
+GROUP BY customer_id
+```
+
+### `ON DELETE`
+
+> ON DELETE CASCADE 當去刪除customer_id表數據時，他會把相關聯的orders數據也刪除
+
+```sql
+CREATE TABLE orders(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_date DATE,
+    amount DECIMAL(8,2),
+    customer_id INT,
+    FOREIGN KEY(customer_id)
+        REFERENCES customers(id)
+        ON DELETE CASCADE
+);
+```
+
+## 多對多表查詢
+
+> 有 book,reviewers,reviews
+
+```sql
+select
+	first_name,
+	last_name,
+	count(rating) as count,
+	min(ifnull(rating,0)) as min,
+	max(ifnull(rating,0)) as max,
+	convert(ifnull(avg(rating),0),decimal(3,2)) as AVG,
+	if(count(rating) > 0,'active','inactive') as new_status,
+	CASE
+		when count(rating) > 0 then "active"
+		else "inactive"
+	end as status
+from reviewers
+left join reviews
+	on reviewers.id = reviews.reviewer_id
+GROUP BY reviews.reviewer_id
+order by AVG desc
+```
+
+## 中文編碼
+
+> 創建時使用utf8
+
+```sql
+create database test default charset=utf8 collate=uf8_general_ci
+```
+
+> 修改未使用utf8 database和table
+
+```sql
+alter database test1 charset utf8 collate utf8_general_ci
+alter table user convert to character set utf8
+```
+
+
+
