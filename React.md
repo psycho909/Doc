@@ -148,6 +148,83 @@ class App extends React.Component {
 ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
+```sql
+constructor(props){
+	super(props)
+	this.input=React.createRef()
+}
+render(){
+	return (
+    	<input ref={this.input}>
+    )
+}
+```
+
+### 獲取組件``REF`
+
+```sql
+class MyButton extends Component{
+	constructor(props){
+		super(props)
+		this.buttonRef=React.createRef()
+	}
+	render(){
+		return (
+        	<button ref={this.buttonRef}>
+            {props.children}
+			</button>
+        )
+	}
+}
+class App extends Component{
+	constructor(props){
+		super(props)
+		this.myRef=React.createRef()
+	}
+	componentDidComponent(){
+		console.log(this.myRef.buttonRef)
+	}
+	render(){
+		return (
+        	<MyButton ref={this.myRef}>
+            	Press here
+            </MyButton>
+        )
+	}
+}
+```
+
+```sql
+import { createRef, forwardRef } from "react";
+
+const MyButton = forwardRef((props, ref) => (
+  <button ref={ref}>
+    {props.children}
+  </button>
+));
+
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.realButton = createRef();
+  }
+  componentDidComponent{
+    //直接拿到 inner element ref
+    console.log(this.realButton);
+  }
+  render(){
+    return (
+    <MyButton ref={this.realButton}>
+      Press here
+    </MyButton>
+    );
+  }
+}
+
+```
+
+
+
 ## 無狀態組件
 
 當一個普通組件只有`render`時，完全可通過一個無狀態組件來替換掉普通的組件
