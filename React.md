@@ -333,7 +333,7 @@ TodoItem.defaultProps={
 
 
 
-## Reduce
+## Redux
 
 Action Creaters-=> Store => Reducers
 
@@ -517,6 +517,36 @@ export default combinReducer({
 })
 
 ```
+
+### redux-thunk
+
+```js
+npm i redux-thunk
+```
+
+```js
+import thunk from 'redux-thunk';
+const store = createStore(
+    reducer,
+    composeWithDevTools(applyMiddleware(thunk))
+)
+```
+
+```js
+export const actionGetUser=()=>{
+    return (dispatch)=>{
+        return fetch("https://randomuser.me/api/")
+            .then((res)=>{
+                return res.json()
+            })
+            .then((data)=>{
+                console.log(data.results)
+            })
+    }
+}
+```
+
+
 
 ## react-router-dom
 
