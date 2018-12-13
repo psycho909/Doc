@@ -345,7 +345,7 @@ React Components => Acton Creaters
 
 ### 創建store
 
-> 建立`store資料夾`，創建`index.js`，並創建`reducers.js`
+1.  建立`store資料夾`，創建`index.js`，並創建`reducers.js`
 
 ```js
 // App.js
@@ -354,10 +354,14 @@ import store from './store/index'
 
 ```js
 // /store/index.js
-import { createStore } from 'redux'
+import { createStore,applyMiddleware} from 'redux'
+import thunk from 'redux-thunk'
 import reducers from './reducers.js'
 
-const store=createStore(reducers)
+const store=createStore(
+    reducers,
+    applyMiddleware(thunk)
+)
 
 export default store
 ```
@@ -375,6 +379,10 @@ export default (state=defaultState,action)=>{
 ```
 
 ### 使用store
+
+1.  使用`store.getState()`方法獲取state
+2.  提供`store.dispatch(action)`更新state
+3.  `store.subscribe(listener)`來註冊、取消監聽
 
 ```js
 // App.js
@@ -455,6 +463,20 @@ handleSearchFocus(){
 }
 ```
 
+### 多個``reducer`管理
+
+1.  創建根`reducer`用於將其他不同業務的`reducer`合併
+
+```js
+import {combineReducers} from 'redux'
+
+import {user} from './user'
+
+export default combineReducers({
+    user
+})
+```
+
 
 
 ### react-redex使用
@@ -477,6 +499,8 @@ import store from './store/index.js'
 ```js
 // Header
 import {connect} from 'react-redux'
+import {actionhandleInputBlur} from './store/actionCreator'
+
 const Header=(props)=>{
     return (
     	<div>
@@ -496,14 +520,41 @@ const mapDispatchToProps=(dispatch)=>{
             const action={
                 type:"search_blur"
             }
-            dispatch(action)
+            dispatch(actionhandleInputBlur)
         }
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Header)
 ```
 
+### `mapStateToProps`
 
+```js
+const mapStateToProps=(state)=>{
+    return {
+        name:header.state.name
+	}
+}
+```
+
+
+
+### `mapDispatch`用法
+
+```js
+import {handleInputBlur} from './store/actionCreator'
+
+const Header=(props)=>{
+    return (
+    	<div>
+        	{props.name}
+        	<input onClick={props.actionhandleInputBlur}>
+        </div>
+    )
+}
+
+export default connect(mapStateToProps,{handleInputBlur})(Header)
+```
 
 ### reducer拆分使用
 
@@ -517,6 +568,8 @@ export default combinReducer({
 })
 
 ```
+
+## 異步場景下更新``store`
 
 ### redux-thunk
 
