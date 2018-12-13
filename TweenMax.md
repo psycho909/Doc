@@ -67,6 +67,8 @@ TweenMax.set(el,1,{
 
 ## TimelineLite()
 
+>   TimelineLite是TweenMax裡面用來控制時間軸動畫的其中一個
+
 ```js
 var tl=new TimelineLite();
 
@@ -118,5 +120,22 @@ TweenMax.fromTo('#ball', 0.75,
                     x:10
                 }
             );
+```
+
+## 多個動畫依序執行
+
+```js
+var tl=new TimelineLite();
+
+tl.to(".box1",1,{opacity:1})
+tl.to(".box2",1,{opacity:1})
+tl.to(".box3",1,{opacity:1})
+tl.to(".box4",1,{opacity:1})
+tl.to(".box5",1,{opacity:1})
+tl.to(".box6",1,{opacity:1})
+tl.to(".box7",1,{opacity:1})
+tl.to(".box8",1,{opacity:1})
+tl.to(".box9",1,{opacity:1})
+tl.to(".box10",1,{opacity:1})
 ```
 
