@@ -236,6 +236,8 @@ for(variable in object){
 * set(name, value)添加headers的内容
 * delete(name) 删除header的信息
 * forEach循环读取header的信息
+### GET
+
 ```javascript
     const url="https://randomuser.me/api/?results=20";
 
@@ -255,7 +257,35 @@ for(variable in object){
     })
 ```
 
-## <span id="array-from">ES6 Array.from()使用方式</span>
+### POST
+
+```js
+    const url="https://randomuser.me/api/?results=20";
+
+    fetch(url,{
+        method:'POST',
+        body:JSON.stringify(data),
+        headers:{
+            "Content-Type":"application/json"
+        }
+    }).then((res)=>{
+        if( res.status == 200 ){
+            console.log(res)
+            return res;
+        }
+    }).then((data)=>{
+        return data.json();
+    }).then((result)=>{
+        console.log(result.results)
+    }).catch((err)=>{
+        console.log(err.message)
+    })
+```
+
+
+
+## ES6 Array.from()使用方式
+
 > 可以將類似Array對象的東西(arguments,NodeList)轉成真的數組形式
 >
 > 舊方法:`Array.prototype.slice.call()`
