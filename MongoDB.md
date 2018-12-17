@@ -215,3 +215,97 @@ Article.find({ content: { $regex: text, $options: 'i' }}, function (err, docs) {
 // x 忽略空格
 // s 允许逗点匹配所有字符串
 ```
+
+## NPM mongodb
+
+### Basic
+
+```js
+import express from 'express'
+import mongodb from 'mongodb'
+
+const app=express()
+const MongoClient=mongodb.MongoClient
+const dbUrl="mongodb://localhost/"
+
+MongoClient.connect(url,(err,client)=>{
+    // 獲取 database
+    const db=client.db('crud')
+    
+    // 獲取全部資料
+    app.get('/api/games',(req,res)=>{
+        // 獲取 table
+        db.collection('games').find({}).toArray((err,games)=>{
+            res.json({games})
+        })
+    })
+})
+```
+
+### `find()`
+
+```js
+app.get('/api/games',(req,res)=>{
+    db.collection('game').find({}).toArray((err,games)=>{
+        res.json({games})
+    })
+})
+```
+
+### `findOne()`
+
+```js
+app.get('/api/games/:_id',(req,res)=>{
+    db.collection('game').findOne({_id:new mongodb.ObjectId(req.params._id)},(err,games)=>{
+        res.json({game})
+    })
+})
+```
+
+### `deleteOne()`
+
+```js
+app.delete('/api/games/:_id',(req,res)=>{
+    db.collection('game').deleteOne(
+        {_id:new mongodb.ObjectId(req.params._id)},
+        (err,game)=>{
+            res.json({})
+        }
+    )
+})
+```
+
+### findOneAndUpdate()
+
+```js
+app.put('/api/games/:_id',(req,res)=>{
+    db.collection('game').findOneAndUpdate(
+    	{_id:new mongodb.ObjectId(req.params._id)},
+        {$set:{title,cover}},
+        {returnOriginal:true},
+        (err,result)=>{
+            // result.value 修改前的資料
+            res.json({game:result.value})
+        }
+    )
+})
+```
+
+### `insert()`
+
+```js
+app.post('/api/games',(req,res)=>{
+    db.collection('games',(err,collection)=>{
+    collection.insert(
+        {
+            title:req.body.title,
+            cover:req.body.cover
+        },(err,result)=>{
+            // result.ops[0] 輸出 成功insert的資料
+            res.json({info:result.ops[0]})
+        }
+    )
+})
+})
+```
+
