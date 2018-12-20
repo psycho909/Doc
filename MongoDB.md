@@ -264,37 +264,6 @@ userModel.find({}).then((result)=>{})
 .catch((err)=>{})
 ```
 
-#### 查找數據`find()`
-
-```js
-userModel.find({
-    username:"AAA",
-    age:{$gt:17,$lt:66}, //限定年齡範圍
-    likes:{$in:["a",'b']} // 限定喜好必須要在這個數組中
-}).
-limit(10). // 限定取出數量
-sort({occupation:-1}). // 1表示正序，-1表示逆序
-select({ name: 1, occupation: 1 }).  // 選擇取出的字段，1表示取出，0表示不取出，如果不需要id，需要顯式寫{_id : 0}
-exec(callback);  // 這裡使用then也行，完全支持Promise，但是查詢不是Promise，這個要注意，後面會說
-```
-#### 更好查找方式`find()`
-
-```js
-// Using query builderPerson.
-userModel.find({
-    username:"AAA",
-    age:{$gt:17,$lt:66}, //限定年齡範圍
-    likes:{$in:["a",'b']} // 限定喜好必須要在這個數組中
-}).
-where('name.last').equals('Ghost').
-where('age').gt(17).lt(66).
-where('likes').in(['vaporizing', 'talking']).
-limit(10).
-sort('-occupation').
-select('name occupation').
-exec(callback);
-```
-
 #### 查詢某一數據`findOne()`
 
 ```js
@@ -450,6 +419,38 @@ userModel.deleteMany(conditions,(err,data)=>{
 
 ### 高級查詢
 
+#### 查找數據`find()`
+
+```js
+userModel.find({
+    username:"AAA",
+    age:{$gt:17,$lt:66}, //限定年齡範圍
+    likes:{$in:["a",'b']} // 限定喜好必須要在這個數組中
+}).
+limit(10). // 限定取出數量
+sort({occupation:-1}). // 1表示正序，-1表示逆序
+select({ name: 1, occupation: 1 }).  // 選擇取出的字段，1表示取出，0表示不取出，如果不需要id，需要顯式寫{_id : 0}
+exec(callback);  // 這裡使用then也行，完全支持Promise，但是查詢不是Promise，這個要注意，後面會說
+```
+
+#### 更好查找方式`find()`
+
+```js
+// Using query builderPerson.
+userModel.find({
+    username:"AAA",
+    age:{$gt:17,$lt:66}, //限定年齡範圍
+    likes:{$in:["a",'b']} // 限定喜好必須要在這個數組中
+}).
+where('name.last').equals('Ghost').
+where('age').gt(17).lt(66).
+where('likes').in(['vaporizing', 'talking']).
+limit(10).
+sort('-occupation').
+select('name occupation').
+exec(callback);
+```
+
 #### 查詢特定字段
 
 >   查找`age`字段
@@ -481,7 +482,7 @@ User.find().skip(2).limit(2).then((docs)=>{
 });
 ```
 
-排序`sort()`
+#### 排序`sort()`
 
 >   sort 排序 1：升序 / -1：降序
 
