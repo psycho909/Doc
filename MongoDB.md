@@ -216,9 +216,135 @@ Article.find({ content: { $regex: text, $options: 'i' }}, function (err, docs) {
 // s 允许逗点匹配所有字符串
 ```
 
+## NPM mongoose
+
+```js
+npm i -S mongoose
+```
+### 連接數據庫
+
+```js
+import mongoose from 'mongoose'
+mongoose.connect("mongodb://localhost/accounts")
+var db=mongoose.connection;
+```
+
+### 定義一個Schema
+
+```js
+var userSchema=new mongoose.Schema({
+    username:String,
+    email:String
+})
+```
+
+### 將`Schema`發佈為Model
+
+```js
+var userModel=mongoose.model("user",userSchema)
+```
+
+### 最後`model`可以對數據庫進行操作`find`
+
+```js
+userModel.find((err,data)=>{
+    if(err) return console.log(err)
+    console.log("資料: "+data)
+})
+```
+
+### 插入數據1 `create`
+
+```js
+var newUser=[{
+	username:"AAA",
+    email:"aaa@gmail.com"
+}]
+userModel.create(newUser,(err)=>{
+    if(err) return console.log(err)
+    console.log("數據插入成功")
+})
+```
+
+### 插入數據2 `save`
+
+```js
+var newUser=new userModel({
+    username:"AAA",
+    email:"aaa@gmail.com"
+})
+newUser.save((err,data)=>{
+    if(err) return console.log(err)
+    console.log("數據插入成功")
+})
+
+```
+
+### 查詢某一數據`findOne`
+
+```js
+userModel.findOne({_id:id},(err,data)=>{
+    if(err) return console.log(err)
+    console.log(data)
+})
+```
+
+### 更新數據1`update`
+
+```js
+var query={$set:{username:"BBB",email:"bbb@gmail.com"}}
+userModel.update({_id:id},query,(err,result)=>{
+    if(err) return console.log(err)
+    console.log("更新成功")
+})
+```
+
+### 更新數據2`findByIdAndUpdate`
+
+```js
+var query={$set:{username:"BBB",email:"bbb@gmail.com"}}
+userModel.findByIdAndUpdate(id,query,{new:true},(err,result)=>{
+	if(err) return console.log(err)
+    console.log("更新成功")
+})
+```
+
+### 更新數據3`findById`
+
+```js
+userModel.findById(id,(err,data)=>{
+    if(err) return console.log(err)
+    data.username="BBB"
+    data.email="bbb@gmail.com"
+    data.save((err)=>{
+        if(err) return console.log(err)
+        console.log("更新成功")
+    })
+})
+```
+
+
+
+### 刪除數據
+
+```js
+userModel.remove({_id:id},(err,data)=>{
+    if(err) return console.log(err)
+    console.log("刪除成功")
+})
+```
+
+
+
+
+
 ## NPM mongodb
 
 ### Basic
+
+```js
+npm i -S mongodb
+```
 
 ```js
 import express from 'express'
