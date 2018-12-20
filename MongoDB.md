@@ -218,6 +218,8 @@ Article.find({ content: { $regex: text, $options: 'i' }}, function (err, docs) {
 
 ## NPM mongoose
 
+### 連接 -> 定義模式(Schema) -> 生成Model -> 生成Model實例
+
 ```js
 npm i -S mongoose
 ```
@@ -229,7 +231,7 @@ mongoose.connect("mongodb://localhost/accounts")
 var db=mongoose.connection;
 ```
 
-### 定義一個Schema
+### 定義一個`Schema`模式
 
 ```js
 var userSchema=new mongoose.Schema({
@@ -238,7 +240,7 @@ var userSchema=new mongoose.Schema({
 })
 ```
 
-### 將`Schema`發佈為Model
+### 將`Schema`發佈為`Model`
 
 ```js
 var userModel=mongoose.model("user",userSchema)
@@ -253,7 +255,66 @@ userModel.find((err,data)=>{
 })
 ```
 
-### 插入數據1 `create`
+### 查找
+
+#### 查找`find()`全部
+
+```js
+userModel.find({}).then((result)=>{})
+.catch((err)=>{})
+```
+
+#### 查找數據`find()`
+
+```js
+userModel.find({
+    username:"AAA",
+    age:{$gt:17,$lt:66}, //限定年齡範圍
+    likes:{$in:["a",'b']} // 限定喜好必須要在這個數組中
+}).
+limit(10). // 限定取出數量
+sort({occupation:-1}). // 1表示正序，-1表示逆序
+select({ name: 1, occupation: 1 }).  // 選擇取出的字段，1表示取出，0表示不取出，如果不需要id，需要顯式寫{_id : 0}
+exec(callback);  // 這裡使用then也行，完全支持Promise，但是查詢不是Promise，這個要注意，後面會說
+```
+#### 更好查找方式`find()`
+
+```js
+// Using query builderPerson.
+userModel.find({
+    username:"AAA",
+    age:{$gt:17,$lt:66}, //限定年齡範圍
+    likes:{$in:["a",'b']} // 限定喜好必須要在這個數組中
+}).
+where('name.last').equals('Ghost').
+where('age').gt(17).lt(66).
+where('likes').in(['vaporizing', 'talking']).
+limit(10).
+sort('-occupation').
+select('name occupation').
+exec(callback);
+```
+
+#### 查詢某一數據`findOne()`
+
+```js
+userModel.findOne({_id:id},(err,data)=>{
+    if(err) return console.log(err)
+    console.log(data)
+})
+```
+
+#### 統計查詢的文檔數據`countDocuments`
+
+```js
+userModel.find({})
+.countDocuments()
+.then()
+```
+
+### 插入數據
+
+#### 插入數據`create()`
 
 ```js
 var newUser=[{
@@ -266,7 +327,25 @@ userModel.create(newUser,(err)=>{
 })
 ```
 
-### 插入數據2 `save`
+#### 插入多條數據`create()`
+
+```js
+var newUsers=[{
+	username:"AAA",
+    email:"aaa@gmail.com"
+},{
+    username:"BBB",
+    email:"bbb@gmail.com"
+}]
+userModel.create(newUser,(err)=>{
+    if(err) return console.log(err)
+    console.log("數據插入成功")
+})
+```
+
+#### 以下不過時不用
+
+#### 插入數據 `save()`
 
 ```js
 var newUser=new userModel({
@@ -280,26 +359,50 @@ newUser.save((err,data)=>{
 
 ```
 
-### 查詢某一數據`findOne`
+
+
+### 更新數據
+
+1.  `update()`
+2.  `updateOne()`
+3.  `updateMany()`
+
+#### 更新數據update`
 
 ```js
-userModel.findOne({_id:id},(err,data)=>{
-    if(err) return console.log(err)
-    console.log(data)
-})
-```
-
-### 更新數據1`update`
-
-```js
+var conditions={_id:id};
 var query={$set:{username:"BBB",email:"bbb@gmail.com"}}
-userModel.update({_id:id},query,(err,result)=>{
+userModel.update(conditions,query,(err,result)=>{
     if(err) return console.log(err)
     console.log("更新成功")
 })
 ```
 
-### 更新數據2`findByIdAndUpdate`
+#### 更新數據`updateOne`
+
+```js
+var conditions={_id:id};
+var query={$set:{username:"BBB",email:"bbb@gmail.com"}}
+userModel.updateOne(conditions,query,(err,result)=>{
+    if(err) return console.log(err)
+    console.log("更新成功")
+})
+```
+
+#### 更新數據`updateMany`
+
+```js
+var conditions={_id:id};
+var query={$set:{username:"BBB",email:"bbb@gmail.com"}}
+userModel.updateMany(conditions,query,(err,result)=>{
+    if(err) return console.log(err)
+    console.log("更新成功")
+})
+```
+
+#### 以下過時不用
+
+#### 更新數據`findByIdAndUpdate`
 
 ```js
 var query={$set:{username:"BBB",email:"bbb@gmail.com"}}
@@ -309,7 +412,7 @@ userModel.findByIdAndUpdate(id,query,{new:true},(err,result)=>{
 })
 ```
 
-### 更新數據3`findById`
+#### 更新數據findById`
 
 ```js
 userModel.findById(id,(err,data)=>{
@@ -323,18 +426,70 @@ userModel.findById(id,(err,data)=>{
 })
 ```
 
-
-
 ### 刪除數據
 
+#### 刪除數據`deleteOne()`
+
 ```js
-userModel.remove({_id:id},(err,data)=>{
+var conditions={_id:id}
+userModel.deleteOne(conditions,(err,data)=>{
     if(err) return console.log(err)
     console.log("刪除成功")
 })
 ```
 
+#### 刪除數據`deleteMany()`
 
+```js
+var conditions={_id:id}
+userModel.deleteMany(conditions,(err,data)=>{
+    if(err) return console.log(err)
+    console.log("刪除成功")
+})
+```
+
+### 高級查詢
+
+#### 查詢特定字段
+
+>   查找`age`字段
+
+```js
+User.find({},'age').then((docs)=>{
+  console.log(docs);
+}).catch((err)=>{})
+```
+
+#### 條件判斷查詢
+
+>   查詢年齡大於等於18歲的所有數據
+
+```js
+let conditions = {age:{$gte:18}};
+User.find(conditions).then((docs)=>{
+  console.log(docs);
+});
+```
+
+#### 游標操作和排序
+
+`skip()`和`limit()`
+
+```js
+User.find().skip(2).limit(2).then((docs)=>{
+    console.log(docs);
+});
+```
+
+排序`sort()`
+
+>   sort 排序 1：升序 / -1：降序
+
+```js
+ User.find().sort({age:1}).skip(3).limit(3).then((docs)=>{
+    console.log(docs);
+  });
+```
 
 
 
