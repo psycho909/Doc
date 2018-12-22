@@ -909,3 +909,52 @@ npm install sass-loader node-sass --save-dev
 }
 ```
 
+## 好用的插件
+
+### redux-logger
+
+```js
+npm i -S redux-logger
+import logger form 'redux-logger'
+import rootReducer from './reducer'
+const store=createStore(
+	rootReducer,
+    applyMiddleware(logger)
+)
+```
+
+### moment
+
+```js
+npm i -S moment
+
+{moment(new Date(action.date)).fromNow()}
+```
+
+### sfcookies
+
+```js
+npm i -S sfcookies
+import {bake_cookie,read_cookie} from 'sfcookies'
+
+const reminders=(state=read_cookie("reminders") || [],action={})=>{
+    let reminders=null;
+    switch(action.type){
+        case ADD_REMINDER:
+            reminders=[...state,reminder(action)]
+            bake_cookie("reminders",reminders)
+            return reminders;
+        case DELETE_REMINDER:
+            reminders=state.filter((reminder)=> reminder.id !== action.id)
+            bake_cookie("reminders",reminders)
+            return reminders;
+        case CLEAR_REMINDERS:
+            reminders=[]
+            bake_cookie("reminders",reminders)
+            return reminders;
+        default: return state;
+    }
+}
+
+```
+
