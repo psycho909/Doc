@@ -240,6 +240,23 @@ const TodoListUI=(props)=>{
 }
 ```
 
+### PureComponent
+
+> 當持續傳入的`props`沒有變化時，不會重新render
+
+```js
+import React,{Component,PureComponent} from 'react'
+
+class Temp extends PureComponent{
+    render(){
+        console.log("render Temp")
+        return (
+        	<div>{this.props.val}</div>
+        )
+    }
+}
+```
+
 
 
 ## React.Fragment
@@ -272,6 +289,76 @@ TodoItem.defaultProps={
     test:"Hello World"
 }
 ```
+
+## `context`上下文
+
+```js
+import PropTypes from 'prop-types'
+
+const Topic=(props)=>{
+    return (
+        <Comment />
+    )
+}
+
+const Comment=(props,context)=>{
+	return (
+		<div>{context.color}</div>
+	)
+}
+
+Comment.contextTypes={
+	color:PropsTypes.string
+}    
+
+class App extends React.Component{
+    getChildContext(){
+		color:"red"
+	}
+    render(){
+        return (
+        
+        )
+    }
+}
+
+App.childContextTypes={
+    color:PropTypes.string
+}
+```
+
+## 高階組件
+
+1. 第一個參數是組件
+2. 返回值也是組件
+
+```js
+const PropsLogger=(WrapperComponent)=>{
+    return class extends Component {
+		render(){
+			return <WrapperComponent {...this.props} />
+		}
+	}
+}
+
+const Hello=PropsLogger((props)=>{
+    return (
+		<div>Hello {props.name}</div>
+	)
+})
+
+class App extends Component {
+	render(){
+		return (
+			<div>
+            	<Hello name="World" />
+            </div>
+		)
+	}
+}
+```
+
+
 
 ## 生命週期
 
