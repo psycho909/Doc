@@ -332,6 +332,8 @@ App.childContextTypes={
 1. 第一個參數是組件
 2. 返回值也是組件
 
+### 範例1
+
 ```js
 const PropsLogger=(WrapperComponent)=>{
     return class extends Component {
@@ -356,6 +358,73 @@ class App extends Component {
 		)
 	}
 }
+```
+
+### 範例2
+
+```js
+// /hoc/widthFetch
+import React,{Component} from 'react'
+
+const widthFetch=(url)=>(View)=>{
+    return class extends Component{
+        constructor(){
+            super()
+            this.state={
+                loading:true,
+                data:null
+            }
+        }
+        componentDidMount(){
+            fetch(url)
+            .then((res)=>res.json())
+            .then((data)=>{
+                this.setState({
+                    loading:false,
+                    data:data
+                })
+            })
+        }
+        render(){
+            if(this.state.loading){
+                return (
+                    <div>loding</div>
+                )
+            }else{
+                return (
+                    <View data={this.state.data} />
+                )
+            }
+        }
+    }
+}
+export default withFetch
+```
+
+```js
+// ./components/Joke
+
+import React from 'react'
+import withFetch from '../hoc/withFetch'
+
+const Joke=withFetch('https://api.icndb.com/jokes/random/3')(props=>{
+    return (
+        <div>
+        {
+            props.data.value.map((joke=>(
+                <p key={joke.id}>{joke.joke}</p>
+            )))
+        }
+     )
+})
+
+export default Joke=
+```
+
+```js
+// App.js
+
+<Joke />
 ```
 
 
