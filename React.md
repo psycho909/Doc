@@ -160,7 +160,7 @@ render(){
 }
 ```
 
-### 獲取組件``REF`
+### 獲取組件`REF`
 
 ```sql
 class MyButton extends Component{
