@@ -610,6 +610,8 @@ FOREIGN KEY(customer_id) REFERENCES customers(id)
 );
 ```
 
+## JOIN
+
 ### `inner join`
 
 > 把 `customers`表跟`orders`表之間`重合`的部分去設置一個filter
