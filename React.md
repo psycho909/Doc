@@ -82,43 +82,13 @@ handleOnDelete(index){
 
 
 
-## ref
+## REF
 
 > ref是幫助我們直接獲取DOM元素的時候使用，但盡量不要去使用
 
 > 不建議使用ref，react建議數據驅動的方式編寫代碼，盡量不要直接去操作DOM
 
-### basic
-
-```react
-class App extends React.Component{
-    constructor(){
-        this.textInput=React.createRef();
-        this.state={
-            value:''
-        }
-    }
-    handleSubmit=e=>{
-        e.preventDefault()
-        this.setState({
-            value:this.textInput.current.value
-        })
-    }
-    render(){
-        return (
-            <div>
-                <h3>{this.state.value}</h3>
-            	<form onSubmit={this.handleSubmit}>
-                    <input type="text" ref={this.textInput}>
-                    <button>Submit</button>
-                </form>
-            </div>
-        )
-    }
-}
-```
-
-### ES6 Ref
+### 方法一
 
 ```react
 class App extends React.Component {
@@ -147,8 +117,9 @@ class App extends React.Component {
 
 ReactDOM.render(<App />, document.getElementById("root"));
 ```
+### 方法二
 
-```sql
+```js
 constructor(props){
 	super(props)
 	this.input=React.createRef()
@@ -290,42 +261,71 @@ TodoItem.defaultProps={
 }
 ```
 
-## `context`上下文
+## `CONTEXT API`上下文
+
+### 第一步創建context
 
 ```js
-import PropTypes from 'prop-types'
+const myContext=React.createContext()
+```
 
-const Topic=(props)=>{
+### 第二步 創建 Provider Component
+
+```js
+class MyProvider extends Component{
+  state={
+    name:"Chen"
+  }
+  render(){
     return (
-        <Comment />
+      // context有Provider屬性，用來提共數據
+      <myContext.Provider value={{state:this.state}}>
+        {this.props.children}
+      </myContext.Provider>
     )
-}
-
-const Comment=(props,context)=>{
-	return (
-		<div>{context.color}</div>
-	)
-}
-
-Comment.contextTypes={
-	color:PropsTypes.string
-}    
-
-class App extends React.Component{
-    getChildContext(){
-		color:"red"
-	}
-    render(){
-        return (
-        
-        )
-    }
-}
-
-App.childContextTypes={
-    color:PropTypes.string
+  }
 }
 ```
+
+### 第三步
+
+```js
+const Family=(props)=>{
+  return (
+    <div>
+      <h1>Family</h1>
+      <Person />
+    </div>
+  )
+}
+
+class Person extends Component {
+  render(){
+    return (
+      <div>
+        <h1>Person</h1>
+        // 使用context提共的屬性Consumer
+        <myContext.Consumer>
+        {({state})=><p>My name is {state.name}</p>}
+        </myContext.Consumer>
+      </div>
+    )
+  }
+}
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <MyProvider>
+          <Family />
+        </MyProvider>
+      </div>
+    );
+  }
+}
+```
+
+
 
 ## 高階組件
 
@@ -425,6 +425,31 @@ export default Joke=
 // App.js
 
 <Joke />
+```
+
+### 範例3 `this.props.rander()`
+
+```js
+class WithMouse extends Component {
+    state={x:0,y:0}
+    handleMouseMove=(event)=>{
+      this.setState({
+        x:event.clientX,
+        y:event.clientY
+      })
+    }
+    render(){
+        return (
+        	<div>{this.props.render(this.state)}</div>
+        )
+    }
+}
+
+const Mouse=()=>{
+    return(
+    	<WithMouse render={(props)=> <div>The mouse position is {props.x,props.y}</div> } />
+    )
+}
 ```
 
 
@@ -764,29 +789,58 @@ npm i -S react-router-dom
 ```
 
 ```js
-// App.js
-import {BrowserRouter,Route} from 'react-router-dom'
-import Home from './pages/home/'
-<div className="App">
-  <Provider store={store}>
-     <div>
-        <Header/>
-        <BrowserRouter>
-            <div>
-                <Route path="/" exact render={()=> <div>Home</div>}></Route>
-                <Route path="/" exact  component={Home}></Route>
-                <Route path="/detail" exact render={()=> <div>detail</div>}></Route>
-            </div>
-     	</BrowserRouter>
-     </div>
-   </Provider>
-</div>
-                                                    
-// Header
-import {Link} from 'react-router-dom'
+import React, { Component } from 'react';
+import './App.css';
+import About from './About'
+import Home from './Home'
+import NoMath from './Error'
 
-<Link to="/detail">detail</Link>
-<NavLink exact={true} to="/">首頁</NavLink>
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect
+} from 'react-router-dom'
+
+const User=(props)=>{
+  return (
+    props.match.params.name === 'chen'?
+    <Redirect to="/" />:<div>User {props.match.params.name}</div>
+    
+  )
+}
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/users">User</Link></li>
+            <li><Link to={{
+              pathname:"/pro",
+              search:"?a=b",
+              hash:"#the-hash",
+              state:{fromDashboard:true}
+            }}>pro</Link></li>
+          </ul>
+          <Switch>
+            <Route path="/" exact component={Home}></Route>
+            <Route path="/about"  render={(props)=> <About {...props} />}></Route>
+            <Route path="/users/:name"  component={User}/>
+            <Route component={NoMath} /> 
+          </Switch>
+        </div>
+        
+      </Router>
+    );
+  }
+}
+
+export default App;
 ```
 
 `exact`完完全全跟路徑相等時，才顯示
@@ -1112,5 +1166,45 @@ const reminders=(state=read_cookie("reminders") || [],action={})=>{
     }
 }
 
+```
+
+## 捕捉錯誤`componentDidCatch(error,errorInfo)`
+
+1. 會把錯誤捕捉到，把對的顯示出來
+2. 並在發布的環境中，可以把把錯誤捕捉到放在`console.log`，把對的顯示在畫面中
+
+```js
+// ./component/ErrorBoundary
+
+class ErrorBoundary extends React.Component{
+    state={
+        hasError:false,
+        error:null,
+        errorInfo:null
+    }
+    componentDidCatch(error,errorInfo){
+        this.setState({
+            hasError:true,
+            error:error,
+            errorInfo:errorInfo
+        })
+    }
+    render(){
+		if(this.state.hasError){
+            return <div>{this.props.render(this.state.error,this.state.errorInfo)}</div>
+        }else{
+            return this.props.children
+        }
+    }
+}
+```
+
+```js
+// ./App.js
+import Broken from './component/Broken'
+
+<ErrorBoundary render={(error,errorInfo)=><p>error.toString()</p>}>
+    <Broken />
+</ErrorBoundary>
 ```
 
