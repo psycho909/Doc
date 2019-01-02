@@ -1208,3 +1208,104 @@ import Broken from './component/Broken'
 </ErrorBoundary>
 ```
 
+## redux-saga
+
+```js
+npm i --save redux-saga
+```
+
+```js
+// index.js
+
+import {createStore,applyMiddleware} from 'redux'
+
+// 引入saga
+import createSagaMiddleware from 'redux-saga'
+import {composeWithDevTools} from 'redux-devtools-extension'
+
+// 使用saga middleware
+const sagaMiddleware=createSagaMiddleware()
+
+// 導入saga目錄下js
+import {helloSaga} from './saga'
+
+const store=createStore(
+    rootReducer,
+    composeWithDevTools(
+        applyMiddleware(sagaMiddleware)
+    )
+)
+
+// 運行saga
+sagaMiddleware.run(helloSaga)
+
+```
+### saga使用generator方式
+#### 用法1
+
+```js
+function* gen(){
+    yield "js";
+    yield "css";
+    yield "html";
+    return "done";
+}
+
+var myGen=gen();
+myGen.next(); // js { value:"js",done:false }
+myGen.next(); // css { value:"css",done:false }
+myGen.next(); // html { value:"html",done:false }
+myGen.next(); // html { value:"done",done:true }
+```
+#### 用法2
+
+```js
+function* gen(){
+    var x=yield "js";
+    var y=yield "css";
+    var z=yield "html";
+    return x+y+z;
+}
+var myGen=gen();
+console.log(myGen.next());
+console.log(myGen.next(1)); // 會取到上一個返回值內容，然後會把 1 當成x
+console.log(myGen.next(2));
+console.log(myGen.next(3)); // 6
+```
+#### 用法3
+
+```js
+function* gen(){
+  var posts=yield $.getJSON("https://jsonplaceholder.typicode.com/posts")
+  console.log(posts[0].title)
+  var users=yield $.getJSON("https://jsonplaceholder.typicode.com/users")
+  console.log(users[0].email)
+}
+
+function run(generator){
+  var myGen=generator();
+  function handle(yielded){
+    if(!yielded.done){
+      yielded.value.then((data)=>{
+        return handle(myGen.next(data))
+      })
+    }
+  }
+  return handle(myGen.next())
+}
+```
+
+
+
+### 創建saga用的js
+
+```js
+// ./saga/index.js
+
+// saga使用generator方式
+function* hellosaga(){
+    console.log("hellosaga")
+}
+
+```
+
