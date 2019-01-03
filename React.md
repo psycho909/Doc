@@ -1299,6 +1299,8 @@ function run(generator){
 
 ### 創建saga用的js
 
+#### basic1
+
 ```js
 // ./saga/index.js
 
@@ -1307,5 +1309,83 @@ function* hellosaga(){
     console.log("hellosaga")
 }
 
+```
+
+#### basic2
+
+`takeEvery()`監聽且不中斷的觸發
+
+`takeLatest()`監聽，指運行一次，如果有其他也同時在運行時，只運行最後一次觸發
+
+`put()`可發送action
+
+`call()`當要調用promise的地方，使用call()，會有更好的測試效果
+
+```js
+import {delay} from 'redux-saga'
+import {takeEvery,put} from 'redux-saga/effects'
+import {INCREMENT_ASYNC} from '../constans'
+import {increment} from '../actions/counter'
+
+function* incrementAsync(){
+    yield delay(2000)
+    yield put({type:INCREMENT_ASYNC})
+}
+
+export function* watchIncrementAsync(){
+    // 監聽 INCREMENT_ASYNC action方法去觸發 incrementAsync函數
+    yield takeEvery(INCREMENT_ASYNC,incrementAsync)
+}
+```
+
+#### basic3:ajax請求
+
+```js
+import {call} from 'redux-saga/effects'
+import axios from 'axios'
+
+function* fetchUser(){
+    const user=yield call(axios.get,"https://jsonplaceholder.typicode.com/posts")
+    console.log(user)
+}
+
+export function* watchFetchUser(){
+    yield takeEvery("FETCH_USER_REQUEST",fetchUser)
+}
+```
+
+#### basic4:同時執行多個saga
+
+```js
+import {delay} from 'redux-saga'
+import {takeEvery,takeLatest,put,call,all} from 'redux-saga/effects'
+import {INCREMENT_ASYNC,INCREMENT} from '../constans'
+import axios from 'axios'
+
+function* incrementAsync(){
+    yield delay(2000)
+    yield put({type:INCREMENT})
+}
+
+function* watchIncrementAsync(){
+    // 監聽 INCREMENT_ASYNC action方法去觸發 incrementAsync函數
+    yield takeLatest(INCREMENT_ASYNC,incrementAsync)
+}
+
+function* fetchUser(){
+    const user=yield call(axios.get,"https://jsonplaceholder.typicode.com/posts")
+    console.log(user)
+}
+
+function* watchFetchUser(){
+    yield takeEvery("FETCH_USER_REQUEST",fetchUser)
+}
+
+export default function* rootSaga(){
+    yield all([
+        watchIncrementAsync(),
+        watchFetchUser()
+    ])
+}
 ```
 
