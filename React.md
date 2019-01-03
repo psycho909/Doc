@@ -1338,7 +1338,7 @@ export function* watchIncrementAsync(){
 }
 ```
 
-#### basic3:ajax請求
+#### basic3:`call()`ajax請求
 
 ```js
 import {call} from 'redux-saga/effects'
@@ -1354,7 +1354,7 @@ export function* watchFetchUser(){
 }
 ```
 
-#### basic4:同時執行多個saga
+#### basic4:`all()`同時執行多個saga
 
 ```js
 import {delay} from 'redux-saga'
@@ -1387,5 +1387,83 @@ export default function* rootSaga(){
         watchFetchUser()
     ])
 }
+```
+
+#### basic5:`fork`
+
+併發執行時使用
+
+```js
+import {all,fork} from 'redux-saga/effects'
+import * as counterSagas from './counter'
+import * as userSagas from './user'
+
+export default function* rootSaga(){
+    yield all([
+        ...Object.values(userSagas),
+        ...Object.values(counterSagas)
+    ].map(fork))
+}
+```
+
+#### basic6:axios && catch
+
+```js
+// ./redcuers/user.js
+const initalState={
+    isFetching:false,
+    error:null,
+    user:null
+}
+
+const user=(state=initalState,action)=>{
+    switch(action.type){
+        case "FETCH_USER_REQUEST":
+            return {
+                isFetching:true,
+                error:null,
+                user:null
+            };
+        case "FETCH_USER_SUCCESSED":
+            return {
+                isFetching:false,
+                error:null,
+                user:action.user
+            }
+        case "FETCH_USER_FAILURE":
+            return {
+                isFetching:false,
+                error:action.error,
+                user:null
+            }
+        default: return state
+    }
+}
+
+export default user
+```
+
+```js
+// ./saga/user.js
+
+import {takeEvery,call,put} from 'redux-saga/effects'
+import axios from 'axios'
+
+function* fetchUser(){
+    try{
+        const user=yield call(axios.get,"https://jsonplaceholder.typicode.com/users")
+        yield put({type:"FETCH_USER_SUCCESSED",user})
+    }catch(e){
+        yield put({type:"FETCH_USER_FAILURE",error:e.message})
+    }
+}
+
+function* watchFetchUser(){
+    yield takeEvery("FETCH_USER_REQUEST",fetchUser)
+}
+
+export const userSagas=[
+    watchFetchUser()
+]
 ```
 
