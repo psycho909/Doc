@@ -506,6 +506,19 @@ const Mouse=()=>{
 >
 > 如果這個組件之前已經存在於父組件中，才會執行。
 
+```js
+componentWillReceiveProps(nextProps){
+    this.setState({
+        _id:nextProps.booklist._id,
+        id:nextProps.booklist.id,
+        title:nextProps.booklist.title,
+        author:nextProps.booklist.author
+    })
+}
+```
+
+
+
 ### Unmounting
 
 #### componentWillUnmount
