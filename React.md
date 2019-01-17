@@ -427,7 +427,7 @@ export default Joke=
 <Joke />
 ```
 
-### 範例3 `this.props.rander()`
+### 範例3 `this.props.render()`
 
 ```js
 class WithMouse extends Component {
