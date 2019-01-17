@@ -418,7 +418,7 @@ const Joke=withFetch('https://api.icndb.com/jokes/random/3')(props=>{
      )
 })
 
-export default Joke=
+export default Joke;
 ```
 
 ```js
