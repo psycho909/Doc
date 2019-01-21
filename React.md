@@ -418,7 +418,7 @@ const Joke=withFetch('https://api.icndb.com/jokes/random/3')(props=>{
      )
 })
 
-export default Joke=
+export default Joke;
 ```
 
 ```js
@@ -427,7 +427,7 @@ export default Joke=
 <Joke />
 ```
 
-### 範例3 `this.props.rander()`
+### 範例3 `this.props.render()`
 
 ```js
 class WithMouse extends Component {
