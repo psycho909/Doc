@@ -39,17 +39,18 @@ var cloneA=Object.assign({},src)
 ```
 ## <span id="pad">`pad`字符串填充</span>
 > `pad`方法可以在原來的字符串上填充
-> `padStart`在字符串開頭填充一組字符串
+> `padStart`在字符串開頭填充一組字符串，可以用於補充01,02,03,04,05...
 ```javascript
-'pig'.padStart(5) //'   pig'
-'pig'.padStart(5,'a') //'aaapig'
+'1'.padStart(2,0) //'01'
+'1'.padStart(5,'0') //'00005'
 ```
 > `padEnd`在字符串末尾填充一組字符串
 ```javascript
-'pig'.padEnd(5) //'pig   '
-'pig'.padEnd(5,'a') //'pigaaa'
+'1'.padEnd(2,0) //'10'
+'1'.padEnd(5,0) //'10000'
 ```
 ### `padStart`和`padEnd`例子
+
 > 可以使用`padStart`和`padEnd`來格式化
 ```javascript
 var data={
@@ -132,22 +133,83 @@ m.get('Adam')//67
 m.delete('Adam')//刪除key 'Adam'
 m.get('Adam')//undefined
 ```
-### Set
-> `Set`和`Map`类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在`Set`中，没有重复的key
->
-> 要创建一个`Set`，需要提供一个`Array`作为输入，或者直接创建一个空`Set`：
-```javascript
-var s1=new Set()
-var s2=new Set([1,2,3])
+#### 遍歷
+
+##### 方法1
+
+```js
+for(var i of m.keys()){
+	console.log(i)
+}
+for(var i of m.values()){
+	console.log(i)
+}
+for(var [i,v] of m.entries()){
+	console.log(i,v)
+}
 ```
-> 重复元素在Set中自动被过滤
-```javascript
-var s = new Set([1, 2, 3, 3, '3']);
-s; // Set {1, 2, 3, "3"}
-s.add(4)//可通過add(key)方法可以添加元素到Set中，可以重复添加，但不会有效果
-s.delete(3);//通过delete(key)方法可以删除元素
+
+#### 方法2
+
+```js
+[...m.keys()]
+[...m.values()]
+[...m.entries()]
+[...m]
 ```
+
+
+
+### Set 不能重複，可使用於不可重複的值設定
+
+1. `Set`和`Map`类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在`Set`中，没有重复的key
+2. 要创建一个`Set`，需要提供一个`Array`作为输入，或者直接创建一个空`Set`：
+3. 可用於去除重複Array
+4. 重复元素在Set中自动被过滤
+
+```javascript
+var s = new Set();
+s.add(1) // 增加
+s.add(2)
+s.has(2) // 判斷有否key值
+s.delete(1) // 刪除指定key
+s.size // 取出長度
+s.clear() // 清除全部
+```
+```js
+let set = new Set(['red', 'green', 'blue']);
+
+for (let item of set.keys()) {
+  console.log(item);
+}
+// red
+// green
+// blue
+
+for (let item of set.values()) {
+  console.log(item);
+}
+// red
+// green
+// blue
+
+for (let item of set.entries()) {
+  console.log(item);
+}
+// ["red", "red"]
+// ["green", "green"]
+// ["blue", "blue"]
+
+[...set]
+// red
+// green
+// blue
+```
+
+
+
 ## 解构赋值
+
 > 从ES6开始，JavaScript引入了解构赋值，可以同时对一组变量进行赋值。
 >
 > 对数组元素进行解构赋值
@@ -177,3 +239,11 @@ var x=1,y=2;
 ```javascript
 var {hostname:domain, pathname:path} = location;
 ```
+
+## `new Array().fill()自動產生多個預設array`
+
+```js
+var arr=new Array(6).fill(0);
+// [0,0,0,0,0,0]
+```
+
