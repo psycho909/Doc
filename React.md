@@ -517,6 +517,50 @@ componentWillReceiveProps(nextProps){
 }
 ```
 
+## static getDerivedStateFromProps(nextProps, prevState)
+
+取代componentWillReceiveProps
+
+```js
+state = {
+    // 从 props 获取默认 state
+    result: this.getResult(this.props.value)
+}
+componentWillReceiveProps(nextProps) {
+    // 常用范式
+    if (nextProps.value !== this.props.value) {
+        this.setState({
+            // 更新 state
+            result: this.getResult(nextProps.value)
+        })
+    }
+}
+```
+
+```js
+state = {
+    result: 0,
+    // 必须存储 props.value 到 state 的副本，以便 getDerivedStateFromProps 取到 
+    value: 0
+}
+// 新的方法，接收 nextProps 和 prevState
+static getDerivedStateFromProps(nextProps, prevState) {
+    // prevState.value 相当于当前组件的 this.props.value，是存在 state 的副本
+    if (prevState.value !== nextProps.value) {
+        // 返回新的state（只需返回更新的部分，与 `setState` 相同）
+        return {
+            // 相当于上面的 getResult，但只有一处
+            result: nextProps.value * nextProps.value,
+            // 又一次保存副本
+            value: nextProps.value
+        }
+    }
+    // 返回 null 表示不更新，此函数最后一定需要返回值
+    return null
+}
+
+```
+
 
 
 ### Unmounting
