@@ -268,16 +268,19 @@ class MyList extends StatelessWidget{
 }
 ```
 
-## 動態列表
+## new ListView.builder()動態列表
 
 ```dart
 import "package:flutter/material.dart";
 
 void main()=> runApp(MyApp(
-  items:List<String>.generate(1000, (i)=>"Item $i")
+  // 從MyApp傳遞進去
+  // new List<String> 數組<String類型>
+  items:new List<String>.generate(1000, (i)=>"Item $i")
 ));
 
 class MyApp extends StatelessWidget{
+  // 接收參數
   final List<String> items;
   // 構造函數
   // 必須有個 Key值
@@ -292,8 +295,11 @@ class MyApp extends StatelessWidget{
       home:Scaffold(
         appBar: new AppBar(title:new Text("ListView Widget")),
         body:Center(
+          // new ListView.builder() 生成動態列表
           child:new ListView.builder(
+            // itemCount:生成長度
             itemCount: items.length,
+            // itemBuilder:(context,index){}
             itemBuilder: (context,index){
               return new ListTile(
                 title:new Text('${items[index]}')
@@ -307,6 +313,16 @@ class MyApp extends StatelessWidget{
 }
 
 ```
+
+## ListTile
+
+```dart
+ListTile(
+	title:Text("文字")
+)
+```
+
+
 
 # GridView
 
@@ -376,6 +392,114 @@ class MyApp extends StatelessWidget{
 # RowWidget布局
 
 ```dart
+body:new Row(
+    children: <Widget>[
+        new RaisedButton(
+            onPressed: (){},
+            color:Colors.greenAccent,
+            child: new Text("green"),
+        ),
+        Expanded(
+            child:new RaisedButton(
+                onPressed: (){},
+                color:Colors.redAccent,
+                child:new Text("red")
+            )
+        ),
+        Expanded(
+            child:new RaisedButton(
+                onPressed: (){},
+                color:Colors.blueAccent,
+                child:new Text("blue")
+            )
+        )
+    ],
+)
+```
+
+# Column布局
+
+```dart
+body:Center(
+    child: new Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+            Text("I am Chen"),
+            Expanded(
+                child: Text("I am Website is Chen"),
+            ),
+            Text("I am Psychosocial909@gmail.com"),
+        ],
+    ),
+)
+```
+
+# StackWidget布局
+
+```dart
+    var stack=new Stack(
+      // 對其屬性，只適用於兩個物品重疊使用
+      // FractionalOffset(x,y) 0~1
+      alignment: const FractionalOffset(0.5, 0.8),
+      children: <Widget>[
+        // 相當於圓形頭像
+        new CircleAvatar(
+          backgroundImage: new NetworkImage("https://p2.bahamut.com.tw/S/2KU/00/e8dab39f68f89b1dabd471dc1c13wyk5.JPG"),
+          radius: 100.0,
+        ),
+        new Container(
+          decoration: new BoxDecoration(
+            color:Colors.lightBlue
+          ),
+          padding: const EdgeInsets.all(5.0),
+          child: Text("董卓",style: TextStyle(fontSize: 24.0),),
+        )
+      ],
+    );
+    return MaterialApp(
+      title:"Hello World",
+      home:Scaffold(
+        appBar: new AppBar(
+          title:new Text("垂直方向布局")
+        ),
+        body:Center(
+          child: stack,
+        )
+      )
+    );
+```
+
+## 對其方式2
+
+```dart
+var stack=new Stack(
+    // 對其屬性，只適用於兩個物品重疊使用
+    // FractionalOffset(x,y) 0~1
+    alignment: const FractionalOffset(0.5, 0.8),
+    children: <Widget>[
+        // 相當於圓形頭像
+        new CircleAvatar(
+            backgroundImage: new NetworkImage("https://p2.bahamut.com.tw/S/2KU/00/e8dab39f68f89b1dabd471dc1c13wyk5.JPG"),
+            radius: 100.0,
+        ),
+        new Positioned(
+            top:10.0,
+            left:10.0,
+            child: Text("董卓"),
+        ),
+        new Positioned(
+            bottom:10.0,
+            right:10.0,
+            child: Text("董軍"),
+        )
+    ],
+);
+```
+
+# CardWidget 卡片布局
+
+```dart
 import "package:flutter/material.dart";
 
 void main() => runApp(MyApp());
@@ -384,34 +508,54 @@ class MyApp extends StatelessWidget{
   @override
 
   Widget build(BuildContext context){
+    var card=new Card(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            title:Text(
+              "《靈魂之聲 Online》台港澳代理權確定 預計近期上線、展開一場諸神與巨人的戰爭！",
+              style: TextStyle(
+                fontWeight:FontWeight.w800 
+              ),
+            ),
+            subtitle: Text("紅心辣椒今（11）日宣布，取得由韓國研發商 Blue Potion Games 開發的北歐奇幻線上遊戲《靈魂之聲 Online》台港澳代理權，預計近期上市。"),
+            leading: new Icon(Icons.account_box,color:Colors.lightBlue),
+          ),
+          // 分隔線
+          new Divider(),
+          ListTile(
+            title:Text(
+              "《靈魂之聲 Online》台港澳代理權確定 預計近期上線、展開一場諸神與巨人的戰爭！",
+              style: TextStyle(
+                fontWeight:FontWeight.w800 
+              ),
+            ),
+            subtitle: Text("紅心辣椒今（11）日宣布，取得由韓國研發商 Blue Potion Games 開發的北歐奇幻線上遊戲《靈魂之聲 Online》台港澳代理權，預計近期上市。"),
+            leading: new Icon(Icons.account_box,color:Colors.lightBlue),
+          ),
+          new Divider(),
+          ListTile(
+            title:Text(
+              "《靈魂之聲 Online》台港澳代理權確定 預計近期上線、展開一場諸神與巨人的戰爭！",
+              style: TextStyle(
+                fontWeight:FontWeight.w800 
+              ),
+            ),
+            subtitle: Text("紅心辣椒今（11）日宣布，取得由韓國研發商 Blue Potion Games 開發的北歐奇幻線上遊戲《靈魂之聲 Online》台港澳代理權，預計近期上市。"),
+            leading: new Icon(Icons.account_box,color:Colors.lightBlue),
+          ),
+          new Divider(),
+        ],
+      ),
+    );
     return MaterialApp(
       title:"Hello World",
       home:Scaffold(
         appBar: new AppBar(
-          title:new Text("水平方向布局")
+          title:new Text("垂直方向布局")
         ),
-        body:new Row(
-          children: <Widget>[
-            new RaisedButton(
-              onPressed: (){},
-              color:Colors.greenAccent,
-              child: new Text("green"),
-            ),
-            Expanded(
-              child:new RaisedButton(
-                onPressed: (){},
-                color:Colors.redAccent,
-                child:new Text("red")
-              )
-            ),
-            Expanded(
-              child:new RaisedButton(
-                onPressed: (){},
-                color:Colors.blueAccent,
-                child:new Text("blue")
-              )
-            )
-          ],
+        body:Center(
+          child: card,
         )
       )
     );
