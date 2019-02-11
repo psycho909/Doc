@@ -2,11 +2,16 @@
 
 1. 安裝JAVA
 
+   1. https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+
 2. 安裝FlutterSDK
+
+   1. https://flutter.io/docs/development/tools/sdk/archive#windows
 
 3. 安裝Android Studio
 
    1. 打開Android Stuido 軟件，然後找到Plugin的配置，搜索Flutter插件
+   2. https://developer.android.com/
 
 4. 環境變數設定`D:\Flutter\flutter\bin`
 

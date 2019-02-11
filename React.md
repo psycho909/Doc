@@ -196,7 +196,7 @@ class App extends Component {
 
 
 
-## 無狀態組件
+# 無狀態組件
 
 當一個普通組件只有`render`時，完全可通過一個無狀態組件來替換掉普通的組件
 
@@ -211,7 +211,7 @@ const TodoListUI=(props)=>{
 }
 ```
 
-### PureComponent
+## PureComponent
 
 > 當持續傳入的`props`沒有變化時，不會重新render
 
@@ -230,7 +230,7 @@ class Temp extends PureComponent{
 
 
 
-## React.Fragment
+# React.Fragment
 
 >   可做不可見的包裹元素
 
@@ -246,7 +246,7 @@ class Temp extends PureComponent{
 <p>2</p>
 ```
 
-## PropTypes
+# PropTypes 驗證
 
 ```js
 improt PropTypes from 'prop-types'
@@ -261,15 +261,15 @@ TodoItem.defaultProps={
 }
 ```
 
-## `CONTEXT API`上下文
+# `CONTEXT API`上下文
 
-### 第一步創建context
+## 第一步創建context
 
 ```js
 const myContext=React.createContext()
 ```
 
-### 第二步 創建 Provider Component
+## 第二步 創建 Provider Component
 
 ```js
 class MyProvider extends Component{
@@ -287,7 +287,7 @@ class MyProvider extends Component{
 }
 ```
 
-### 第三步
+## 第三步
 
 ```js
 const Family=(props)=>{
@@ -327,12 +327,12 @@ class App extends Component {
 
 
 
-## 高階組件
+# 高階組件
 
 1. 第一個參數是組件
 2. 返回值也是組件
 
-### 範例1
+## 範例1
 
 ```js
 const PropsLogger=(WrapperComponent)=>{
@@ -360,7 +360,7 @@ class App extends Component {
 }
 ```
 
-### 範例2
+## 範例2
 
 ```js
 // /hoc/widthFetch
@@ -427,7 +427,7 @@ export default Joke;
 <Joke />
 ```
 
-### 範例3 `this.props.render()`
+## 範例3 `this.props.render()`
 
 ```js
 class WithMouse extends Component {
@@ -454,43 +454,43 @@ const Mouse=()=>{
 
 
 
-## 生命週期
+# 生命週期
 
 > 生命週期函數只在某一個函數組件會自動執行的函數
 
-### Mounting
+## Mounting
 
-#### componentWillMount
+### componentWillMount
 
 > 在組件即將被掛載到頁面時候自動執行
 
-#### componentDidMount
+### componentDidMount
 
 > 組件被掛載到頁面之後，自動被執行一次，之後就不會再重新被重複執行
 
 > ajax請求使用此生命週期
 
-### Updation
+## Updation
 
-#### shouldComponentUpdate(nextProps,nextState)
+### shouldComponentUpdate(nextProps,nextState)
 
 > 組件被更新之前，它會自動被執行
 
 > rteturn true 會執行更新，rteturn  false不會執行更新
 
-##### nextProps
+#### nextProps
 
 > 接下來props會變化成怎樣
 
-##### nextState
+#### nextState
 
 > 接下來state會變化成怎樣
 
-#### componentWillUpdate
+### componentWillUpdate
 
 > 組件被更新之前，它會自動執行，但是他在`shouldComponentUpdate`之後被執行，如果`shouldComponentUpdate`返回`true`才執行，如果返回`false`不會執行更新
 
-#### componentDidUpdate
+### componentDidUpdate
 
 > 組件更新完成之後，他會被執行
 
@@ -517,9 +517,19 @@ componentWillReceiveProps(nextProps){
 }
 ```
 
+## Unmounting
+
+### componentWillUnmount
+
+>   當這個組件即將被從頁面中剔除的時候，會被執行
+
+# 新的生命週期
+
 ## static getDerivedStateFromProps(nextProps, prevState)
 
-取代componentWillReceiveProps
+1.  用來取代`componentWillReceiveProps`
+2.  不可以直接訪問`this.state`&`this.props`
+3.  兩個參數`nextProps`&`prevState`
 
 ```js
 state = {
@@ -561,13 +571,45 @@ static getDerivedStateFromProps(nextProps, prevState) {
 
 ```
 
+## getSnapshotBeforeUpdate
 
+1.  用來取代`componentWillUpdate`
+2.  接收兩個參數`prevProps`&`prevState`
+3.  返回值會傳給`componentDidUpdate`的第三個參數`snapshot`
 
-### Unmounting
+```react
+// list` 條目增加，渲染的 `li` 也增加。但是滾動條位置不變
+export default class List extends React.Component {
+    listRef = null
+    // 新的生命週期
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        // 如果 `props.list` 增加，將原來的 scrollHeight 存入 listRef
+        if (prevProps.list.length < this.props.list.length) {
+            return this.listRef.scrollHeight
+        }
+        return null
+    } 
+    // snapshot 就是 `getSnapshotBeforeUpdate` 的返回值
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (snapshot !== null) {
+            // scrollTop 增加新的 scrollHeight 和原來 scrollHeight 的差值，以保持滾動條位置不變
+            this.listRef.scrollTop += this.listRef.scrollHeight - snapshot
+        }
+    } 
+    
+    setListRef = ref => (this.listRef = ref)
 
-#### componentWillUnmount
-
-> 當這個組件即將被從頁面中剔除的時候，會被執行
+    render() {
+        return (
+            <ul ref={this.setListRef} style={{ height: 200, overflowY: 'scroll' }}>
+                {this.props.list.map((n, i) => (
+                    <li key={i}>{n}</li>
+                ))}
+            </ul>
+        )
+    }
+}
+```
 
 
 
@@ -1524,18 +1566,18 @@ export const userSagas=[
 ]
 ```
 
-## React Hook
+# React Hook
 
 1.  useState()
 2.  useEffect()
 3.  useContext()
 
-### useState
+## useState
 
 1.  **useState 什麼時候執行？** 它會在組件每次render的時候調用
 2.  類似`this.state`與`this.setState`的合體
 
-```js
+```react
 import React,{useState} from 'react'
 
 const Example=()=>{
@@ -1548,20 +1590,48 @@ const Example=()=>{
     }
     return (
     	<div>
-        	<button onClick={this.increase}>-</button>
+        	<button onClick={increase}>-</button>
         	<span>{count}</span>
-        	<button onClick={this.decrease}>+</button>
+        	<button onClick={decrease}>+</button>
         </div>
     )
 }
 
 ```
 
-### useContext
+```react
+const SuperButton=(props)=>{
+    const {onClick,children}=props
+    const onclickHere=onClick;
+    return <button onClick={onclickHere}>{children}</button>
+}
+
+const UseStateSample=()=>{
+    const [count,setCount]=useState(0)
+
+    const increased=()=>{
+        setCount(count=>count+1)
+    }
+    const decreased=()=>{
+        setCount(count-1)
+    }
+    return (
+        <p>
+            <SuperButton onClick={decreased}>-</SuperButton>
+            <b>{count}</b>
+            <SuperButton onClick={increased}>+</SuperButton>
+        </p>
+    )
+}
+```
+
+
+
+## useContext
 
 可以取代`Context.Consumer`使用
 
-```js
+```react
 import React,{useContext,useState} from 'react'
 
 const CounterContext=React.createContext()
@@ -1580,9 +1650,7 @@ const CounterApp=()=>{
         </CounterContext.Provider>
     )
 }
-```
 
-```js
 const Counter=()=>{
     const {count,increase,decrease}=useContext(CounterContext);
     return (
@@ -1595,6 +1663,44 @@ const Counter=()=>{
 }
 ```
 
+
+
+```react
+const MyContext=React.createContext();
+
+const UseContextSample=()=>{
+    const [count,setCount]=useState(0);
+    const increment=()=>{
+        setCount(count=>count+1)
+    }
+    const decrement=()=>{
+        setCount(count=>count-1)
+    }
+    return (
+        <div>
+            <MyContext.Provider value={{increment,decrement,count}}>
+                <IncrementButton/>
+            </MyContext.Provider>
+        </div>
+    )
+}
+
+const IncrementButton=()=>{
+    const {increment,decrement,count}=useContext(MyContext);
+
+    return (
+        <p>
+            <h3>UseContextSample</h3>
+            <button onClick={increment}>+</button>
+            <b>{count}</b>
+            <button onClick={decrement}>-</button>
+        </p>
+    )
+}
+```
+
+
+
 ## useEffect
 
 `componentDidMount`和`componentWillUnmount`和`componentDidUpdate`綜合體
@@ -1602,6 +1708,7 @@ const Counter=()=>{
 1.  **useEffect 什麼時候執行？** 它會在組件 mount 和 unmount 以及每次重新渲染的時候都會執行，也就是會在 componentDidMount、componentDidUpdate、componentWillUnmount 這三個時期執行。
 2.  第一個參數為`componentDidMount`、`componentWillUnmount`
 3.  第二個參數為`componentDidUpdate`
+4.  第二個參數，若與前一次相等 effect 就不會執行，空陣列就意味著只會執行一次 ( 永遠相等 )
 
 ```js	
 useEffect(
@@ -1611,8 +1718,6 @@ useEffect(
 	return ;
 ,[])
 ```
-
-
 
 ```js
 import { useState, useEffect } from 'react';
@@ -1658,6 +1763,45 @@ const App = () => {
 ```
 
 ```js
+const UseEffectSample=()=>{
+    const [count,setCount]=useState(0);
 
+    useEffect(()=>{
+        const timerId=setTimeout(()=>{
+            setCount(count=>count+1)
+        },1000)
+        return ()=>{
+            return clearTimeout(timerId)
+        }
+    },[count])
+
+    return (
+        <p>
+            time: <b>{count}</b>
+        </p>
+    )
+}
+```
+
+## 支援IE11
+
+### 第一步 React Polyfill
+
+-   通過`npm install react-app-polyfill`安裝 polyfill
+-   在入口文件（通常是`src/index.js`）的第一行引入該庫
+
+```js
+// 在文件的第一行導入，兼容 IE11
+import 'react-app-polyfill/ie11';
+```
+
+### 第二步 core-js
+
+-   通過`npm install core-js`命令進行安裝
+-   在入口文件（通常是`src/index.js`）的第一行引入該庫
+
+```js
+// 在文件的第一行導入
+import 'core-js';
 ```
 
