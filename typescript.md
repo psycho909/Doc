@@ -8,6 +8,10 @@ npm i -g typescript
 2. 轉檔`tsc 檔名.ts`
 3. 會轉檔成`js`
 4. 遇到錯誤會停止轉檔
+5. 自動編譯
+   1. 安裝`ts-node`
+   2. 安裝`nodemon`
+   3.  執行`nodemon --exec ts-node [檔名].ts`
 
 ## 類型定義
 
