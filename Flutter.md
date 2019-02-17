@@ -563,3 +563,203 @@ class MyApp extends StatelessWidget{
 }
 ```
 
+# 導航Page
+
+```dart
+import "package:flutter/material.dart";
+
+void main(){
+  runApp(MaterialApp(
+    title:"導航",
+    home:new FirstScreen()
+  ));
+}
+
+class FirstScreen extends StatelessWidget{
+  @override
+
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: new AppBar(
+        title:Text('導航頁面')
+      ),
+      body:Center(
+        child:RaisedButton(
+            child: Text("Check Item info"),
+            onPressed: (){
+              Navigator.push(context,MaterialPageRoute(
+                  builder: (context)=>new SecondScreen()
+              ));
+            },
+        )
+      )
+    );
+  }
+}
+
+class SecondScreen extends StatelessWidget{
+  @override
+
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(
+        title:Text("Itme info page")
+      ),
+      body: Center(
+        child: RaisedButton(
+            child: Text("Back"),
+            onPressed: (){
+              Navigator.pop(context);
+            }
+        ),
+      ),
+    );
+  }
+}
+```
+
+# 導航參數傳遞和接收
+
+```dart
+import "package:flutter/material.dart";
+
+class Products{
+  final String title; // 商品名稱
+  final String description; // 商品描述
+  Products(this.title,this.description);
+}
+
+void main(){
+  runApp(MaterialApp(
+    title:"Nav data",
+    home:ProductList(
+      products:List.generate(20, (i)=>Products('商品名稱 $i',"商品描述 $i"))
+    )
+  ));
+}
+
+class ProductList extends StatelessWidget {
+  // 參數接收
+  // 定義List變量<Product 類>
+  final List<Products> products;
+  ProductList({Key key,@required this.products}):super(key:key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title:Text("Item List")
+      ),
+      body:ListView.builder(
+        itemCount: products.length,
+        itemBuilder: (context,index){
+          return ListTile(
+            title:Text("${products[index].title} @ ${products[index].description}"),
+            onTap:(){
+              Navigator.push(context,
+              MaterialPageRoute(
+                builder: (context)=>ProductDetail(products:products[index])
+              ));
+            }
+          );
+        },
+      )
+    );
+  }
+}
+
+class ProductDetail extends StatelessWidget {
+  final Products products;
+  ProductDetail({Key key,@required this.products}):super(key:key);
+
+  @override
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title:Text("${products.title}")
+      ),
+      body:Center(
+        child: Text("${products.description}"),
+      )
+    );
+  }
+}
+```
+
+頁面跳轉並返回數據
+
+```dart
+import "package:flutter/material.dart";
+
+void main(){
+  runApp(MaterialApp(
+    title:"Page 跳轉返回數據",
+    home:FirstPage()
+  ));
+}
+
+class FirstPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title:Text("找~~~")
+      ),
+      body:Center(
+        child: RouteButton(),
+      )
+    );
+  }
+}
+
+class RouteButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      child: Text("去找~"),
+      onPressed: (){_navigateToXiaoJieJie(context);},
+    );
+  }
+
+  _navigateToXiaoJieJie(BuildContext context) async{
+    final result=await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context)=>XiaoJieJie()));
+
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text("$result")));
+  }
+}
+
+class XiaoJieJie extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title:Text("Find~~")
+      ),
+      body:Center(
+        child: Column(
+          children: <Widget>[
+            RaisedButton(
+              child: Text("第一個JieJie"),
+              onPressed: (){
+                Navigator.pop(context,"第一個JieJie 15616");
+              },
+            ),
+            RaisedButton(
+              child: Text("第二個JieJie"),
+              onPressed: (){
+                Navigator.pop(context,"第二個JieJie 3213123");
+              },
+            )
+          ],
+        ),
+      )
+    );
+  }
+}
+```
+
