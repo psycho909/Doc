@@ -255,6 +255,7 @@ arr.forEach((item,index)=>{
 		obj[item]=1
 	}
 })
+// {1: 3, 2: 2, 3: 3, 4: 2, 5: 1, 6: 1}
 ```
 ## 找出重複OBJ個數
 ```javascript
@@ -279,6 +280,8 @@ for(var i=0;i<arr.length;i++){
 		obj[index]=1
 	}
 }
+
+// {0: 1, 1: 3, 3: 2, 4: 2, 5: 1, 6: 2, 7: 1, 8: 2, 9: 1}
 ```
 ## 使用reduce找出重複數量
 ```javascript

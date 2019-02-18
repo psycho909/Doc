@@ -522,7 +522,7 @@ Vue.prototype.bus=bus;
 ========================================
 // 要從 Parent 的值 傳入 Child
 // 進入 Parent.vue
-mounte(){
+mounted(){
     this.bus.$emit('tomsg',"Hello msg")
 }
 
