@@ -1783,6 +1783,49 @@ const UseEffectSample=()=>{
 }
 ```
 
+## useRef
+
+```react
+const UseRefSample=()=>{
+  const inputRef=useRef();
+  const onButtonClick=()=>{
+    console.log(displayAreaRef.current.value)
+  }
+  return (
+    <div>
+      <input ref={inputRef} type="text"/>
+      <button onClick={onButtonClick}>GET INPUT</button>
+    </div>
+  )
+}
+```
+
+```react
+const UseRefSample=()=>{
+  const displayAreaRef=useRef();
+  useEffect(()=>{
+    let rafid=null;
+    const loop=()=>{
+      const now=new Date();
+      displayAreaRef.current.textContent=`
+      ${String(now.getHours()).padStart(2,'0')}:
+      ${String(now.getMinutes()).padStart(2,"0")}:
+      ${String(now.getSeconds()).padStart(2,'0')}.${String(now.getMilliseconds()).padStart(3,'0')}
+      `;
+      rafid=requestAnimationFrame(loop)
+    };
+    loop();
+    return ()=>cancelAnimationFrame(rafid);
+  })
+  
+  return (
+    <p ref={displayAreaRef} />
+  )
+}
+```
+
+
+
 ## 支援IE11
 
 ### 第一步 React Polyfill
