@@ -107,7 +107,21 @@ $boolean:true;
 }
 ```
 
+
+
+# Array
+
+```scss
+$colors:#fb3569,#ffe26f,#a1dd70,#35477d;
+
+background:nth($colors,1);
+// background:#fb3569;
+```
+
+
+
 ## Maps
+
 ```scss
 $map: (
     key1: value1, 
