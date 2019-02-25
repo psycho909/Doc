@@ -613,157 +613,99 @@ new Vue({
 1. Single Slot
 1. Named Slot
 1. Scoped Slot
-### Single Slot
-```html
-<my-component>
-    <div>This is not slot</div>
-</my-component>
-<template id="signle-slot">
-    <div class="box">
-        <slot>Hello from child</slot>
+### Default Slot && Named Slot
+```vue
+// Child.vue
+<template>
+    <div>
+        <header>
+            <slot name="header" :text="nameText"></slot>
+            <slot :defaulttext="defaultText">Default name</slot>
+        </header>
     </div>
 </template>
-```
-```javascript
-Vue.component('my-component',{
-    template:'#my-component'
-})
-```
-### Named Slot
-```html
-<name-slot>
-    <div slot="header">HHHeader</div>
-    <div slot="footer">FFFooter</div>
-</name-slot>
-<template id="name-slot">
-    <div class="box">
-        <slot name="header">Header</slot>
-        <slot>This is content</slot>
-        <slot name="footer">Footer</slot>
-    </div>
-</template>
-```
-```javascript
-Vue.component('name-slot',{
-    template:'#name-slot'
-})
-```
-### Scoped Slot
-```html
-<div id="app">
-    <scope-slot v-bind:items="items">
-        <template scope="props" slot="item">
-            <span>{{props.text}}</span>
-        </template>
-    </scope-slot>
-</div>
-<template id="scope-slot">
-    <div class="box">
-        <h1>Scope Slot</h1>
-        <p>內容</p>
-        <slot name="item" v-for="item in items" v-bind:text="item.text"></slot>
-    </div>
-</template>
-```
-```javascript
-Vue.component('scope-slot',{
-    props:['items'],
-    template:'#scope-slot'
-})
-var app=new Vue({
-    el:'#app',
-    data:{
-        items: [
-            { id: 1, text: '項目 1' },
-            { id: 2, text: '項目 2' },
-            { id: 3, text: '項目 3' }
-        ]
+<script>
+    export default {
+        data(){
+            return {
+                defaultText:"child default text",
+                nameText:"child Name text",
+            }
+        }
     }
-})
+</script>
+```
+```vue
+// Parent.vue
+<template>
+  <div class="hello">
+      <Child>
+        <template #header="slotProps">
+            <h1>{{slotProps.text}}</h1>
+        </template>
+        <template v-slot:default="slotProps">
+            <h2>{{slotProps.defaulttext}}</h2>
+        </template>
+      </Child>
+  </div>
+</template>
 ```
 ### Slot-Scope
 
-> 使用`slot`插槽使`組件`可以更靈活的使用
-1. 父組件在使用子組件`slot`，並在子組件內定義`template`，並定義`slot-scope`
-2. 在子組件已定義的`slot`綁定`自定義屬性`
+>   使用`slot`插槽使`組件`可以更靈活的使用
 
-#### 用法1
+1.  父組件在使用子組件`slot`，並在子組件內定義`template`，並定義`slot-scope`
+2.  在子組件已定義的`slot`綁定`自定義屬性`
 
-```html
-<!-- Child -->
-<template id="content">
-    <main>
-        <h1>TiTLE</h1>
-        <p>Content</p>
-        <!-- 定義slot name -->
-        <!-- 使用v-bind綁定 一個自定義屬性item -->
-        <slot name="slot-content" :item="val" v-for="val in artlist"></slot>
-    </main>
-</template>
-<!-- Parent -->
-<template id="container">
-    <div class="container">
-        <content>
-            <!-- 自定義scope -->
-            <!-- 從Child的slot name 獲取 slot -->
-            <template slot-scope="props" slot="slot-content">
-                <article>
-                    <div>{{props.item.title}}</div>
-                </article>
-            </template>
-        </content>
+```vue
+// child
+<template>
+    <div>
+        <header>
+            <slot name="header" :text="nameText"></slot>
+            <slot :defaulttext="defaultText">Default name</slot>
+        </header>
+        <main>
+            <slot name="main" :movie="m" v-for="m in movies"></slot>
+        </main>
     </div>
 </template>
-```
-```javascript
-Vue.component('content',{
-    template:'#content',
-    data:function(){
-        return {
-            artlist:[
-                {title:'Firefox'},
-                {title:'Edge'},
-                {title:'IE'}
-            ]
+<script>
+    export default {
+        data(){
+            return {
+                defaultText:"child default text",
+                nameText:"child Name text",
+                movies:[
+                    {"name":"粽邪","country":"TW"},
+                    {"name":"棒邪","country":"TW"},
+                    {"name":"復仇者聯盟4","country":"USA"},
+                ]
+            }
         }
     }
-})
-Vue.component('container',{
-    template:'#container
-})
+</script>
 ```
-#### 用法2
 
-```html
-<ul>
-    <scope-slot v-bind:items="itemsList">
-        <li slot-scope="props" slot="item">{{props.id}}.{{props.text}}</li>
-    </scope-slot>
-</ul>
-<template id="scope-slot">
-    <div class="box">
-        <h1>Scope Slot</h1>
-        <p>內容</p>
-        <slot name="item" v-for="item in items" v-bind:text="item.text" v-bind:id="item.id"></slot>
-    </div>
+```vue
+// Parent.vue
+<template>
+  <div class="hello">
+      <Child>
+        <template #header="slotProps">
+            <h1>{{slotProps.text}}</h1>
+        </template>
+        <template v-slot:default="slotProps">
+            <h2>{{slotProps.defaulttext}}</h2>
+        </template>
+        <template #main="slotProps">
+            <div>{{slotProps.movie['name']}}</div>
+        </template>
+      </Child>
+  </div>
 </template>
 ```
-```javascript
-Vue.component('scope-slot',{
-    props:['items'],
-    template:'#scope-slot'
-})
-var app=new Vue({
-    el:'#app',
-    data:{
-        itemsList: [
-            { id: 1, text: '項目 1' },
-            { id: 2, text: '項目 2' },
-            { id: 3, text: '項目 3' }
-        ]
-    }
-})
-```
+
 ## transition動畫效果
 > 淡入、淡出
 ```css

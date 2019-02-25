@@ -156,10 +156,19 @@ git add files //添加代碼到緩存區
 git commit -m '提交內容的備註' //提交代碼到本地倉庫
 git branch //顯示本地分支
 git branch branchName //創建分支
+git fetch origin origin/remote_branch:your_branch //將遠程分支下載到本地，並創建分支
 git branch -d branchName //刪除分支 -D強制刪除分支
 git checkout -b branchName //不加-b就是普通切換分支
 git fetch -p //同步遠端分支狀態
 git pull -r origin branchName //fetch遠端代碼到本地，並以rebase的方式合併代碼
 git push origin branchName //更新本地代碼到遠端
 git push <remoteName> :branchName //刪除遠端分支
+
+git merge <name> // 將目標分支合併到當前分支
+git clean -d -f // 刪除當前目錄下沒有被track過的文件和文件夾
+
+git log // 顯示commit的詳細日誌
+git log --pretty=oneline // 只顯示commit的ID與描述
+git reset --hard HEAD // 回退到最近的一個版本
+git reset --hard commit_id // 根據commit_id回退到指定版本
 ```
