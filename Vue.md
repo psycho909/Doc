@@ -229,7 +229,7 @@ updata_username () {
 ```
 ## Vue 動態組件 :is
 
-​```html
+```html
 <div id="app">
     <div class="form-group">
         <input type="radio" name="drive" id="bus" value="bus" v-model="currentView">
@@ -1370,7 +1370,7 @@ process.env.VUE_APP_API
 
 ### proxy
 
-```js
+```vue
 // 在vue.config.js建立
 deServer:{
     proxy:{
@@ -1398,7 +1398,7 @@ deServer:{
 
     1.  使用異步路由可以根據URL自動加載所需頁面的資源，並且不會造成頁面阻塞，較適用於移動端頁面，建議主頁面直接import，非主頁面使用異步路由
 
-        ```js
+        ```vue
         {
           path: '/order',
           component: () => import('./views/order.vue')
@@ -1407,7 +1407,7 @@ deServer:{
 
 4.  ### 異步組件
 
-    ```js
+    ```vue
     <template>
       <div>
         <HellowWorld v-if="showHello" />
