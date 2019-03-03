@@ -190,13 +190,13 @@ gtag('event', 'sign_up', {
 3. 開始結帳:begin_checkout
 4. 購買成功:purches
 
-### 自訂事件
+### * 自訂事件
 
 ```js
-// 事件類別 event_category
-// 事件動作 active
-// 事件標籤 event_label
-gtag('event','下載電子書',{
+// 事件類別 event_category => 點及鏈結
+// 事件動作 active =>　PageView
+// 活動標籤 event_label　＝＞下載密集電子書
+gtag('event','PageView',{
     "event_category":"點及鏈結",
     "event_label":"下載密集電子書",
     "value":10

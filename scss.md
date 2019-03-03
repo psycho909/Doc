@@ -1,5 +1,38 @@
 # SCSS
+## 變數使用
+
+```scss
+$blue:#eee;
+$n:2;
+
+.box{
+    color:$blue;
+    &__box-inner::nth-child(#{$n}){
+        color:$blue;
+    }
+}
+```
+
+## 嵌套
+
+```scss
+.box{
+    a &{
+		color:#000;
+    }
+}
+```
+
+```css
+a .box{
+    color:#000;
+}
+```
+
+
+
 ## @if
+
 ```scss
 $boolean:true;
 
@@ -17,13 +50,32 @@ $boolean:true;
 ```
 ## @for $i from <start> through <end>
 ```scss
+// 1 <= 10
+
 @for $i from 1 through 10{
     .ball-#{i}{
         color:red;
     }
 }
 ```
+## @for $i from <start> to<end>
+
+```scss
+// 1 < 10
+
+@for $i from 1 to 10{
+    .ball-#{i}{
+        color:red;
+    }
+}
+```
+
+
+
+
+
 ## mixins
+
 ```scss
 @mixin Mixins名($valueName:value){
     /*樣式規則*/
@@ -146,7 +198,22 @@ body {
     color: map-get($colors, pink);
 }
 ```
-## 迴圈 跑 maps
+## Map append
+
+```scss
+$overSelector: (menu1:#000,menu2:#eee);
+
+$overSelector: append($overSelector,aba #ccc);
+
+@debug $overSelector();
+
+CSS: (menu1 #000, menu2 #eee, aba #ccc) ()
+```
+
+
+
+## 迴圈 跑 maps 【@each $key,$value in $map】
+
 ```scss
 $menus: (
     menu1: #94a437,
@@ -165,6 +232,7 @@ $menus: (
 }
 ```
 ## @function
+
 ```scss
 p{
     color:darken($f00,70%);

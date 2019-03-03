@@ -117,7 +117,7 @@ class App extends React.Component {
 
 ReactDOM.render(<App />, document.getElementById("root"));
 ```
-### 方法二
+### 方法二 (常用)
 
 ```js
 constructor(props){
@@ -289,7 +289,7 @@ class MyProvider extends Component{
 
 ## 第三步
 
-```js
+```react
 const Family=(props)=>{
   return (
     <div>
@@ -334,7 +334,7 @@ class App extends Component {
 
 ## 範例1
 
-```js
+```react
 const PropsLogger=(WrapperComponent)=>{
     return class extends Component {
 		render(){
@@ -362,7 +362,7 @@ class App extends Component {
 
 ## 範例2
 
-```js
+```react
 // /hoc/widthFetch
 import React,{Component} from 'react'
 
@@ -401,7 +401,7 @@ const widthFetch=(url)=>(View)=>{
 export default withFetch
 ```
 
-```js
+```react
 // ./components/Joke
 
 import React from 'react'
@@ -415,6 +415,7 @@ const Joke=withFetch('https://api.icndb.com/jokes/random/3')(props=>{
                 <p key={joke.id}>{joke.joke}</p>
             )))
         }
+        </div>
      )
 })
 
@@ -1440,7 +1441,7 @@ import Broken from './component/Broken'
 </ErrorBoundary>
 ```
 
-## redux-saga
+# redux-saga
 
 ```js
 npm i --save redux-saga
@@ -1472,7 +1473,7 @@ const store=createStore(
 sagaMiddleware.run(helloSaga)
 
 ```
-### saga使用generator方式
+## saga使用generator方式
 #### 用法1
 
 ```js
@@ -1529,7 +1530,7 @@ function run(generator){
 
 
 
-### 創建saga用的js
+## 創建saga用的js
 
 #### basic1
 
@@ -1846,9 +1847,10 @@ const IncrementButton=()=>{
 ```js	
 useEffect(
 // componentDidMount
-    
-// componentWillUnmount
-	return ;
+  
+    return ()=>{
+    // componentWillUnmount
+	};
 ,[])
 ```
 
@@ -1922,7 +1924,7 @@ const UseEffectSample=()=>{
 const UseRefSample=()=>{
   const inputRef=useRef();
   const onButtonClick=()=>{
-    console.log(displayAreaRef.current.value)
+    console.log(inputRef.current.value)
   }
   return (
     <div>
@@ -1959,9 +1961,9 @@ const UseRefSample=()=>{
 
 
 
-## 支援IE11
+# 支援IE11
 
-### 第一步 React Polyfill
+## 第一步 React Polyfill
 
 -   通過`npm install react-app-polyfill`安裝 polyfill
 -   在入口文件（通常是`src/index.js`）的第一行引入該庫
@@ -1971,7 +1973,7 @@ const UseRefSample=()=>{
 import 'react-app-polyfill/ie11';
 ```
 
-### 第二步 core-js
+## 第二步 core-js
 
 -   通過`npm install core-js`命令進行安裝
 -   在入口文件（通常是`src/index.js`）的第一行引入該庫

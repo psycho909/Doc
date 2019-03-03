@@ -276,7 +276,7 @@ import "package:flutter/material.dart";
 void main()=> runApp(MyApp(
   // 從MyApp傳遞進去
   // new List<String> 數組<String類型>
-  items:new List<String>.generate(1000, (i)=>"Item $i")
+  items:List<String>.generate(1000, (i)=>"Item $i")
 ));
 
 class MyApp extends StatelessWidget{
@@ -296,7 +296,7 @@ class MyApp extends StatelessWidget{
         appBar: new AppBar(title:new Text("ListView Widget")),
         body:Center(
           // new ListView.builder() 生成動態列表
-          child:new ListView.builder(
+          child:ListView.builder(
             // itemCount:生成長度
             itemCount: items.length,
             // itemBuilder:(context,index){}
@@ -761,5 +761,434 @@ class XiaoJieJie extends StatelessWidget {
     );
   }
 }
+```
+
+# 底部導航Bar
+
+```dart
+import 'package:flutter/material.dart';
+import 'pages/home_screen.dart';
+import 'pages/pages_screen.dart';
+import 'pages/email_screen.dart';
+import 'pages/airplay_screen.dart';
+
+
+class BottomNavgationWidget extends StatefulWidget {
+  _BottomNavgationWidgetState createState() => _BottomNavgationWidgetState();
+}
+
+class _BottomNavgationWidgetState extends State<BottomNavgationWidget> {
+  final _BottomNavgationColor=Colors.blue;
+  int _currentIndex=0;
+  // List 類似JS的Array
+  List<Widget> list=List();
+	
+  // 初始化 重寫
+  @override
+  void initState(){
+    list
+      ..add(HomeScreen())
+      ..add(EmailScreen())
+      ..add(PagesScreen())
+      ..add(AirplayScreen());
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body:list[_currentIndex],
+      /*
+      bottomNavigationBar:BottomNavigationBar(
+      	// 數組
+        items:[
+        	BottomNavigationBarItem(
+        		icon:Icon(
+        			Icons.home,
+        			color:Colors.blue
+        		),
+        		title:Text(
+        			"Home",
+        			style:TextStyle(color:Colors.blue)
+        		)
+        	)
+        ],
+      	// 哪個被點擊 就顯示哪個
+      	currentIndex:_currentIndex,
+      	// 響應事件
+        onTap:(int index){
+        	setState(() {
+                _currentIndex=index;
+            });
+        }
+      )
+      */
+      bottomNavigationBar: BottomNavigationBar(
+        items:[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color:_BottomNavgationColor
+            ),
+            title:Text(
+              "Home",
+              style:TextStyle(color:_BottomNavgationColor)
+            )
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.email,
+              color:_BottomNavgationColor
+            ),
+            title:Text(
+              "Email",
+              style:TextStyle(color:_BottomNavgationColor)
+            )
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.pages,
+              color:_BottomNavgationColor
+            ),
+            title:Text(
+              "Pages",
+              style:TextStyle(color:_BottomNavgationColor)
+            )
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.airplay,
+              color:_BottomNavgationColor
+            ),
+            title:Text(
+              "Airplay",
+              style:TextStyle(color:_BottomNavgationColor)
+            )
+          )
+        ],
+		currentIndex: _currentIndex,
+        onTap:(int index){
+          setState(() {
+            _currentIndex=index;
+          });
+        }
+      ),
+    );
+  }
+}
+
+```
+
+# 懸浮按鈕`floatingActionButton`
+
+```dart
+// each_view.dart
+
+import "package:flutter/material.dart";
+
+class EachView extends StatefulWidget {
+  String _title;
+  EachView(this._title);
+  @override
+  _EachViewState createState() => _EachViewState();
+}
+
+class _EachViewState extends State<EachView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title:Text(widget._title)),
+      body:Center(
+        child: Text(widget._title),
+      )
+    );
+  }
+}
+```
+
+
+
+```dart
+import "package:flutter/material.dart";
+import "each_view.dart";
+
+class BottomAppBarDemo extends StatefulWidget {
+  final Widget child;
+
+  BottomAppBarDemo({Key key, this.child}) : super(key: key);
+
+  _BottomAppBarDemoState createState() => _BottomAppBarDemoState();
+}
+
+class _BottomAppBarDemoState extends State<BottomAppBarDemo> {
+  List<Widget> _eachView;
+  int _index=0;
+  // 初始化
+  @override
+  void initState() {
+    _eachView=List();
+    _eachView
+      ..add(EachView("Home"))
+      ..add(EachView("JSPang"));
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body:_eachView[_index],
+      // 可交互浮動按鈕
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          // 點按鈕 生成一個路由
+          Navigator.push(context,
+            MaterialPageRoute(
+              builder: (BuildContext context){
+                return EachView("New Page");
+              }
+            )
+          );
+        },
+        tooltip: "JSPang",
+        child:Icon(
+          Icons.add,
+          color:Colors.white
+        )
+      ),
+      // 與底部工具欄 融合
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // 底部工具欄
+      bottomNavigationBar: BottomAppBar(
+        color:Colors.lightBlue,
+        // 底部导航栏打一个圆形的洞
+        shape:CircularNotchedRectangle(),
+        child:Row(
+          //mainAxisSize，可压缩或伸长行内控件的间距
+          mainAxisSize: MainAxisSize.max,
+          //对齐方式
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            IconButton(
+              icon:Icon(
+                  Icons.home,
+                  color:Colors.greenAccent,
+              ),
+              onPressed: (){
+                setState(() {
+                  _index=0;
+                });
+              },
+            ),
+            IconButton(
+              icon:Icon(
+                  Icons.airline_seat_flat,
+                  color:Colors.greenAccent,
+              ),
+              onPressed: (){
+                setState(() {
+                  _index=1;
+                });
+              },
+            )
+          ],
+        )
+      ),
+    );
+  }
+}
+```
+
+# 路由換頁動畫
+
+```dart
+import "package:flutter/material.dart";
+
+class CustomRoute extends PageRouteBuilder{
+  final Widget widget;
+
+  CustomRoute(this.widget)
+    // 調用父類方法
+    :super(
+      // 設置過渡時間
+      transitionDuration:Duration(seconds: 1),
+      // 重寫頁面構造氣
+      // 接收3個參數
+      pageBuilder:(
+        // 1.上下文
+        BuildContext context,
+        Animation<double> animation1,
+        Animation<double> animation2,
+      ){
+        return widget;
+      },
+      // 過去效果 接收4個參數
+      transitionsBuilder:(
+        BuildContext context,
+        Animation<double> animation1,
+        Animation<double> animation2,
+        Widget child
+      ){
+        // 漸隱見線的路由動畫效果
+        // return FadeTransition(
+        //   opacity:Tween(begin:0.0,end:1.0)
+        //   .animate(CurvedAnimation(
+        //     parent:animation1,
+        //     curve: Curves.fastLinearToSlowEaseIn
+        //   )),
+        //   child: child,
+        // );
+
+        // 縮放的動畫效果
+        // return ScaleTransition(
+        //   scale:Tween(begin:0.0,end:1.0).animate(CurvedAnimation(
+        //     parent:animation1,
+        //     curve: Curves.fastLinearToSlowEaseIn
+        //   )),
+        //   child: child,
+        // );
+
+        // 旋轉+縮放動畫效果
+        // return RotationTransition(
+        //   turns: Tween(begin: 0.0,end: 1.0)
+        //   .animate(CurvedAnimation(
+        //     parent: animation1,
+        //     curve: Curves.fastLinearToSlowEaseIn
+        //   )),
+        //   child:ScaleTransition(
+        //     scale:Tween(begin:0.0,end:1.0).animate(CurvedAnimation(
+        //       parent: animation1,
+        //       curve: Curves.fastLinearToSlowEaseIn
+        //     )),
+        //     child:child
+        //   )
+        // );
+
+        // 左右滑動動畫
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: Offset(-1.0, 0.0),
+            end:Offset(0.0, 0.0)
+          ).animate(CurvedAnimation(
+            parent: animation1,
+            curve: Curves.fastLinearToSlowEaseIn
+          )),
+          child:child
+        );
+      }
+    );
+}
+```
+
+```dart
+import "package:flutter/material.dart";
+import "custom_router.dart";
+
+class FirstPage extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blue,
+      appBar: AppBar(
+        title:Text("FirstPage",style: TextStyle(fontSize: 36.0)),
+        elevation: 4.0
+      ),
+      body:Center(
+        child: MaterialButton(
+          child:Icon(
+            Icons.navigate_next,
+            color:Colors.white,
+            size:64.0
+          ),
+          onPressed: (){
+            Navigator.of(context).push(
+              CustomRoute(SecondPage())
+            );
+          },
+        ),
+      )
+    );
+  }
+}
+
+class SecondPage extends StatelessWidget{
+  @override
+
+  Widget build(BuildContext context){
+    return Scaffold(
+      backgroundColor: Colors.pinkAccent,
+      appBar: AppBar(
+        title:Text("SecondPage",style: TextStyle(fontSize: 36.0)),
+        elevation: 4.0,
+        backgroundColor: Colors.pinkAccent,
+        leading: Container()
+      ),
+      body:Center(
+        child: MaterialButton(
+          child:Icon(
+            Icons.navigate_before,
+            color:Colors.white,
+            size:64.0
+          ),
+          onPressed: (){
+            Navigator.of(context).pop();
+          },
+        ),
+      )
+      
+    );
+  }
+}
+```
+
+# 毛玻璃效果
+
+```dart
+import "package:flutter/material.dart";
+// 圖片過濾器
+import 'dart:ui';
+
+class FrostedGlassDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // 層疊效果
+      body:Stack(
+        children: <Widget>[
+          // 約束盒子組件,添加額外的約束條件
+          ConstrainedBox(
+            constraints: const BoxConstraints.expand(),
+            child: Image.network('https://p2.bahamut.com.tw/M/2KU/81/80d8f81da0010dd06468a3355f144cp5.JPG'),
+          ),
+          Center(
+            // 可裁切的矩形
+            child:ClipRect(
+              // 背景過濾器
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5.0,sigmaY: 5.0),
+                child: Opacity(
+                  opacity: 0.5,
+                  child: Container(
+                    width: 500.0,
+                    height:700.0,
+                    // 盒子修飾器
+                    decoration: BoxDecoration(color:Colors.grey.shade200),
+                    child: Center(
+                      child: Text(
+                        "JSPang",
+                        style:Theme.of(context).textTheme.display3  
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ),
+        ],
+      )
+    );
+  }
+}  
 ```
 
