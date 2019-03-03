@@ -867,8 +867,6 @@ export default (state=defaultState,action)=>{
 }
 ```
 
-
-
 ```js
 // App.js
 import {searchFocus} from './store/actionCreator'
@@ -876,6 +874,31 @@ handleSearchFocus(){
     store.dispatch(searchFocus())
 }
 ```
+
+## actionCreator
+
+```react
+export const setGames=(games)=>{
+    return {
+        type:SET_GAMES,
+        games
+    }
+}
+
+export const fetchGames=(id)=>{
+    return (dispatch)=>{
+        fetch('/api/games')
+        .then((res)=>{
+            return res.json()
+        })
+        .then((data)=>{
+            dispatch(setGames(data.games))
+        })
+    }
+}
+```
+
+
 
 ### 多個``reducer`管理
 
@@ -1012,8 +1035,6 @@ export const actionGetUser=()=>{
     }
 }
 ```
-
-
 
 ## react-router-dom
 
