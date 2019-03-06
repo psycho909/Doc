@@ -1,34 +1,32 @@
-# Vuex
+# Actions / Mutations / State
 
-## Actions / Mutations / State
-
-### Actions
+## Actions
 
 1. 定義整個App的所有行為，使用者在前端元件觸發的事件會`dispatch`給`Actions`，接著`Actions`會去`commit mutation`，進而讓相對應的`mutation handler`去做更改狀態的動作。
 
 2. 在這個階段因為常要從後端讀取資料，所以也可以進行`非同步地`跟`Backend API`溝通。
 
-### Mutations
+## Mutations
 
 1. 透過`commit`接收`Actions`傳遞的資料與行為，並經過計算處理過後改變State。
 2. 每個`Mutation`都有一個字串型態的`事件類型(type)`和一個`回調函數(handler)`。
 3. `回調函數(handler)`就是我們實際更改狀態的地方，第一個參數即帶入`State`。
 4. 注意只有使用`commit mutation`才能改變在`Store`中的狀態，這個動作就像是`註冊事件`一樣，是不可以直接調用`mutation handler的`。
 
-### State
+## State
 
 1. 用一個物件型態記錄整個App的所有狀態。
 2. 讓`Mutation`去更改狀態。
 3. 雖然建議是將App的所有狀態全部放入`Store`，但是Vuex還是保有彈性，可以讓元件保有自己的局部狀態。
 
-## Actions / Mutations差別
+# Actions / Mutations差別
 
-### Actions
+## Actions
 
 1. 更改狀態:`Actions`只能透過`commit mutation`去提交事件，不能直接更改狀態。
 2. 處理的事件種類:可同時處理非同步事件(call API)，這樣就可以在此階段等待API回應的時間，接收到的資料再`commit`給`Mutations`，`Mutations`收到的資料就會是即時的。
 
-### Mutations
+## Mutations
 
 1. 更改狀態:`Mutations`透過`mutation handler`直接實際更改狀態。
 2. 處理的事件種類:只能處理同步事件。
@@ -39,11 +37,11 @@
 |action|調用處理 ajax 及調用 mutation (不改變 State)，類似 methods|
 |getter|負責取得 state 資料，類似 computed|
 |mutation|負責改變 state 資料 (Vuex 文件說明，盡可能使用 mutation 改變狀態)|
-## Vuex的使用
+# Vuex的使用
 ```javascript
 npm install vuex --save
 ```
-### Vuex Store
+## Vuex Store
 > 創建`Vuex.store`(倉庫)開始，在`src`下創建一個`store`的文件，並新建一個`store.js`，在這個文件中將包函我們所需要的store
 >
 > 每一個Vuex應用的核心就是`store`(倉庫)。`store`基本上就是一個容器，他包含著你的應用中大部分的狀態(`state`)。Vuex和單純的全局對像有以下兩點不同:
@@ -53,7 +51,7 @@ npm install vuex --save
 >
 > Vuex的最新特點之一是能夠在一個`store`文件中定義`actions`和`getter`
 >
-### `store`的基本結構
+## `store`的基本結構
 ```javascript
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -134,7 +132,7 @@ export default new Vuex.Store({
     }
 })
 ```
-### Actions
+## Actions
 > Vuex的actions期望一個存儲作為必需的參數，然後是一個可選的參數。如果使用參數遭到破壞，可以使用以下語法傳遞額外的參數:
 ```javascript
 actions:{
@@ -143,13 +141,13 @@ actions:{
     }
 }
 ```
-### 開始使用
+## 開始使用
 > Vuex2中，分發用於觸發`actions`，而`commit`用於觸發`mutations`。一個`actions`的分對應一個`mutations`的`commit`。由於我們的操作是在Vuex存儲中定義的，所以可以在多個模塊中使用單個調用來分發`actions`：
 ```html
 <button class="btn btn-primary" @click="addTodo">Add Todo</button>
 ```
 > 當addTodo被分發時，它將觸發名叫ADD_TODO的mutation，並將一個新的todo推送(push())到todos列表。其餘的動作，當被觸發時將以類似的方式表現，因此沒有必要對每一個動作進行檢查。
-### 使用getters
+## 使用getters
 ```javascript
 store.getters
 ```
@@ -239,5 +237,69 @@ methods:{
        		})
     }
 }
+```
+
+# Watch 方法
+
+```vue
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  getters: {
+    getCountPlusOne: state => state.count + 1
+  },
+  mutations: {
+    increment(state) {
+      state.count++;
+    }
+  }
+});
+
+```
+
+`watch` 是將 Vuex 與其他外部代碼整合的最有用的方法，可以在你的 `awesomeService` 或者是在 `catchAllAuthUtils` 等等類似的服務中使用。
+
+```vue
+const unsubscribe = store.watch(
+  (state, getters) => {
+    return [state.count, getters.getCountPlusOne];
+  },
+  watched => {
+    console.log("Count is:", watched[0]);
+    console.log("Count plus one is:", watched[1]);
+  },
+  {}
+);
+
+// To unsubscribe:
+unsubscribe();
+```
+
+我們所做的就是在調用 vuex 的實例方法 `watch` 時，傳入兩個函數作為實參，第一個函數實參返回我們想要在 state 與/或 getters 上監聽的屬性；第二個函數實參是當屬性值 `state.count` 或 `getters.getCountPlusOne` 有改變時，調用的回調函數。
+
+這是用來結合 Vuex 與 react 或者 angular 甚至是 JQuery 代碼時，非常有用的技巧
+
+# SubscribeAction 方法
+
+有時候，與其監聽 store 中的一個屬性改變，不如使用 `subscribeAction` 方法訂閱一個特定的 action，比如像 `login` 和 `logout` 之類的異步請求，這也是更有用的方案。
+
+調用監聽函數，在每一個 action 分發的時候調用指定的回調函數，並在其中調用自定義代碼。
+
+我們在每一個 action 的分發前以及完成後，來分別開始和停止全局的 spinner。
+
+```vue
+const unsubscribe = store.subscribeAction({
+  before: (action, state) => {
+    startBigLoadingSpinner();
+  },
+  after: (action, state) => {
+    stoptBigLoadingSpinner();
+  }
+});
+
+// To unsubscribe:
+unsubscribe();
+
 ```
 

@@ -246,7 +246,7 @@ updata_username () {
     <mycomponent :is="currentView"></mycomponent>
 </div>
 ```
-​```javascript
+```javascript
 new Vue({ 
     el: "#app", 
     data: { 
@@ -331,7 +331,7 @@ new Vue({
 > 當你需要響應更改的數據執行非同步或複雜的計算時，Watch 就非常有用。
 ## Watch
 
-```js
+​```js
 watch:{
     item:{
         handel(newValue,oldValue){
@@ -575,7 +575,7 @@ destory(){
 1. 個人理解是：Vue.extend({})是Vue.component({})的核心，換句話說：
     1. 在實體化 Component 時會用到 Extend。
     1. Vue.component 是一個語法糖，使我們不需透過 Extend 和其他程序來實體化 Vue Instance 的子類別。
-## Vue.nextTick
+## Vue.nextTick()
 > 應用場景：需要在視圖更新之後，基於新的視圖進行操作。 
 >
 > 可以使用Vue.nextTick取得更新後的 DOM。
@@ -603,6 +603,21 @@ new Vue({
     }
   }
 })
+
+```
+
+```js
+// 修改數據
+vm.msg = 'Hello';
+// DOM 還沒有更新
+Vue.nextTick(function() {
+  // DOM 更新了
+});
+
+// 作為一個 Promise 使用
+Vue.nextTick().then(function() {
+  // DOM 更新了
+});
 
 ```
 
