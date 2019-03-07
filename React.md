@@ -1036,7 +1036,7 @@ export const actionGetUser=()=>{
 }
 ```
 
-## react-router-dom
+# react-router-dom
 
 ```js
 npm i -S react-router-dom
@@ -1207,7 +1207,7 @@ const User=(props)=>{
 
 1.可使用`URLSearchParams`去做分析
 
-```js
+```react
 // http://localhost:3000/users/weq?name=123
 
 //
@@ -1216,9 +1216,9 @@ const User=(props)=>{
 // User.js
 const User=(props)=>{
   const params=new URLSearchParams(props.location.search)
-  console.log(params.get('name'))
+  console.log(params.get('name')) // 123
   return (
-    <div>User {props.match.params.name}</div>
+    <div>User {props.match.params.name}</div> // User weq
   )
 }
 ```
@@ -1373,9 +1373,9 @@ npm install sass-loader node-sass --save-dev
 }
 ```
 
-## 好用的插件
+# 好用的插件
 
-### redux-logger
+## redux-logger
 
 ```js
 npm i -S redux-logger
@@ -1387,7 +1387,7 @@ const store=createStore(
 )
 ```
 
-### moment
+## moment
 
 ```js
 npm i -S moment
@@ -1395,7 +1395,7 @@ npm i -S moment
 {moment(new Date(action.date)).fromNow()}
 ```
 
-### sfcookies
+## sfcookies
 
 ```js
 npm i -S sfcookies
@@ -1495,7 +1495,7 @@ sagaMiddleware.run(helloSaga)
 
 ```
 ## saga使用generator方式
-#### 用法1
+### 用法1
 
 ```js
 function* gen(){
@@ -1511,7 +1511,7 @@ myGen.next(); // css { value:"css",done:false }
 myGen.next(); // html { value:"html",done:false }
 myGen.next(); // html { value:"done",done:true }
 ```
-#### 用法2
+### 用法2
 
 ```js
 function* gen(){
@@ -1526,7 +1526,7 @@ console.log(myGen.next(1)); // 會取到上一個返回值內容，然後會把 
 console.log(myGen.next(2));
 console.log(myGen.next(3)); // 6
 ```
-#### 用法3
+### 用法3
 
 ```js
 function* gen(){
@@ -1553,7 +1553,7 @@ function run(generator){
 
 ## 創建saga用的js
 
-#### basic1
+### basic1
 
 ```js
 // ./saga/index.js
@@ -1565,7 +1565,7 @@ function* hellosaga(){
 
 ```
 
-#### basic2
+### basic2
 
 `takeEvery()`監聽且不中斷的觸發
 
@@ -1592,7 +1592,7 @@ export function* watchIncrementAsync(){
 }
 ```
 
-#### basic3:`call()`ajax請求
+### basic3:`call()`ajax請求
 
 ```js
 import {call} from 'redux-saga/effects'
@@ -1608,7 +1608,7 @@ export function* watchFetchUser(){
 }
 ```
 
-#### basic4:`all()`同時執行多個saga
+### basic4:`all()`同時執行多個saga
 
 ```js
 import {delay} from 'redux-saga'
@@ -1643,7 +1643,7 @@ export default function* rootSaga(){
 }
 ```
 
-#### basic5:`fork`
+### basic5:`fork`
 
 併發執行時使用
 
@@ -1660,7 +1660,7 @@ export default function* rootSaga(){
 }
 ```
 
-#### basic6:axios && catch
+### basic6:axios && catch
 
 ```js
 // ./redcuers/user.js
