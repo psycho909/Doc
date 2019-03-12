@@ -9,7 +9,7 @@ box{
 }
 ```
 
-## CSS Card翻轉
+## CSS 3D Card翻轉
 
 1. 先有3個要素 攝影機、空間、物件
 2. 攝影機 `perspective:1000px`
