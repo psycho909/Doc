@@ -374,6 +374,28 @@ SELECT COUNT(1) AS totals FROM Persons;
 -- 獲取表 station 字段 user_id 相同的總數
 select user_id, count(*) as totals from station group by user_id;
 ```
+## 文字處理函數
+
+|  名稱  |         調用示例         |  示例結果  |            描述            |
+| :----: | :----------------------: | :--------: | :------------------------: |
+|  LEFT  |    LEFT('abc123', 3)     |    abc     | 返回從左邊取指定長度的子串 |
+| RIGHT  |    RIGHT('abc123', 3)    |    321     | 返回從左邊取指定長度的子串 |
+| LENGTH |      LENGTH('abc')       |     3      |      返回字符串的長度      |
+|  LOWE  |       LOWER(‘ABC’)       |    abc     |                            |
+| UPPER  |       UPPER(‘abc’)       |    ABC     |                            |
+| LTRIM  |      LTRIM('  abc')      |    abc     |                            |
+| RTRIM  |      RTRIM(‘abc  ’)      |    abc     |                            |
+| SUBSTR | SUBSTR(“HelloWorld”,2,3) |    ell     |                            |
+| CONCAT | CONCAT(“Hello”,‘world’)  | Helloworld |                            |
+
+## 隨機取得一筆數值
+
+```mysql
+select * from order by rand() limit 1
+```
+
+
+
 ## 觸發器
 
 語法：
@@ -550,33 +572,6 @@ from demo.employee
 ```
 
 ## 內置函數(補充)
-
-### 字符串
-
-#### `LEFT()` `right()`
-
-```sql
-select left("Mysql",2),right('mysql',2)
-// my //ql
-```
-
-#### `length()` 字符串長度
-
-```sql
-select length('mysql')
-// 5
-```
-
-#### `ltrim()` `rtrim()` `trim()`去除空格
-
-```sql
-select ltrin('  mysql'),rtrim('mysql  '),trim(' mysql ');
-// mysql
-select trim(leading '$' from "$$mysql$$");
-// mysql$$
-select trim(trailing '$' from "$$mysql$$");
-// $$mysql
-```
 
 #### `replace()`
 

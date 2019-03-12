@@ -2,6 +2,7 @@
 
 ```js
 npm i -g typescript
+npm i -g ts-node
 ```
 
 1. 副檔名`.ts`
@@ -90,7 +91,7 @@ let log=(value:string | number)=>{
 
 ```
 
-## class
+## TypeScript 類
 
 ```typescript
 // 模板
@@ -333,6 +334,21 @@ day=DaysOfTheWeek.MON;
 console.log(day); // 1
 ```
 
+## TypeScript 函數
+
+### 函數的定義
+
+```ts
+// 函數聲明
+function fn(x:number,y:number):number{}
+
+var fn=(x:number,y:number):number=>{}
+```
+
+
+
+
+
 ## 類型別名
 
 1. 定義類別別名 type alias
@@ -359,9 +375,124 @@ const user:User={
 
 ## interface 接口
 
-接口規定了如何設計，就是一些規範，別人設計的接口都是差不多
+接口定義：接口是對傳入參數進行約束；或者對類裡面的屬性和方法進行聲明和約束，實現這個接口的類必須實現該接口裡面屬性和方法；typescript中的接口用interface關鍵字定義。
+
+接口作用：接口定義了某一批類所需要遵守的規範，接口不關心這些類的內部狀態數據，也不關心這些類裡方法的實現細節，它只規定這批類裡必須提供某些方法，提供這些方法的類就可以滿足實際需要。 typescrip中的接口類似於java，同時還增加了更靈活的接口類型，包括屬性、函數、可索引和類等。
+
+內容概述：接口分類：（屬性接口、函數類型接口、可索引接口、類類型接口），接口的繼承
 
 1. 可以互相繼承
+
+### 屬性接口
+
+```ts
+interface FullName{
+    firstName: string; // 注意;结束
+    secondName: string;
+    age?: number // 接口的可选属性用?
+}
+
+function printFullName(name:FullName) {
+    // 传入对象必须包含firstName和secondName，可传可不传age
+    return name
+}
+var obj = {
+    firstName:'小',
+    secondName:'明',
+    age: 20
+}
+console.log(printFullName(obj))
+```
+
+### 函数类型接口
+
+```ts
+interface encrypt{
+    (key: string, value: string): string; // 传入的参数和返回值的类型
+}
+
+var md5:encrypt = function(key:string, value:string):string{
+    // encrypt对加密方法md5进行约束，同时md5方法的参数和返回值类型和encrypt要保持一致
+    return key + value
+}
+
+console.log(md5('name', '小明'))
+```
+
+### 可索引接口
+
+```ts
+// 对数组的的约束
+interface UserArr{
+    // 索引为number，参数为string
+    [index:number]: string
+}
+var userarr:UserArr = ['a', 'b']
+console.log(userarr)
+```
+
+### 类类型接口
+
+```ts
+interface Animal{
+    // 对类里面的属性和方法进行约束
+    name:string;
+    eat(str:string):void;
+}
+// 类实现接口要用implements关键字，必须实现接口里面声明的方法和属性
+class Cat implements Animal{
+    name:string;
+    constructor(name:string){
+        this.name = name
+    }
+    eat(food:string){
+        console.log(this.name + '吃' + food)
+    }
+}
+var cat = new Cat('小花')
+cat.eat('老鼠')
+```
+
+### 接口的继承
+
+```ts
+interface Animal {
+    eat(): void;
+}
+// 继承Animal接口，则实现Person接口的类必须也实现Animal接口里面的方法
+interface Person extends Animal {
+    work(): void;
+}
+
+class Programmer {
+    public name: string;
+    constructor(name: string) {
+        this.name = name;
+    }
+    coding(code: string) {
+        console.log(this.name + code)
+    }
+}
+
+// 继承类并且实现接口
+class Web extends Programmer implements Person {
+    constructor(name: string) {
+        super(name)
+    }
+    eat() {
+        console.log(this.name + '吃')
+    }
+    work() {
+        console.log(this.name + '工作');
+    }
+}
+
+var w = new Web('小李');
+w.eat();
+w.coding('写ts代码');
+```
+
+
 
 ### 基本接口
 
@@ -515,5 +646,58 @@ let person:Person={
 }
 
 person.print(printCallback)
+```
+
+## TypeScript 泛型
+
+泛型：很多時候，類型是寫死的，不利於復用，泛型可以簡單理解為給類型這種值設置變量，解決類、接口、方法的複用性，以及對不特定數據類型的支持。
+
+### 基本使用
+
+```ts
+function dataT<T>(value:T):T{
+    return value
+}
+
+console.log(dataT<string>('1'));
+```
+
+### 泛型類
+
+```ts
+class MinClass<T>{
+    list:T[]=[];
+    add(num:T){
+        this.list.push(num);
+    }
+    min():T{
+        var minNum=this.list[0];
+        for(var i=0;i<this.list.length;i++){
+            if(minNum>this.list[i]){
+                minNum=this.list[i]
+            }
+        }
+        return minNum;
+    }
+}
+
+var m=new MinClass<number>();
+m.add(3);
+m.add(1);
+console.log(m.min())
+```
+
+### 泛型街口
+
+```ts
+interface ConfigFnOne{
+    <T>(value:T):T;
+}
+
+var setDataOne:ConfigFnOne=function<T>(value:T):T{
+    return value;
+}
+
+console.log(setDataOne<string>('SSS'));
 ```
 
