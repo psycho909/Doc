@@ -135,8 +135,7 @@ export default class Consumer extends Component{
         return(
             <ThemeContext.Consumer>
                 {({allChar, searchTerm, searchTermChanged}) => {
-                    const char = searchTerm
-                    ? allChar.filter(
+                    const char = searchTerm? allChar.filter(
                         char => char.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
                     ) : allChar
                     return React.Children.map(children, child => React.cloneElement(child, {
