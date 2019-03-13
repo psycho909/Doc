@@ -612,6 +612,30 @@ readFile(file1)
     .catch( /* handle errors */ )
 ```
 ### 使用Promise
+
+```js
+var promise=(x)=>{
+	return new Promise((resolve,reject)=>{
+        if(x > 10){
+             resolve(x)
+        }else{
+            reject("x需比10大")
+        }
+	})
+}
+
+promise(2).then((data)=>{
+	console.log(data)
+	return promise(4)
+}).then((data)=>{
+	console.log(data)
+}).catch((error)=>{
+	console.log(error)
+})
+```
+
+
+
 ```javascript
 var delay = function(s) {
     return new Promise(function(resolve, reject) {
