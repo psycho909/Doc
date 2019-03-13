@@ -713,3 +713,11 @@ alter table user convert to character set utf8
 
 
 
+## 查詢指令
+
+```sql
+查詢中用到的關鍵詞主要包含六個，並且他們的順序依次為
+
+select--from--where--group by--having--order by
+```
+
