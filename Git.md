@@ -149,7 +149,28 @@ git checkout -- files
 ```js
 git reflog
 ```
+## rebase
+
+1. Dog線
+2. Cat線(分支)
+3. Cat合併去Dog
+
+```git
+// 目前在Cat的branch
+git merge Dog
+// 目前在Cat的branch
+git rebase Dog
+
+// 回復 rebase 操作
+git reset --hard ORIG_HEAD
+```
+
+### 好處:不會產生額外的節點
+
+
+
 ## Git常用指令
+
 ```javascript
 git status //常看本地碼狀態
 git add files //添加代碼到緩存區
@@ -169,6 +190,11 @@ git clean -d -f // 刪除當前目錄下沒有被track過的文件和文件夾
 
 git log // 顯示commit的詳細日誌
 git log --pretty=oneline // 只顯示commit的ID與描述
+
+*******
+git reset --hard ORIG_HEAD // 在進行reset或其他危險操作，git會把資訊保留在這這
+*******
 git reset --hard HEAD // 回退到最近的一個版本
+git rest --hard HEAD^ // 回到上一步
 git reset --hard commit_id // 根據commit_id回退到指定版本
 ```
