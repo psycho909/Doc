@@ -23,7 +23,7 @@ class RadioGroup extends React.Component {
   renderChildren=()=>{
     return React.Children.map(this.props.children,child=>{
       return React.cloneElement(child,{
-        name:this.props.name
+        name:this.state.name
       })
     })
   }
@@ -39,7 +39,7 @@ class RadioGroup extends React.Component {
 ```
 
 ```react
-<RadioGroup name="g2">
+<RadioGroup>
     <RadioButton value="first">First</RadioButton>
     <RadioButton value="second">Second</RadioButton>
     <RadioButton value="third">Third</RadioButton>
