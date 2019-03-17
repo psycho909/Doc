@@ -331,7 +331,7 @@ new Vue({
 > 當你需要響應更改的數據執行非同步或複雜的計算時，Watch 就非常有用。
 ## Watch
 
-​```js
+```js
 watch:{
     item:{
         handel(newValue,oldValue){
@@ -357,7 +357,7 @@ watch 裡面還有一個屬性 `deep`，默認值是 `false`，代表是否深�
 
 ## 事件綁定
 ### v-bind屬性綁定/樣式綁定
-```html
+​```html
 <!-- src是屬性 -->
 <img v-bind:src="imgNew">
 <!-- isActive為true,即給 div addClass isActive-->
@@ -633,18 +633,19 @@ Vue.nextTick().then(function() {
 // Child.vue
 <template>
     <div>
-        <header>
-            <slot name="header" :text="nameText"></slot>
-            <slot :defaulttext="defaultText">Default name</slot>
-        </header>
+        <nav class="nav">
+			<slot name="nav"></slot>
+		</nav>
+		<header class="header">
+			<slot name="header"></slot>
+		</header>
     </div>
 </template>
 <script>
     export default {
         data(){
             return {
-                defaultText:"child default text",
-                nameText:"child Name text",
+                
             }
         }
     }
@@ -655,11 +656,14 @@ Vue.nextTick().then(function() {
 <template>
   <div class="hello">
       <Child>
-        <template #header="slotProps">
-            <h1>{{slotProps.text}}</h1>
-        </template>
-        <template v-slot:default="slotProps">
-            <h2>{{slotProps.defaulttext}}</h2>
+        <template #nav>
+            <ul>
+                <li>Home</li>
+                <li>about</li>
+   			</ul>
+		</template>
+        <template #header >
+            <h1>My name is Header slot! by {{user}}</h1>
         </template>
       </Child>
   </div>
@@ -671,6 +675,7 @@ Vue.nextTick().then(function() {
 
 1.  父組件在使用子組件`slot`，並在子組件內定義`template`，並定義`slot-scope`
 2.  在子組件已定義的`slot`綁定`自定義屬性`
+3.  `#`為`v-slot`縮寫
 
 ```vue
 // child
@@ -710,7 +715,7 @@ Vue.nextTick().then(function() {
         <template #header="slotProps">
             <h1>{{slotProps.text}}</h1>
         </template>
-        <template v-slot:default="slotProps">
+        <template #default="slotProps">
             <h2>{{slotProps.defaulttext}}</h2>
         </template>
         <template #main="slotProps">
