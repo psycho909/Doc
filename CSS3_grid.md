@@ -205,3 +205,17 @@ grid-auto-flow:column;
 ```
 > `auto-fill`與`auto-fill`類似，但是任何的空白空間都會自動收縮，同時這一行的元素也會被拉升——類似flexbox的效果，列會隨著可用空間變小發生摺疊。
 
+## **grid-auto-flow**
+
+1.  `row`:該關鍵字指定自動佈局算法按照通過逐行填充來排列元素，在必要時增加新行。如果既沒有指定 `row` 也沒有 `column`，則默認為 `row`。
+2.  `column`:該關鍵字指定自動佈局算法通過逐列填充來排列元素，在必要時增加新列。
+3.  `dense`:該關鍵字指定自動佈局算法使用一種“稠密”堆積算法，如果後面出現了稍小的元素，則會試圖去填充網格中前面留下的空白。這樣做會填上稍大元素留下的空白，但同時也可能導致原來出現的次序被打亂。
+
+```css
+grid-auto-flow: row;
+grid-auto-flow: column;
+grid-auto-flow: dense;
+grid-auto-flow: row dense;
+grid-auto-flow: column dense;
+```
+
