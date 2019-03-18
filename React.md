@@ -1117,9 +1117,9 @@ export default App;
 
 state:可用於傳數據，又不出現在網址欄
 
-```js
+```react
 // http://localhost:3000/pro?a=b#the-hash
-console.log(props.lcation.state)
+console.log(props.lcation.state) // {fromDashboard:true}
 
 <Link to={{
  pathname:"/pro",
@@ -1143,7 +1143,7 @@ strict（bool）：為 true 時，在確定位置是否與當前 URL 匹配時�
 
 isActive（func）：判斷鏈接是否激活的額外邏輯的功能；
 
-```js
+```react
 <NavLnk
 	exact
     to="/home"
@@ -1156,7 +1156,7 @@ Home
 
 ### `Switch`
 
-```js
+```react
 // 常用於包覆 <Route />
 <Switch>
     ...
@@ -1167,7 +1167,7 @@ Home
 
 ### `404`
 
-```js
+```react
 // 建立一個 404 component
 // 在 Route 最後一個 放置
 import NoMath from './Error'
@@ -1182,7 +1182,7 @@ import NoMath from './Error'
 
 可以對於`Route`進行公能力增強
 
-```js
+```react
 <Route path="/home" render={()=> <div>Home</div>} />
                             
 <Route path="/home" render={(props)=> <Home {...props} />} />
