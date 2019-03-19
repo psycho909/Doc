@@ -57,11 +57,26 @@ const UseStateSample=()=>{
 }
 ```
 
+```react
+const UseState=()=>{
+  const [{count1,count2},setCount]=useState({count1:0,count2:1});
+  return (
+    <div>
+      <button onClick={ ()=>setCount(state=>({...state,count1:state.count1-1}) ) }>-</button>
+      <span>{count1} {count2}</span>
+      <button onClick={()=>setCount(state=>({...state,count1:state.count1+1}))}>+</button>
+    </div>
+  )
+}
+```
+
 
 
 ## useContext
 
 可以取代`Context.Consumer`使用
+
+### example1
 
 ```react
 import React,{useContext,useState} from 'react'
@@ -95,7 +110,7 @@ const Counter=()=>{
 }
 ```
 
-
+### example2
 
 ```react
 const MyContext=React.createContext();
@@ -131,6 +146,58 @@ const IncrementButton=()=>{
 }
 ```
 
+### example3
+
+```react
+// context.js
+import {createContext} from 'react'
+const context=createContext()
+export const {Provider,Consumer} = context;
+export default context;
+```
+
+```react
+// UseContextOpen
+import React, {useState} from 'react'
+import UseContextOpenButton from './UseContextOpenButton'
+import { Provider } from './context';
+
+const UseContextOpen=()=>{
+    const [open,setOpen]=useState(false);
+    const toggle=()=>{setOpen(!open)}
+    const contextValue={open,toggle}
+    
+    return (
+        <Provider value={contextValue}>
+            <div>
+                <UseContextOpenButton/>
+                { open && <div>Some Content</div> }
+            </div>
+        </Provider>
+    )
+}
+
+export default UseContextOpen
+
+```
+
+```react
+// UseContextOpenButton
+import React, {useContext} from 'react'
+import context from './context';
+
+const UseContextOpenButton = ()=>{
+    const contextValue=useContext(context)
+    const {open,toggle}=contextValue
+    return (
+        <button onClick={toggle}>{open?"Close Btn":"Open Btn"}</button>
+    )
+}
+
+export default UseContextOpenButton
+
+```
+
 
 
 ## useEffect
@@ -140,7 +207,13 @@ const IncrementButton=()=>{
 1.  **useEffect 什麼時候執行？** 它會在組件 mount 和 unmount 以及每次重新渲染的時候都會執行，也就是會在 componentDidMount、componentDidUpdate、componentWillUnmount 這三個時期執行。
 2.  第一個參數為`componentDidMount`、`componentWillUnmount`
 3.  第二個參數為`componentDidUpdate`
-4.  第二個參數，若與前一次相等 effect 就不會執行，空陣列就意味著只會執行一次 ( 永遠相等 )
+4.  第二個參數陣列在每次`useEffect `會去比較這個參數陣列裡面的值，跟上次傳入的做比較，如果一樣的話就不會去執行`useEffects`裡面的函式，如果傳入空陣列，代表每次傳入的時候都是空陣列，只有在第一次`render`的時候會執行。
+5.  `componentWillUnmount `的執行`useEffect `傳入一個函式，可以在`return `另外一個函式，另外一個函式就會在清理函式，在`componentWillUnmount`執行
+6.  `useEffect`或做 四件事情:
+    1.  會判斷這次輸入的陣列是否跟上一次一樣，如果一樣才會繼續
+    2.  會執行上一次存下來的清理函式
+    3.  執行裡面的內容
+    4.  把`return`函式存下來讓下一次可以用
 
 ```js	
 useEffect(
@@ -150,9 +223,11 @@ useEffect(
     // componentWillUnmount
 	};
 ,[])
+// [] => componentDidUpdate
 ```
+### example1
 
-```js
+```react
 import { useState, useEffect } from 'react';
 
 const App = () => {
@@ -194,8 +269,9 @@ const App = () => {
   )
 }
 ```
+### example2
 
-```js
+```react
 const UseEffectSample=()=>{
     const [count,setCount]=useState(0);
 
@@ -215,10 +291,36 @@ const UseEffectSample=()=>{
     )
 }
 ```
+### example3
+
+```react
+const UseEffect=()=>{
+  const [state,setState]=useState({
+    email:"",
+    picture:""
+  });
+
+  useEffect(()=>{
+    fetch("https://randomuser.me/api/")
+    .then(rs=>rs.json())
+    .then(data=>{
+      const [user]=data.results;
+      setState({
+        email:user.email,
+        picture:user.picture.medium
+      })
+    })
+  },[])
+```
+
+
 
 ## useRef
 
+### example1
+
 ```react
+
 const UseRefSample=()=>{
   const inputRef=useRef();
   const onButtonClick=()=>{
@@ -232,6 +334,7 @@ const UseRefSample=()=>{
   )
 }
 ```
+### example2
 
 ```react
 const UseRefSample=()=>{
@@ -256,3 +359,48 @@ const UseRefSample=()=>{
   )
 }
 ```
+
+### example3
+
+```react
+import React, {useRef,useEffect} from 'react'
+
+const UseRefFocus = ()=>{
+    const ref=useRef();
+    useEffect(()=>{
+        ref.current.focus();
+    },[])    
+    return (
+        <input ref={ref} type="text"/>
+    )
+}
+
+export default UseRefFocus
+```
+
+### example4
+
+```react
+import React, {useRef,useState} from 'react'
+
+const UseRefTimer = ()=>{
+    const [count,setCount]=useState(0)
+    const ref=useRef({});
+    const startCounter=()=>{
+        ref.current=setInterval(()=>setCount(c=>c+1),100)
+    }
+    const stopCounter=()=>{
+        clearInterval(ref.current)
+    } 
+    return (
+        <div>
+            <h1>{count}</h1>
+            <button onClick={startCounter}>Start</button>
+            <button onClick={stopCounter}>Stop</button>
+        </div>
+    )
+}
+
+export default UseRefTimer
+```
+
