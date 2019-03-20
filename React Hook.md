@@ -297,7 +297,7 @@ const UseEffectSample=()=>{
 const UseEffect=()=>{
   const [state,setState]=useState({
     email:"",
-    picture:""
+    gender:""
   });
 
   useEffect(()=>{
@@ -307,10 +307,19 @@ const UseEffect=()=>{
       const [user]=data.results;
       setState({
         email:user.email,
-        picture:user.picture.medium
+        gender:user.gender
       })
     })
   },[])
+    return (
+        <div>
+            <h2>User</h2>
+            <span>{user.email}</span>
+            <br/>
+            <span>{user.gender}</span>
+        </div>
+    )
+}
 ```
 
 
