@@ -486,6 +486,43 @@ const UseRefTimer = ()=>{
 export default UseRefTimer
 ```
 
+### exapmle5 `ref`組件傳遞`forwardRef()`
+
+```react
+import React, {
+    Component,
+    useState,
+    useRef,
+    useEffect,
+    createRef,
+    forwardRef
+} from 'react'
+
+const InputComponent = () => {
+    const [greeting, setGreeting] = useState('Hello React!')
+
+    const handleChange = event => setGreeting(event.target.value)
+
+    const ref = createRef()
+
+    useEffect(() => ref.current.focus(), [])
+
+    return (
+        <div>
+            <h1>{greeting}</h1>
+
+            <Input value={greeting} handleChange={handleChange} ref={ref} />
+        </div>
+    )
+}
+
+const Input = forwardRef(({value, handleChange}, ref) => (
+    <input type="text" value={value} onChange={handleChange} ref={ref} />
+))
+```
+
+
+
 ## Example 結合 `useState`、`useEffect`、`useRefucer`
 
 結合`useState`、`useEffect`、`useReducer`共同完成一個呼叫`BLOG API`的範例
@@ -604,6 +641,28 @@ const User = () => {
 }
 
 export default User
+
+```
+
+## useMemo()
+
+```react
+import React, { useEffect } from "react";
+
+let count = 0;
+
+function NestedComponent(props) {
+  useEffect(() => {
+    count += 1;
+  });
+  return <div>Render Count: {count}</div>;
+}
+
+const App=()=>{
+    const memoizedChildComponent = useMemo(() => {
+        return <NestedComponent />;
+      }, []);
+}
 
 ```
 

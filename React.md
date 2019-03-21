@@ -202,6 +202,7 @@ class App extends Component {
 
 1. 性能好
 2. 無邏輯操作時
+3. 不能時候`生命週期`
 
 ```react
 const TodoListUI=(props)=>{
@@ -211,9 +212,11 @@ const TodoListUI=(props)=>{
 }
 ```
 
-## PureComponent
+# PureComponent
 
-> 當持續傳入的`props`沒有變化時，不會重新render
+1.  當持續傳入的`props`沒有變化時，不會重新render
+2.  自動處理` shouldComponentUpdate()`
+3.  現在有一個顯示時間的組件,每一秒都會重新渲染一次，對於`Child`組件我們肯定不希望也跟著渲染，所有需要用到`PureComponent`
 
 ```js
 import React,{Component,PureComponent} from 'react'
@@ -226,6 +229,31 @@ class Temp extends PureComponent{
         )
     }
 }
+```
+
+# React.memo
+
+1.  `React.memo()`是一個高階函數，它與 [`React.PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent)類似，但是一個函數組件而非一個類。
+2.  `React.memo()`可接受2個參數，第一個參數為純函數的組件，第二個參數用於對比props控制是否刷新，與[`shouldComponentUpdate()`](https://reactjs.org/docs/react-component.html#shouldcomponentupdate)功能類似。
+3.  現在有一個顯示時間的組件,每一秒都會重新渲染一次，對於`Child`組件我們肯定不希望也跟著渲染，所有需要用到`React.memo`
+
+```react
+function Child({seconds}){
+    console.log('I am rendering');
+    return (
+        <div>I am update every {seconds} seconds</div>
+    )
+};
+
+function areEqual(prevProps, nextProps) {
+    if(prevProps.seconds===nextProps.seconds){
+        return true
+    }else {
+        return false
+    }
+
+}
+export default React.memo(Child,areEqual)
 ```
 
 
