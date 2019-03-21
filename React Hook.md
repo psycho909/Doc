@@ -322,6 +322,79 @@ const UseEffect=()=>{
 }
 ```
 
+### ##example4##
+
+```react
+import React,{Fragment,useState,useEffect} from 'react'
+import axios from 'axios'
+
+const User = () => {
+    const [data,setData]=useState({hits:[]})
+    const [query,setQuery]=useState('redux')
+    const [url,setUrl]=useState(
+        "http://hn.algolia.com/api/v1/search?query=redux"
+    )
+    const [isLoading,setIsLoading]=useState(false);
+    const [isError,setIsError]=useState(false);
+
+    useEffect(()=>{
+        const fetchData=async()=>{
+            setIsLoading(true)
+            setIsError(false)
+            try{
+                const result=await axios(url)
+                setData(result.data)
+            }catch(error){
+                setIsError(true)
+            }
+            setIsLoading(false)
+        }
+        
+        fetchData()
+    },[url])
+    const doFetch=()=>{
+        setUrl(`http://hn.algolia.com/api/v1/search?query=${query}`)
+    }
+    return (
+        <Fragment>
+            <form
+                onSubmit={(e)=>{
+                    e.preventDefault();
+                    doFetch();
+                }}
+            >
+                <input 
+                type="text"
+                value={query}
+                onChange={e=>setQuery(e.target.value)}
+                />
+                <button type="submit" >Search</button>
+            </form>
+
+            {isError && <div>Something went wrong ...</div>}
+            {
+                isLoading?(
+                    <div>Loading...</div>
+                ):(
+                    <ul>
+                        {
+                            data.hits.map(item=>(
+                                <li key={item.objectID}>
+                                    <a href={item.url}>{item.title}</a>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                )
+            }
+        </Fragment>
+    )
+}
+
+export default User
+
+```
+
 
 
 ## useRef
@@ -411,5 +484,126 @@ const UseRefTimer = ()=>{
 }
 
 export default UseRefTimer
+```
+
+## Example 結合 `useState`、`useEffect`、`useRefucer`
+
+結合`useState`、`useEffect`、`useReducer`共同完成一個呼叫`BLOG API`的範例
+
+```react
+import React,{Fragment,useState,useEffect,useReducer} from 'react'
+import axios from 'axios'
+
+const dataFetchReducer=(state,action)=>{
+    switch(action.type){
+        case "FETCH_INIT":
+            return {
+                ...state,
+                isLoading:true,
+                isError:false
+            };
+        case "FETCH_SUCCESS":
+            return {
+                ...state,
+                isLoading:false,
+                isError:false,
+                data:action.value
+            };
+        case "FETCH_FAILURE":
+            return {
+                ...state,
+                isLoading:false,
+                isError:true
+            }
+        default:
+            throw new Error();
+    }
+}
+
+const useDataApi=(initialUrl,initialData)=>{
+    const [url,setUrl]=useState(initialUrl)
+
+    const [state,dispatch]=useReducer(dataFetchReducer,{
+        isLoading:false,
+        isError:false,
+        data:initialData
+    })
+
+    useEffect(()=>{
+        let didCancel=false;
+
+        const fetchData=async()=>{
+            dispatch({type:"FETCH_INIT"})
+
+            try{
+                const result=await axios(url)
+
+                if(!didCancel){
+                    dispatch({type:"FETCH_SUCCESS",value:result.data})
+                }
+            }catch(error){
+                if(!didCancel){
+                    dispatch({type:"FETCH_FAILURE"})
+                }
+            }
+        }
+        
+        fetchData()
+
+        return ()=>{
+            didCancel=true
+        }
+    },[url])
+    const doFetch=(url)=>{
+        setUrl(url)
+    }
+
+    return {...state,doFetch}
+}
+
+const User = () => {
+    const [query,setQuery]=useState('redux')
+    const {data,isLoading,isError,doFetch} = useDataApi(
+        'http://hn.algolia.com/api/v1/search?query=redux',
+        { hits: [] },
+    );
+    return (
+        <Fragment>
+            <form
+                onSubmit={(e)=>{
+                    e.preventDefault();
+                    doFetch(`http://hn.algolia.com/api/v1/search?query=${query}`,);
+                }}
+            >
+                <input 
+                type="text"
+                value={query}
+                onChange={e=>setQuery(e.target.value)}
+                />
+                <button type="submit" >Search</button>
+            </form>
+
+            {isError && <div>Something went wrong ...</div>}
+            {
+                isLoading?(
+                    <div>Loading...</div>
+                ):(
+                    <ul>
+                        {
+                            data.hits.map(item=>(
+                                <li key={item.objectID}>
+                                    <a href={item.url}>{item.title}</a>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                )
+            }
+        </Fragment>
+    )
+}
+
+export default User
+
 ```
 

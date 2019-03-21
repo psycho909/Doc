@@ -44,11 +44,11 @@
 
 > 組件被更新之前，它會自動執行，但是他在`shouldComponentUpdate`之後被執行，如果`shouldComponentUpdate`返回`true`才執行，如果返回`false`不會執行更新
 
-### componentDidUpdate
+### componentDidUpdate(prevProps, prevState, snapshot)
 
 > 在更新發生之後立即被調用。這個生命週期在組件第一次渲染時不會觸發。
 
-### componentWillReceiveProps
+### componentWillReceiveProps(nextProps)
 
 > 當一個組件從父組件接收了參數。
 >
