@@ -388,7 +388,59 @@ class App extends Component {
 }
 ```
 
-## 範例2
+## 範例2 給HOC組件添加靜態displayName屬性
+
+```react
+import React,{Component} from 'react'
+
+const getDisplayName=WrapperComponent=>(
+	WrapperComponent.displayName || WrapperComponent.name || "WrapperComponent"
+)
+const InputHOC =(WrapperComponent) => {
+    return class extends Component{
+        static displayName=`InputHOC(${getDisplayName(WrapperComponent)})`
+        state={
+            value:""
+        }
+        handleChange=(e)=>{
+            this.setState({
+                value:e.target.value
+            })
+        }
+        render(){
+            const passProps={
+                value:this.state.value,
+                onChange:this.handleChange,
+            }
+            console.log(id)
+            return (
+                <div className="input-group">
+                    <WrapperComponent {...passProps} />
+                </div>
+            )
+        }
+    }
+}
+
+export default InputHOC;
+```
+
+```react
+import React,{Component} from 'react'
+import InputHOC from './InputHOC'
+
+class Input extends Component{
+    render(){
+        return (
+            <input type="text" {...this.props} />
+        )
+    }
+}
+
+export default InputHOC(Input)
+```
+
+## 範例3 增加屬性
 
 ```react
 // /hoc/widthFetch
@@ -420,7 +472,7 @@ const widthFetch=(url)=>(View)=>{
                 )
             }else{
                 return (
-                    <View data={this.state.data} />
+                    <View {...this.state.data} />
                 )
             }
         }
@@ -456,7 +508,76 @@ export default Joke;
 <Joke />
 ```
 
-## 範例3 `this.props.render()`
+## 範例4 復用Input
+
+```react
+import React,{Component} from 'react'
+
+const InputHOC = ({id,title}) =>(WrapperComponent) => {
+    return class extends Component{
+        state={
+            value:""
+        }
+        handleChange=(e)=>{
+            this.setState({
+                value:e.target.value
+            })
+        }
+        render(){
+            const passProps={
+                value:this.state.value,
+                onChange:this.handleChange,
+                id
+            }
+            console.log(id)
+            return (
+                <div className="input-group">
+                    <label htmlFor={id}>{title}</label>
+                    <WrapperComponent {...passProps} />
+                </div>
+            )
+        }
+    }
+}
+
+export default InputHOC;
+```
+
+```react
+import React,{Component} from 'react'
+import InputHOC from './InputHOC'
+
+class Input extends Component{
+    render(){
+        return (
+            <input type="text" {...this.props} />
+        )
+    }
+}
+
+export default InputHOC({id:"inputs",title:"InputLabel"})(Input)
+```
+
+```react
+import React,{Component,Fragment} from 'react'
+import Input from './Hight2/Input'
+
+class App extends Component{
+    render(){
+        return (
+            <Fragment>
+                <Input />
+            </Fragment>
+        )
+    }
+}
+
+export default App;
+```
+
+
+
+## 範例5 `this.props.render()`
 
 ```js
 class WithMouse extends Component {
@@ -480,6 +601,16 @@ const Mouse=()=>{
     )
 }
 ```
+
+## 注意事項
+
+1.  ### 不要在render函數中使用高階組件
+
+2.  ### 靜態方法需手動複製
+
+3.  ### Ref不會被傳遞
+
+
 
 # Redux
 
@@ -541,7 +672,7 @@ constructor(props){
     this.state=store.getState();
     
     // 訂閱store，每次store變更時會調動handleStorageChange
-    store.subscribe(this.handleStorageChange.bind(this))
+    store.subscribe(this.handleStorageChange)
 }
 handleInputChange(e){
     const action={
@@ -551,7 +682,7 @@ handleInputChange(e){
     // dispatch action
     store.dispatch(action)
 }
-handleStorageChange(){
+handleStorageChange=()=>{
     this.setState(store.getState())
 }
 ```
