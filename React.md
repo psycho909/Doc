@@ -663,7 +663,7 @@ export default (state=defaultState,action)=>{
 2.  提供`store.dispatch(action)`更新state
 3.  `store.subscribe(listener)`來註冊、取消監聽
 
-```js
+```react
 // App.js
 
 constructor(props){
@@ -674,7 +674,7 @@ constructor(props){
     // 訂閱store，每次store變更時會調動handleStorageChange
     store.subscribe(this.handleStorageChange)
 }
-handleInputChange(e){
+handleInputChange=(e)=>{
     const action={
         type:"change_input_value",
         value:e.target.value
@@ -687,7 +687,7 @@ handleStorageChange=()=>{
 }
 ```
 
-```js
+```react
 // ./store/reducers.js
 
 // reducer 可以接收state，但是絕不能修改state
@@ -740,7 +740,7 @@ handleSearchFocus(){
 }
 ```
 
-## actionCreator
+### actionCreator
 
 ```react
 export const setGames=(games)=>{
@@ -781,7 +781,7 @@ export default combineReducers({
 
 
 
-### react-redex使用
+## react-redex使用
 
 ```
 npm i -S react-redex
