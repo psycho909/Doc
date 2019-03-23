@@ -27,15 +27,15 @@ img {
     margin: 0 auto;
 }
 
-.card-container{
+.card-container.camera{
     perspective: 600px;
     width: 150px;
     height: 150px;
 }
-.card-container.active .card{
+.card-container.active .card.space{
     transform: rotateY(180deg);
 }
-.card{
+.card.space{
     width: 150px;
     height: 150px;
     position: relative;
