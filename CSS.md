@@ -83,7 +83,7 @@ RWD Youtube
   }
   .video-container{
     position: relative;
-    padding-bottom: 56.25%;
+    padding-bottom: 56.25%; /* 16:9 */
     padding-top: 30px;
     height: 0;
     overflow: hidden;
@@ -251,3 +251,34 @@ ol li:before{
     <meta property="og:url" content=""> <!-- 分享的網頁連結 -->
     <meta property="og:image" content="http://www.joostrap.com/images/homepage_multiple_devices.jpg"> <!--分享在FB的縮圖 -->
 ```
+
+## HTML 圖片優化(響應式圖片)
+
+### img
+
+```html
+<img class='pic' 
+     srcset="https://picsum.photos/200/200?image=1063 200w,
+             https://picsum.photos/300/300?image=1064 300w,
+             https://picsum.photos/600/600?image=1065 600w,
+              https://picsum.photos/800/400?image=1066 800w,
+              https://picsum.photos/1000/500?image=1067 1000w,
+              https://picsum.photos/1200/600?image=1068 1200w"
+     sizes="100vw"
+     src="https://picsum.photos/1200/600?image=1069" alt="">
+```
+
+### picture
+
+```html
+<picture>
+   <source media="(min-width: 1200px)" srcset="https://picsum.photos/1200/600?image=1068">
+   <source media="(min-width: 1000px)" srcset="https://picsum.photos/1000/500?image=1067">
+   <source media="(min-width: 800px)" srcset="https://picsum.photos/800/400?image=1066">
+   <source media="(min-width: 600px)" srcset="https://picsum.photos/600/600?image=1065">
+  <source srcset="https://picsum.photos/400/200?image=1064 ">
+   <img src="https://picsum.photos/1200/600?image=1069" alt="A photo of London by night">
+</picture>
+
+```
+
