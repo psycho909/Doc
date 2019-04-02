@@ -1586,6 +1586,58 @@ export const userSagas=[
 ]
 ```
 
+# 錯誤處理
+
+純粹接收錯誤把錯誤回傳給網頁，用於視覺錯誤處理
+
+```react
+state={
+    hasError:false
+}
+static getDerivedStateFromError(error){
+    return {
+      hasError:true
+    }
+}
+render(){
+    if(this.state.hasError){
+        return <h1>Error</h1>
+    }
+}
+```
+
+想把錯誤傳給後端做紀錄，或者發生錯誤時導向另外網址
+
+```react
+componentDidCatch(error,info){
+    axios.post('/api/logger',{info})
+  }
+```
+
+# Protal 傳送門
+
+網頁有三個DIV，想把react分別分配給三個DIV
+
+* `createPortal(somthing,for)`
+
+```react
+import React, {Component} from 'react'
+import {createPortal} from 'react-dom'
+
+class LessionModal extends Component {
+    render() {
+        return createPortal(
+            <div>LessionModal</div>,
+            document.getElementById("modal")
+        )
+    }
+}
+
+export default LessionModal
+```
+
+
+
 # 支援IE11
 
 ## 第一步 React Polyfill

@@ -290,3 +290,9 @@ export default class List extends React.Component {
   * render 以及 render 之前的生命週期，則 父組件 先執行
   * render 以及 render 之後的聲明週期，則子組件先執行，並且是與父組件交替執行
 * 當子組件進行卸載時，只會執行自身的 componentWillUnmount 生命週期，不會再觸發別的生命週期
+
+# 常用生命週期
+
+* `componentDidMount()`
+* `componentDidUpdate()`
+* `componentWillUnmount()`
