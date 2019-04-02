@@ -92,6 +92,7 @@ componentWillReceiveProps(nextProps){
 1.  用來取代`componentWillReceiveProps`
 2.  不可以直接訪問`this.state`&`this.props`
 3.  兩個參數`nextProps`&`prevState`
+4.  不常使用
 
 > 在每次調用 render 方法之前調用。包括初始化和後續更新時。
 
