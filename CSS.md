@@ -3,9 +3,20 @@
 `.box`如果有變量設定`--color`時顏色為orange，沒有則red
 
 ```css
-box{
+:root{
+    --w:100px;
+}
+.box{
+    width:var(--w);
+}
+```
+
+
+
+```css
+.box{
     --color:orange;
-    background-color:--var(--color,red);
+    background-color:var(--color,red);
 }
 ```
 
