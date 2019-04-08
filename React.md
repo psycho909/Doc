@@ -119,7 +119,7 @@ ReactDOM.render(<App />, document.getElementById("root"));
 ```
 ### 方法二 (常用)
 
-```js
+```react
 constructor(props){
 	super(props)
 	this.input=React.createRef()
@@ -131,9 +131,11 @@ render(){
 }
 ```
 
-### 獲取組件`REF`
+### forwardRef使用方法
 
-```sql
+#### 如何将DOM 通过`Refs` 暴露给父组件
+
+```react
 class MyButton extends Component{
 	constructor(props){
 		super(props)
@@ -164,8 +166,12 @@ class App extends Component{
 	}
 }
 ```
+##### 解決方法:使用`forwardRef`
+在极少数情况下，我们可能希望在父组件中引用子节点的 DOM 节点（官方不建议这样操作，因为它会打破组件的封装），用户触发焦点或者测量子DOM 节点的大小或者位置。虽然我们可以通过向子组件添加 ref的方式来解决，但这并不是一个理想的解决方案，因为我们只能获取组件实例而不是 DOM节点。并且它还在函数组件上无效。
 
-```sql
+> Ref forwarding 是一种自动将ref 通过组件传递给其子节点的技术。下面我们通过具体的案例来演示一下效果。
+
+```react
 import { createRef, forwardRef } from "react";
 
 const MyButton = forwardRef((props, ref) => (
@@ -191,6 +197,83 @@ class App extends Component {
     );
   }
 }
+
+```
+
+#### 高阶组件中的refs
+
+```react
+import React from 'react'
+
+const HOCLogProps=(Comp)=>{
+    class HOCLogProps extends React.Component{
+        componentDidUpdate(prevProps){
+            console.log('old props:', prevProps);
+            console.log('new props:', this.props);
+        }
+
+        render(){
+            const { forwardedRef, ...rest } = this.props;
+            return <Comp ref={ forwardedRef } {...rest} />;
+        }
+    }
+    return React.forwardRef((props, ref) => {
+        return <HOCLogProps { ...props } forwardedRef={ ref } />;
+    });
+}
+
+export default HOCLogProps
+```
+
+```react	
+import React from 'react'
+import HOCLogProps from './HOCLogProps'
+
+const BtnComp=React.forwardRef((props,ref)=>{
+    return (
+        <div>
+            <button ref={ref} className="btn">
+                {props.children}
+            </button>
+        </div>
+    )
+})
+
+export default HOCLogProps(BtnComp)
+```
+
+```react
+import React, { Component } from 'react';
+import BtnComp from './BtnComp'
+class App extends Component {
+  constructor(props){
+    super(props)
+    this.btnRef=React.createRef()
+    this.state={
+      value:"init"
+    }
+  }
+  componentDidMount() {
+    console.log('ref', this.btnRef);
+    console.log('ref', this.btnRef.current.className);
+    this.btnRef.current.classList.add('cancel'); // 给BtnComp中的button添加一个class
+    this.btnRef.current.focus(); // focus到button元素上
+    setTimeout(() => {
+      this.setState({
+        value: '更新'
+      });
+    }, 3000);
+  }
+  render() {
+    return (
+      <div className="App">
+        <BtnComp ref={this.btnRef}>{this.state.value}</BtnComp>
+      </div>
+    );
+  }
+}
+
+export default App;
 
 ```
 

@@ -90,3 +90,43 @@ const start= async ()=>{
 start();
 ```
 
+## Fetch + Async Await
+
+```js
+var api="https://randomuser.me/api";
+        
+var getData=async ()=>{
+    var res=await fetch(api)
+    var data=await res.json()
+    return data
+}
+
+var start=()=>{
+    var data=getData();
+    data.then(user=>{
+        console.log(user.results)
+    })
+}
+start()
+```
+
+## Fetch + Promise
+
+```js
+var api="https://randomuser.me/api";
+
+var getData=()=>{
+    return new Promise((resolve,reject)=>{
+        var data=fetch(api).then(res=>res.json())
+        resolve(data)
+    })
+}
+var start=()=>{
+    var data=getData();
+    data.then(user=>{
+        console.log(user)
+    })
+}
+start()
+```
+
