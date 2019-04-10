@@ -82,8 +82,9 @@ img {
 </div>
 ```
 
-RWD Youtube
---------------------
+## 響應式 Iframe
+
+### CSS
 
 > 使用`padding-bottom`去撐高
 ```css
@@ -131,8 +132,36 @@ RWD Youtube
     overflow: hidden;
   }
 ```
+### 使用 JS 響應 iframe
+
+```js
+// 找到所有的 iframe
+var $iframe = $( "iframe" );
+// 保存所有 iframe 的縱橫比
+$iframe.each(function () {
+  $( this ).data( "ratio", this.height / this.width )
+    // 移除 width 和 height 屬性
+    .removeAttr( "width" )
+    .removeAttr( "height" );
+});
+ 
+// 當窗口被調整大小時，調整 iframe 的大小
+$( window ).resize( function () {
+  $iframe.each( function() {
+    // 獲取父元素內容的寬
+    var width = $( this ).parent().width();
+    $( this ).width( width )
+      .height( width * $( this ).data( "ratio" ) );
+  });
+// 調整大小以適應頁面加載上的所有iframe。
+}).resize();
+```
+
+
+
 阻止用戶選中
 ------------
+
 ```css
 .select{
   -webkit-user-select:none;
