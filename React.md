@@ -1530,15 +1530,43 @@ import {INCREMENT_ASYNC} from '../constans'
 import {increment} from '../actions/counter'
 
 function* incrementAsync(){
-    yield delay(2000)
-    yield put({type:INCREMENT_ASYNC})
+    yield delay(2000) // middleware 拿到一個 yield 後的 Promise，暫停1s後再繼續執行
+    yield put({type:INCREMENT_ASYNC}) // 告訴 middleware 發起一個 INCREMENT 的 action。
 }
 
+// watcher Saga: 在每個INCREMENT_ASYNC上生成一個新的incrementAsync任務
 export function* watchIncrementAsync(){
     // 監聽 INCREMENT_ASYNC action方法去觸發 incrementAsync函數
     yield takeEvery(INCREMENT_ASYNC,incrementAsync)
 }
 ```
+
+```react
+ import { all, put, takeEvery } from 'redux-saga/effects'
+ const delay = (ms) => new Promise(res => setTimeout(res, ms))
+
+ // worker Saga: 執行異步的 increment 任務
+ export function* incrementAsync() {
+   yield delay(1000) // middleware 拿到一個 yield 後的 Promise，暫停1s後再繼續執行
+   yield put({ type: 'INCREMENT' })  // 告訴 middleware 發起一個 INCREMENT 的 action。
+ }
+
+ // watcher Saga: 在每個INCREMENT_ASYNC上生成一個新的incrementAsync任務
+ export function* watchIncrementAsync() {
+  yield takeEvery('INCREMENT_ASYNC', incrementAsync)
+ }
+
+// 啟動saga們
+ export default function* rootSaga() {
+  yield all([
+    watchIncrementAsync(),
+    helloSaga()
+  ])
+ }
+
+```
+
+
 
 ### basic3:`call()`ajax請求
 
