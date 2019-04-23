@@ -226,6 +226,10 @@ SELECT Company, OrderNumber FROM Orders ORDER BY Company DESC
 
 -- Company以降序顯示公司名稱，並OrderNumber以順序顯示
 SELECT Company, OrderNumber FROM Orders ORDER BY Company DESC, OrderNumber ASC
+
+-- 遇到排序浮點數時，會出現排序不正確
+SELECT * from People order by age * 1 limit 30
+SELECT * from People order by CAST(age as DECIMAL(10,5)) limit 30
 ```
 
 ## IN

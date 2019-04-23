@@ -303,3 +303,149 @@ unsubscribe();
 
 ```
 
+# Vuex Modules
+
+```
+src
+	store
+		modules
+			- user.js
+		- index.js
+		- types.js
+	main.js
+```
+
+## main.js
+
+```js
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+import store from './store/index.js'
+
+Vue.config.productionTip = false
+
+new Vue({
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app')
+
+```
+
+## store/types.js
+
+```js
+const INCREMENT="INCREMENT";
+const DECREMENT="DECREMENT";
+
+export default{
+    INCREMENT,DECREMENT
+}
+```
+
+## store/modules/user.js
+
+```js
+import types from '../types'
+
+const moduleUser={
+    namespaced:true,
+    state:{
+        count:5
+    },
+    getters:{
+        count(state){
+            return state.count
+        },
+        isEvenOrOdd(state){
+            return state.count & 2 === 0?"Even":"Odd"
+        }
+    },
+    mutations:{
+        [types.INCREMENT](state){
+            return state.count++
+        },
+        [types.DECREMENT](state){
+            return state.count--
+        }
+    },
+    actions:{
+        increment({commit,state}){
+            commit(types.INCREMENT)
+        },
+        decrement({commit,state}){
+            commit(types.DECREMENT)
+        },
+        incrementAsync({commit,state}){
+            var p=new Promise((resolve,reject)=>{
+                setTimeout(()=>{
+                    resolve()
+                },500)
+            })
+            p.then(()=>{
+                commit(types.INCREMENT)
+            }).catch(()=>{
+                console.log("Async")
+            })
+        }
+    }
+}
+
+export default moduleUser
+```
+
+## store/index.js
+
+```js
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex);
+
+import moduleUsers from './modules/user'
+
+export default new Vuex.Store({
+    modules:{
+        users:moduleUsers
+    }
+})
+```
+
+## 使用modules
+
+```vue
+<template>
+  <div class="vuex">
+    <button @click="decrement">-</button>
+    <div>count {{count}} {{isEvenOrOdd}}</div>
+    <button @click="increment">+</button>
+    <button @click="incrementAsync">async add</button>
+  </div>
+</template>
+
+<script>
+import {mapGetters,mapActions} from 'vuex'
+export default {
+  name: 'HelloWorld',
+  props: {
+    msg: String
+  },
+  computed:{
+    ...mapGetters({
+      count:'users/count',
+      isEvenOrOdd:"users/isEvenOrOdd"
+    }),
+  },
+  methods:{
+    ...mapActions({
+      increment:"users/increment",
+      decrement:"users/decrement",
+      incrementAsync:"users/incrementAsync"
+    })
+
+  }
+}
+</script>
+```
+
