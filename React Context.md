@@ -34,7 +34,7 @@ export default [
 ];
 ```
 
-App.js
+# App.js
 
 ```react
 import React from 'react'

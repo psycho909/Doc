@@ -521,9 +521,46 @@ const Input = forwardRef(({value, handleChange}, ref) => (
 ))
 ```
 
+## useReducer
+
+```react
+const counterReducer=(state,action)=>{
+  switch(action.type){
+    case "INCREMENT":
+      return {counter:state.counter+1};
+    case "DECREMENT":
+      return {counter:state.counter-1};
+    default:
+      return {counter:0};
+  }
+}
+
+const UseReducer=(props)=>{
+    const [state,dispatch]=React.useReducer(counterReducer,{
+      counter:10
+    })
+    const increment=()=>{
+      dispatch({type:"INCREMENT"})
+    }
+    const decrement=()=>{
+      dispatch({type:"DECREMENT"})
+    }
+    return (
+      <div>
+        <h2>Hello {props.name}</h2>
+        <div>
+          <button onClick={decrement}>-</button>
+          <span>{state.counter}</span>
+          <button onClick={increment}>+</button>
+        </div>
+      </div>
+    )
+}
+```
 
 
-## Example 結合 `useState`、`useEffect`、`useRefucer`
+
+## Example 結合 `useState`、`useEffect`、`useReducer`
 
 結合`useState`、`useEffect`、`useReducer`共同完成一個呼叫`BLOG API`的範例
 
