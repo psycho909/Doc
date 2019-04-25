@@ -1697,6 +1697,25 @@ export const userSagas=[
 ]
 ```
 
+# `env` 環境變量設置
+
+再項目跟目錄創建``.env`
+
+```env
+REACT_APP_SECRET_CODE=abcdef
+```
+
+```react
+<div>{process.env.REACT_APP_SECRET_CODE}</div>
+```
+
+-   `.env`：默认。
+-   `.env.local`：本地覆盖。**除 test 之外的所有环境都加载此文件**。
+-   `.env.development`, `.env.test`, `.env.production`：设置特定环境。
+-   `.env.development.local`, `.env.test.local`, `.env.production.local`：设置特定环境的本地覆盖。
+
+
+
 # 錯誤處理
 
 純粹接收錯誤把錯誤回傳給網頁，用於視覺錯誤處理
