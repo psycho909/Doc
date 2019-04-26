@@ -1,3 +1,23 @@
+
+
+# 給React-Router添加路由頁面切換時的過渡動畫
+
+```js
+npm install react-transition-group --save
+```
+
+`react-transition-group`提供了三個React組件，分別是`<Transition>`，`<CSSTransition>`以及`<TranstionGroup>`，關於它們的詳細api還請各位去查閱官方文檔，這裡只是簡單介紹一下它們各自的用途：
+
+*   `<Transition>`：通過`javascript`動態修改`style`的方式為子元素添加動畫，對比`<CSSTransiton>`多了幾個編程式的`props`可以配置
+
+*   `<CSSTransition>`：相比`<Transition>`多了一個`classNames`可以配置，通過引入CSS以及動態更改子元素`className`的方式為子元素添加動畫（是不是像極了Vue裡的`<transition>`）
+
+*   `<TranstionGroup>`：顧名思義，為多個子元素添加動畫，需要結合`<Transition>`或`<CSSTransition>`使用
+
+    
+
+
+
 # 正確使用方式
 
 ## `<Route>` 傳遞props to Component
