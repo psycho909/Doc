@@ -1,5 +1,87 @@
 # VueRouter
 
+## 嵌套路由和編程式導航
+
+### 設定嵌套
+
+```js
+// route.js
+{
+      path: '/about/:id',
+      name: 'about',
+      component:()=>import('./views/About.vue'),
+      children:[
+        {name:"cookBook",path:"cook_book",component:()=>import('./views/CookBook.vue')}
+      ]
+}
+```
+
+### 1.router-link 導航
+
+```vue
+// About.vue
+<template>
+  <div class="about">
+    <h1>{{$route.params}}</h1>
+    <span>{{this.allAbout}}</span>
+    <div>
+      <router-link :to="{name:'cookBook'}">查看食譜</router-link>
+    </div>
+    <router-view></router-view>
+  </div>
+</template>
+```
+
+### 2.編程式導航
+
+>   通過 '<button @click='jumpTo'>查看食譜' 跳轉
+
+```vue
+methods: {
+    jumpTo(){
+        //通過$router來跳轉
+        this.$router.push({name:'cookBook'})
+    }
+},
+```
+
+## 路由重定向
+
+>   重定向也是通過 `routes` 配置來完成
+
+```js
+{name:'default',path:'*',redirect: '/index'},
+```
+
+>   重定向的目標也可以是一個命名的路由：
+
+```js
+{name:'default',path:'*',redirect: {name:'index'}}
+```
+
+>   甚至是一個方法，動態返回重定向目標：
+
+```js
+{ path: '/dynamic-redirect/:id?',
+      redirect: to => {
+        const { hash, params, query } = to
+        if (query.to === 'foo') {
+          return { path: '/foo', query: null }
+        }
+        if (hash === '#baz') {
+          return { name: 'baz', hash: '' }
+        }
+        if (params.id) {
+          return '/with-params/:id'
+        } else {
+          return '/bar'
+        }
+      }
+    }
+```
+
+
+
 ## this.$router && this.$route 
 
 ### $router
@@ -103,6 +185,61 @@ this.$router.push({name:'home'})
 有的時候，我們需要通過路由來進行一些操作，比如最常見的登錄權限驗證，當用戶滿足條件時，才讓其進入導航，否則就取消跳轉，並跳到登錄頁面讓其登錄。
 
 為此我們有很多種方法可以植入路由的導航過程：**全局的, 單個路由獨享的, 或者組件級**
+
+## 響應路由參數的變化
+
+beforeRouteUpdate
+
+```vue
+export default {
+  data(){
+    return {
+      allAbout:"1"
+    }
+  },
+  mounted(){
+    // console.log(this.$route.params.id)
+  },
+  watch:{
+	//to表示你將要去的路由對象, from表示你從哪個路由來
+    '$route'(to,from){
+      if(to.params.id == 1){
+        this.allAbout="第1頁"
+      }
+      if(to.params.id == 2){
+        this.allAbout="第2頁"
+      }
+    }
+  }
+}
+```
+
+或者使用 2.2 中引入的 `beforeRouteUpdate` [導航守衛](https://link.juejin.im/?target=https%3A%2F%2Frouter.vuejs.org%2Fzh%2Fguide%2Fadvanced%2Fnavigation-guards.html)：
+
+```vue
+export default {
+  data(){
+    return {
+      allAbout:"1"
+    }
+  },
+  mounted(){
+    // console.log(this.$route.params.id)
+  },
+  beforeRouteUpdate(to,from,next){
+    if(to.params.id == 1){
+      this.allAbout="第1頁"
+    }
+    if(to.params.id == 2){
+      this.allAbout="第2頁"
+    }
+    
+    next()
+  }
+}
+```
+
+
 
 ## 全局守衛
 
