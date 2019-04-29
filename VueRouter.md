@@ -147,6 +147,8 @@ $route.params:userId
 ```
 
 ```js
+// 全局使用beforeEach
+
 router.beforeEach((to,from,next)=>{
     if(to.matched.some(record)=>record.meta.requiresAuth){
         let isLogin=true
@@ -164,6 +166,10 @@ router.beforeEach((to,from,next)=>{
     }
 })
 ```
+
+
+
+
 
 ### $router.push() && $router.replace() && $router.go()
 
@@ -239,8 +245,6 @@ export default {
 }
 ```
 
-
-
 ## 全局守衛
 
 >   全局守衛，每次使用router時都會調用
@@ -248,6 +252,30 @@ export default {
 1.  router.beforeEach 全局前置守衛 進入路由之前
 2.  router.beforeResolve 全局解析守衛(2.5.0+) 在beforeRouteEnter調用之後調用
 3.  router.afterEach 全局後置鉤子 進入路由之後
+
+### beforeEach
+
+>   ## 切換必做 beforeEach，在切換頁面的某個時機點，會做一次
+
+```js
+const router = new VueRouter({ ... })
+
+router.beforeEach(async (to, from, next) => {
+  //...
+  switch(to.name) {
+    case 'news':
+      await router.app.$store.dispatch('API', '/news')
+      break
+    case 'products':
+      await router.app.$store.dispatch('API', '/products')
+      break
+    //...
+  }
+  next()
+})
+```
+
+
 
 ### **使用方法** 
 
