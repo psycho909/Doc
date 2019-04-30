@@ -365,7 +365,7 @@ watch 裡面還有一個屬性 `deep`，默認值是 `false`，代表是否深�
 <!-- isActive為true,即給 div addClass active-->
 <div class="view" v-bind:class={'active':'isActive'}>Class</div>
 ```
-​```javascript
+```javascript
 new Vue({
     el:"#app",
     data:{
@@ -376,7 +376,7 @@ new Vue({
 ## v-model雙向綁定
 > 单个复选框，绑定到布尔值
 > 多个复选框，绑定到同一个数组
-```html
+​```html
 <!-- checkbox -->
 <input type="checkbox" id="jack" value="jack" v-model="checkedName">
 <label for="jack">jack</label>
@@ -863,7 +863,60 @@ methods: {
     }
 }
 ```
+## Vue.use()
+
+>   自定義一個需要 Vue.use() 的組件，也就是有 install 的組件
+
+### 在 Loading.vue 中定義一個組件
+
+```vue
+<template>
+    <div class="loading-box">
+        Loading...
+    </div>
+</template>
+```
+
+### 在 index.js 中 引入 Loading.vue ，並導出
+
+```js
+// 引入組件
+import LoadingComponent from './loading.vue'
+// 定義 Loading 對象
+const Loading={
+    // install 是默認的方法。當外界在 use 這個組件的時候，就會調用本身的 install 方法，同時傳一個 Vue 這個類的參數。
+    install:function(Vue){
+        Vue.component('Loading',LoadingComponent)
+    }
+}
+// 導出
+export default Loading
+```
+
+### 在 main.js 中引入 loading 文件下的 index
+
+```js
+// 其中'./components/loading/index' 的 /index 可以不寫，webpack會自動找到並加載 index 。如果是其他的名字就需要寫上。
+import Loading from './components/loading/index'
+// 這時需要 use(Loading)，如果不寫 Vue.use()的話，瀏覽器會報錯，大家可以試一下
+Vue.use(Loading)
+```
+
+### App.vue裡面寫入定義好的組件標籤
+
+```vue
+<template>
+  <div id="app">
+    <h1>vue-loading</h1>
+    <Loading></Loading>
+  </div>
+</template>
+```
+
+
+
 ## Vue Router
+
 ### 子路由
 ```html
 <!-- Hi template -->
