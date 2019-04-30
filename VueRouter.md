@@ -169,9 +169,9 @@ router.beforeEach((to,from,next)=>{
 
 
 
+## vue 路由的跳转
 
-
-### $router.push() && $router.replace() && $router.go()
+### `$router.push()`` $router.replace() ``$router.go()`
 
 ### $router.push()
 
@@ -182,9 +182,9 @@ this.$router.push('home')
 this.$router.push({name:'home'})
 ```
 
-### router.replace(location) = = = window.history.replaceState
+>    router.replace(location) = = = window.history.replaceState
 
-### $router.go(n) = = = window.history.go
+>    $router.go(n) = = = window.history.go
 
 ## Vue-Router導航守衛
 
@@ -391,3 +391,26 @@ beforeRouteLeave (to, from , next) {
 10.  調用全局後置鉤子的 afterEach 鉤子。
 11.  觸發DOM更新(mounted)。
 12.  執行beforeRouteEnter 守衛中傳給 next 的回調函數
+
+## 動態改變頁面的title
+
+```js
+// router.js
+{
+	path: '/index',
+	name: 'index',
+	meta: {
+		title: '首頁'
+	}
+}
+
+// main.js
+router.beforeEach(to, from, next){
+	if(to.meta.title){
+		document.title = to.meta.title
+	}
+	next()  // 這個方法必須調用 不然路由不會跳轉
+}
+
+```
+

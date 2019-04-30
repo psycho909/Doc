@@ -357,7 +357,7 @@ watch 裡面還有一個屬性 `deep`，默認值是 `false`，代表是否深�
 
 ## 事件綁定
 ### v-bind屬性綁定/樣式綁定
-​```html
+```html
 <!-- src是屬性 -->
 <img v-bind:src="imgNew">
 <!-- isActive為true,即給 div addClass isActive-->
@@ -365,7 +365,7 @@ watch 裡面還有一個屬性 `deep`，默認值是 `false`，代表是否深�
 <!-- isActive為true,即給 div addClass active-->
 <div class="view" v-bind:class={'active':'isActive'}>Class</div>
 ```
-```javascript
+​```javascript
 new Vue({
     el:"#app",
     data:{
@@ -1186,11 +1186,31 @@ npm i --save-dev node-sass sass-loader
 
 ### 增加對IE 11支持
 
+#### 1.
+
 ```js
 // 安裝
 npm i --save babel-polyfill
 // main.js
 import 'babel-polyfill'
+```
+
+#### 2.
+
+```js
+// 安裝
+npm i --save @babel/polyfill
+// main.js
+import '@babel/polyfill';
+```
+
+```js
+const plugins = [];
+
+module.exports = {
+  presets: [["@vue/app",{"useBuiltIns": "entry"}]],
+  plugins: plugins
+};
 ```
 
 
@@ -1404,6 +1424,19 @@ deServer:{
     }
 }
 ```
+
+### 修复 HMR(热更新)失效
+
+```js
+module.exports = {
+    chainWebpack: config => {
+        // 修复HMR
+        config.resolve.symlinks(true);
+    }
+}
+```
+
+
 
 ## Vue優化方式
 
