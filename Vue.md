@@ -365,7 +365,7 @@ watch 裡面還有一個屬性 `deep`，默認值是 `false`，代表是否深�
 <!-- isActive為true,即給 div addClass active-->
 <div class="view" v-bind:class={'active':'isActive'}>Class</div>
 ```
-```javascript
+​```javascript
 new Vue({
     el:"#app",
     data:{
@@ -1302,6 +1302,30 @@ build:{
     assetsPublicPath:"./"
 }
 ```
+
+## 使用axios
+
+```js
+npm i -S axios
+```
+
+```js
+// main.js
+import axios from 'axios'
+Vue.prototype.$axios=axios
+```
+
+```vue
+// Home.vue
+mounted(){
+    this.$axios.get(api)
+	.then((res)=>{
+		console.log(res)
+	})
+}
+```
+
+
 
 ## 使用axios post到PHP問題
 
