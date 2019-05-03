@@ -464,14 +464,42 @@ const result = arr.filter(item => {
 });
 //[{name: "a", value: 20}, {name: "b", value: 40}]
 ```
-### 驗證 Email
+## 千位分隔
+
+### 方法1(小數點會4捨5入)
+
+```js
+(123456789).toLocaleString('en-US')
+```
+
+### 方法2(不能有小數點)
+
+```js
+'123456789'.replace(/(\d)(?=(\d{3})+$)/g,'$1,')
+```
+
+### 方法3(可以有小數點)
+
+```js
+function numFormat(num){
+  var res=num.toString().replace(/\d+/, function(n){ // 先提取整数部分
+       return n.replace(/(\d)(?=(\d{3})+$)/g'$1,');
+  })
+  return res;
+}
+```
+
+
+
+## 驗證 Email
+
 ```js
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
 ```
-### 将下面数组转成对象，key/value 对应里层数组的两个值 
+## 将下面数组转成对象，key/value 对应里层数组的两个值 
 
 ```javascript
 const objLikeArr = [["name", "Jim"], ["age", 18], ["single", true]]; 
@@ -482,7 +510,7 @@ fromPairs(objLikeArr);
 
 ```
 
-### 将多层数组转换成一层数组 
+## 将多层数组转换成一层数组 
 
 ```javascript
 var nestedArr = [1, 2, [3, 4, [5, 6]]];
@@ -492,7 +520,7 @@ var flatten=arr=>arr.reduce((flat,next)=>{
 flatten(nestedArr)
 ```
 
-### 生成由隨機整數組成的數組，數組長度和元素大小可自定義 
+## 生成由隨機整數組成的數組，數組長度和元素大小可自定義 
 
 ```javascript
 var genNumArr=(length,limit)=>(
@@ -501,7 +529,7 @@ var genNumArr=(length,limit)=>(
 genNumArr(10,100)
 ```
 
-### 從長度為 100 萬的隨機整數組成的數組中取出偶數，再把所有數字乘以 3 
+## 從長度為 100 萬的隨機整數組成的數組中取出偶數，再把所有數字乘以 3 
 
 ```javascript
 var bigArr = genNumArr(1e6, 100)

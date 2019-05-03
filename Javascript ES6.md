@@ -240,7 +240,17 @@ var x=1,y=2;
 var {hostname:domain, pathname:path} = location;
 ```
 
-## `new Array().fill()自動產生多個預設array`
+## 產生多個預設Array
+
+### Array.from()產生
+
+```js
+Array.from(new Array(N),(v,i)=>i)
+```
+
+
+
+### `new Array().fill()自動產生多個預設array`
 
 ```js
 var arr=new Array(6).fill(0);
