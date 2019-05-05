@@ -1697,6 +1697,32 @@ export const userSagas=[
 ]
 ```
 
+# Create React App 3 絕對路徑設置
+
+```react
+import { Header } from '../Header'
+import { HeaderContainer } from '../../containers/HeaderContainer'
+import headerStore from '../../store/headerStore'
+
+//-------------------------------------------------
+
+import { Header } from 'components/Header'
+import { HeaderContainer } from 'containers/HeaderContainer'
+import headerStore from 'store/headerStore'
+```
+
+```js
+// 在跟目錄下 創建 jsconfig.json
+
+{
+  "compilerOptions": {
+    "baseUrl": "src"
+  }
+}
+```
+
+
+
 # `env` 環境變量設置
 
 再項目跟目錄創建``.env`
