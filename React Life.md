@@ -30,8 +30,6 @@
   }
 ```
 
-
-
 #### nextProps
 
 > 接下來props會變化成怎樣
@@ -40,36 +38,9 @@
 
 > 接下來state會變化成怎樣
 
-### componentWillUpdate
-
-> 組件被更新之前，它會自動執行，但是他在`shouldComponentUpdate`之後被執行，如果`shouldComponentUpdate`返回`true`才執行，如果返回`false`不會執行更新
-
 ### componentDidUpdate(prevProps, prevState, snapshot)
 
 > 在更新發生之後立即被調用。這個生命週期在組件第一次渲染時不會觸發。
-
-### componentWillReceiveProps(nextProps)
-
-> 當一個組件從父組件接收了參數。
->
-> 只要父組件的render函數被重新執行了，子組件這個生命週期函數就會被執行。
-
-
-
-> 如果這組件第一次存在於父組件中，不會執行。
->
-> 如果這個組件之前已經存在於父組件中，才會執行。
-
-```js
-componentWillReceiveProps(nextProps){
-    this.setState({
-        _id:nextProps.booklist._id,
-        id:nextProps.booklist.id,
-        title:nextProps.booklist.title,
-        author:nextProps.booklist.author
-    })
-}
-```
 
 ## Unmounting
 
@@ -96,6 +67,8 @@ componentWillReceiveProps(nextProps){
 
 > 在每次調用 render 方法之前調用。包括初始化和後續更新時。
 
+### order
+
 ```js
 state = {
     // 从 props 获取默认 state
@@ -111,7 +84,7 @@ componentWillReceiveProps(nextProps) {
     }
 }
 ```
-
+### new
 ```js
 state = {
     result: 0,
@@ -136,7 +109,7 @@ static getDerivedStateFromProps(nextProps, prevState) {
 
 ```
 
-## getSnapshotBeforeUpdate
+## getSnapshotBeforeUpdate(prevProps, prevState)+componentDidUpdate
 
 1.  用來取代`componentWillUpdate`
 2.  接收兩個參數`prevProps`&`prevState`
