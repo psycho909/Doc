@@ -1430,7 +1430,9 @@ var api="/user/user/api/e573c6ac371821077c0fded1cb5d3fdc/";
 			})
 ```
 
-## Vue引入第三方插件如:jquery...
+## Vue 全局引入第三方插件如:jquery...
+
+### 方法1(Best):
 
 >   創建lib目錄，存放裡面
 >
@@ -1463,6 +1465,33 @@ mounted(){
 	this.$jquery('.vuex').html()
 }
 ```
+
+### 方法2:
+
+> 在main.js引入
+
+```js
+import jquery from 'jquery'
+
+Vue.prototype.$jquery=jquery;
+```
+
+> 使用
+
+```js
+mounted(){
+    this.$jquery.ajax({
+        url:"https://randomuser.me/api/",
+        method:"GET",
+        dataType:"JSON",
+        success:function(data){
+            console.log(data)
+        }
+    })
+}
+```
+
+
 
 
 
