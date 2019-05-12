@@ -1143,20 +1143,6 @@ methods: {
 }
 ```
 
-## export引入
-
-```js
-// xxx.js
-var x1=a;
-var x2=b;
-export {x1,x2}
-
-// xxx.vue
-import {x1,x2} form ./xxx.js
-```
-
-
-
 ## Vue bulid後的問題
 
 ### 增加自定義路徑
@@ -1444,7 +1430,7 @@ var api="/user/user/api/e573c6ac371821077c0fded1cb5d3fdc/";
 			})
 ```
 
-## Vue引入第三方
+## Vue引入第三方插件如:jquery...
 
 >   創建lib目錄，存放裡面
 >
