@@ -38,7 +38,7 @@ $msg = "";
 if (isset($_POST['upload'])) {
     $image = $_FILES['image']['name'];
     $image_text = mysqli_real_escape_string($conn, $_POST['image_text']);
-    $baseUrl = "images/".basename($image);
+    // $baseUrl = "images/".basename($image);
 
     $tmp=explode('.',$image);
     $filessub=end($tmp);
