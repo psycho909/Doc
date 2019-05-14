@@ -41,3 +41,71 @@ http.createServer((req,res)=>{
 1. 在`heroku`主機上面
 1. `setting` -> `Config Variables`管理變數資料
 1. 這樣子就可以透過`process.env`去取得變數
+
+# 部屬Heroku步驟
+
+## step1: 初始化 git init
+
+>   初始化
+
+```js
+> git init
+```
+
+## step2: 使用.gitignore
+
+>   創建`.gitignore`忽略`node_modules`
+
+```js
+node_modules > .gitignore
+```
+
+## step3: git commit
+
+>   `git commit`
+
+```js
+> git add -A
+> git commit -m 'initial commit'
+```
+
+## step4: 安裝Heroku並Login
+
+>   安裝Heroku並Login
+
+```js
+> heroku login
+```
+
+## step5: 創建 Heroku app
+
+```js
+> heroku create nodejs-demo
+```
+
+## step6: Make sure `package.json`have`start`
+
+```js
+...
+"scripts": {
+    "dev": "nodemon index.js", <-- for local development purpose
+    "start": "node .", <-- Heroku will use to start the application
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+...
+```
+
+## step7: Deploy the code
+
+>   部屬code到Heorku，如果沒有出錯，會產生一個URL
+
+```js
+> git push heroku master
+```
+
+## step8: Check deploument logs
+
+```js
+> heroku logs --tail
+```
+
