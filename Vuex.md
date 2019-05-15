@@ -425,7 +425,7 @@ export default new Vuex.Store({
 </template>
 
 <script>
-import {mapGetters,mapActions} from 'vuex'
+import {mapState,mapGetters,mapActions} from 'vuex'
 export default {
   name: 'HelloWorld',
   props: {
@@ -436,6 +436,9 @@ export default {
       count:'users/count',
       isEvenOrOdd:"users/isEvenOrOdd"
     }),
+    ...mapState({
+		count:state=>state.user.count
+    })
   },
   methods:{
     ...mapActions({

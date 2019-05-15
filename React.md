@@ -1,3 +1,30 @@
+## state,setState 注意事項
+
+### 當setState不同步時，正確獲取state的方法
+
+>   react官網說明setState不一定同步，state為component封裝內部狀態屬性，當呼叫setState()就會重新繪製，所以由react自己透過diff進行控制state更新狀態。
+
+```js
+// setState()可以透過第二參數callback來取到更新後的值
+this.setState({
+    count:3
+},callback)
+```
+
+### 當state依據props改變時
+
+>   如果state會依據props改變，props與state的更新不一定會同步，所以使用setState()傳入的參數就不是要更新的state object，而會是一個傳入 **previous state** 和 **props** 的function，並且回傳要更新的state object。
+
+```js
+this.setState(
+    (prevState,props)=>({
+        count:prevState.count+1
+    }),callback
+)
+```
+
+
+
 ## props，state與render函數的關係
 
 1. 當組件的state或者props發生改變的時候，render函數就會重新執行
