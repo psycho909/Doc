@@ -134,14 +134,84 @@ export default new Vuex.Store({
 ```
 ## Actions
 > Vuex的actions期望一個存儲作為必需的參數，然後是一個可選的參數。如果使用參數遭到破壞，可以使用以下語法傳遞額外的參數:
-```javascript
+```js
 actions:{
-    addTodo({commit}){
-        commit('ADD_TODO')
+    addTodo(context,data){
+        context.commit('ADD_TODO',data)
     }
 }
 ```
+
+```javascript
+actions:{
+    addTodo({commit},data){
+        commit('ADD_TODO',data)
+    }
+}
+```
+## 組合 actions
+
+```js
+actions: {
+  actionA ({ commit }) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        commit('someMutation')
+        resolve()
+      }, 1000)
+    })
+  }
+}
+```
+## Promise後dispatch
+
+>   當一個 action 返回 **Promise** 時，`store.dispatch` 可以處理返回（return）的 **Promise** ：
+
+```js
+actions: {
+    waitIncrement({commit}){
+        return new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+                commit(INCREMENT)
+                console.log(1000)
+                resolve()
+            },1000)
+        })
+    },
+    incrementAsync({dispatch,commit,state}){
+        return dispatch('waitIncrement').then(()=>{
+            commit(INCREMENT)
+            console.log("Async")
+        })
+    }
+}
+```
+
+## 在 actions 中使用 async / await
+
+```js
+actions:{
+    async actionA({commit}){
+        return new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+                commit(INCREMENT)
+                console.log(1000)
+                resolve()
+            },1000)
+        })
+    },
+    async incrementAsync({dispatch,commit,state}){
+        await dispatch("actionA") // 等待actionA 完成
+        commit(INCREMENT)
+    }
+}
+
+```
+
+
+
 ## 開始使用
+
 > Vuex2中，分發用於觸發`actions`，而`commit`用於觸發`mutations`。一個`actions`的分對應一個`mutations`的`commit`。由於我們的操作是在Vuex存儲中定義的，所以可以在多個模塊中使用單個調用來分發`actions`：
 ```html
 <button class="btn btn-primary" @click="addTodo">Add Todo</button>

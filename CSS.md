@@ -324,3 +324,108 @@ ol li:before{
 
 ```
 
+## CSS Background 屬性
+
+### **Background Clip**
+
+>   background-clip 顧名思義，背景剪切，用來設置元素的背景（背景圖片或顏色）是否延伸到邊框下面。
+
+`background-clip: border-box;`  背景延伸至邊框外沿（但是在邊框下層）
+
+`background-clip: padding-box;` 背景延伸至內邊距（padding）外沿。不會繪製到邊框處
+
+`background-clip: content-box;` 背景被裁剪至內容區（content box）外沿
+
+`background-clip: text;` 背景被裁剪成文字的前景色（實驗屬性，需要加瀏覽器前綴）
+
+### **Background Origin**
+
+>   此屬性需要與`background-position`配合使用。你可以用`background-position`計算定位是從border，padding或content boxes內容區域算起。（類似`background-clip`）
+
+`background-origin：border-box;` 從border邊框位置算起
+
+`background-origin：padding-box;` 從padding位置算起
+
+`background-origin：content-box;` 從content-box內容區域位置算起；
+
+### 搭配background製作漸層border
+
+```css
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 290px;
+    height: 90px;
+    position: relative;
+    border-radius: 50px;
+    font-weight: 500;
+    border: solid 5px transparent;
+    color: #5e3700;
+    font-size: 32px;
+    margin: 20px;
+}
+.btn-default {
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    background-image: linear-gradient(
+        to right,
+        #ff7c2d 3%,
+        #ff016e 97%
+    ),
+        linear-gradient(to bottom, #fff3b6, #e27d2c);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+```
+
+```html
+<div class="btn btn-default"></div>
+```
+
+### 搭配background製作漸層border
+
+```css
+.btn-anim{
+    display: inline-flex;
+    width: 290px;
+    height: 90px;
+    padding: 6px;
+    position: relative;
+}
+.btn-anim:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #0ebeff, #ffdd40, #ae63e4, #47cf73, #0ebeff, #ffdd40, #ae63e4, #47cf73);
+    border-radius: 50px;
+    background-size: 200%;
+    transition: background-color .3s linear;
+    animation: rainbow-border 3s linear infinite;
+}
+.btn-box{
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    position: relative;
+    border-radius: 50px;
+}
+@keyframes rainbow-border{
+    0%{
+        background-position: 0% 0%;
+    }
+    100%{
+        background-position: 200% 50%;
+    }
+}
+```
+
+```html
+<div class="btn-anim">
+    <div class="btn-box"></div>
+</div>
+```
+
