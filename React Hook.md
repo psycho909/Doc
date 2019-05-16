@@ -534,11 +534,11 @@ const counterReducer=(state,action)=>{
       return {counter:0};
   }
 }
-
+const defaultState={
+  counter:0
+}
 const UseReducer=(props)=>{
-    const [state,dispatch]=React.useReducer(counterReducer,{
-      counter:10
-    })
+    const [state,dispatch]=React.useReducer(counterReducer,defaultState)
     const increment=()=>{
       dispatch({type:"INCREMENT"})
     }
