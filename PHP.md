@@ -1,5 +1,44 @@
 # PHP
-## array
+
+## String
+
+### substr()
+
+```php
+$str="HEELOWORLD";
+substr($str,1,4); // ELLO
+```
+
+### str_replace()
+
+```php
+$str="HEELOWORLD";
+str_replace("H","Z",$str); // ZEELOWORLD
+```
+
+### strlen()
+
+```php
+$str="HEELOWORLD";
+echo strlen($str); // 10
+```
+
+### str_pad(string,length,pad_string,pad_type)
+
+*pad_type*
+
+*   STR_PAD_BOTH - 填充字符串的兩側。如果不是偶數，則右側獲得額外的填充
+*   STR_PAD_LEFT - 填充字符串的左側。
+*   STR_PAD_RIGHT - 填充字符串的右側。默認。
+
+```php
+$str="HEELOWORLD";
+echo str_pad($str,30,".",STR_PAD_LEFT); // ....................HEELOWORLD
+```
+
+
+
+## Array
 ```php
 //Old array
 $fruits=array(
@@ -105,7 +144,43 @@ $fruitss=[
 var_dump($fruits);
 //['apple'=>'red','lemon'=>'greeb','pineapple'=>'yellow']
 ```
+### usort 可排序object字串
+
+```php
+$openlist=Array();
+$openlist[0]['title']="6/10 中獎名單";
+$openlist[0]['name']="6/10 獎項: Panasonic 日製手持無線吸塵器";
+$openlist[0]['datetime']="2019-06-10 17:00:00";
+
+$openlist[1]['title']="6/19 中獎名單";
+$openlist[1]['name']="6/19 獎項: Panasonic 日製手持無線吸塵器";
+$openlist[1]['datetime']="2019-06-19 17:00:00";
+
+// 小到大
+function sortDate($a,$b){
+    return $a['datetime'] > $b['datetime']?1:-1;
+}
+usort($openlist1,'sortDate');
+```
+
+### array_filter
+
+```php
+function findunNum($array){
+    if($array['num'] == 0){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+$openlist1=array_filter($openlist,findunNum);
+```
+
+
+
 ## Object
+
 ### Object
 ```php
 // 定義架構
@@ -177,7 +252,37 @@ class ATM extends Computer{
 }
 $bankATM=new ATM('1.2Ghz','2GB','2TB');
 ```
+### example
+
+```php
+class Database{
+    function __construct(){
+        $this->conn=mysqli_connect(DB_HOST,DB_USER,DB_PASS);
+        $this->set_db_encode();
+    }
+
+    function set_db_encode(){
+        return mysqli_query($this->conn,"SET NAMES UTF8");
+    }
+}
+```
+
+```php
+class DB extends Databaase{
+    function __construct(){
+        parent::__construct();
+    }
+    function query($sql){
+        $result=mysqli_query($this->conn,$sql);
+        return $result;
+    }
+}
+```
+
+
+
 ### property &  method visibility
+
 ```php
 // 定義架構
 class Computer{
@@ -430,23 +535,5 @@ echo 'hello, '.$_SESSION['user_id'];
     * 從session清除username資訊(登出)
 ### header already sent問題出現
 > `session`&`cookie`都要放在頁面最上方，如果沒放在最上方會出現header already sent問題出現
-## cURL
-> 可以直接用PHP跟其他網站溝通或去跑別人網站API的工具
-```php
-$formData=[
-    'name'=>'Taker',
-    'email'=>'ss@gmail.com'
-];
-$c=curl_init('http://www.example.com/test.php');
-curl_setopt($c,CURLOPT_RETURNTRANSFER,true);
-curl_setopt($c,CURLOPT_POST,true);
-curl_setopt($c,CURLOPT_POSTFIELDS,$formData);
 
-$serverOutput=curl_exec($c);
-echo $serverOutput;
-
-curl_close($c);
-
-```
-## composer package管理系統
-1. composer require kint-php/kint => debug工具
+> 
