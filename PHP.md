@@ -177,6 +177,45 @@ function findunNum($array){
 $openlist1=array_filter($openlist,findunNum);
 ```
 
+### implode() array->str
+
+```php
+$fruits=['pineapple','lemon','apple'];
+echo implode(",",$fruits); // pineapple,lemon,apple
+```
+
+### explode() str->array
+
+```php
+$str="pineapple,lemon,apple";
+print_r(explode(",",$str));
+(
+    [0] => pineapple
+    [1] => lemon
+    [2] => apple
+)
+```
+
+## file_get_contents()
+
+```php
+// 讀取JSON檔案並轉成PHP可讀取的陣列格式
+$news_discount_json=file_get_contents("./json/news-discount.json");
+$news_discount_data=json_decode($news_discount_json,true);
+```
+
+## JOSN
+
+*   `json_decode($json)`:將json轉成陣列或object
+*   `json_encode($json)`:將變量轉成JONS編碼
+
+```php
+// json_decode($json,true)
+可以用來獲取文件的JSON格式，json_decode()轉成PHP可讀取陣列格式
+// json_encode($array)
+可以用於PHP整理好的資料，json_encode()給前端
+```
+
 
 
 ## Object
@@ -278,8 +317,6 @@ class DB extends Databaase{
     }
 }
 ```
-
-
 
 ### property &  method visibility
 
