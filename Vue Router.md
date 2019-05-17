@@ -1,5 +1,183 @@
 # VueRouter
 
+## `<router-link>`
+
+```vue
+<!-- 字符串 -->
+<router-link to="home">查看食譜</router-link>
+
+<!--使用v-bind綁定-->
+<router-link v-bind:to="home">Home</router-link>
+
+<!-- 根據router的name -->
+<router-link :to="{name:'cookBook'}">查看食譜</router-link>
+
+<!-- 命名路由 : /cookBook/123 -->
+<router-link :to="{name:'cookBook',params:{userId:123}}">查看食譜</router-link>
+
+<!-- 帶查詢參數 : /cookBook/?plan=123 -->
+<router-link :to="{name:'cookBook',query:{plan:123}}">查看食譜</router-link>
+```
+
+### tag
+
+>   更換標籤屬性預設`a`標籤
+
+```vue
+<router-link to="/foo" tag="li">foo</router-link>
+<!-- 渲染结果 -->
+<li>foo</li>
+```
+
+## `<router-view>`
+
+```vue
+<transition>
+  <keep-alive>
+    <router-view></router-view>
+  </keep-alive>
+</transition>
+
+```
+
+## Router 構建選項
+
+### routes
+
+>   `RouteConfig`的類型定義：
+
+```js
+declare type RouteConfig = {
+  path: string; //路徑
+  component?: Component;
+  name?: string; // 命名路由
+  components?: { [name: string]: Component }; // 命名視圖組件
+  redirect?: string | Location | Function; //重定向
+  props?: boolean | Object | Function;
+  alias?: string | Array<string>; //別名
+  children?: Array<RouteConfig>; // 嵌套路由
+  beforeEnter?: (to: Route, from: Route, next: Function) => void;
+  meta?: any; //路由元信息 使用$route.meta.屬性可以獲取
+
+  // 2.6.0+
+  caseSensitive?: boolean; // 匹配規則是否大小寫敏感？(默認值：false)
+  pathToRegexpOptions?: Object; // 編譯正則的選項
+}
+```
+
+## 路由對象屬性
+
+### `$route.path`
+
+字符串，對應當前路由的路徑，總是解析為絕對路徑，如 "/foo/bar"
+
+### `$route.params`
+
+一個 key/value 對象，包含了動態片段和全匹配片段，如果沒有路由參數，就是一個空對象。
+
+### `$router.query`
+
+一個 key/value 對象，表示 URL 查詢參數。例如，對於路徑 /foo?user=1，則有 $route.query.user == 1，如果沒有查詢參數，則是個空對象。
+
+### `$route.hash`
+
+當前路由的 hash 值 (帶 #) ，如果沒有 hash 值，則為空字符串。
+
+### `$route.fullPath`
+
+完成解析後的 URL，包含查詢參數和 hash 的完整路徑。
+
+### `$route.matched`
+
+一個數組，包含當前路由的所有嵌套路徑片段的路由記錄 。路由記錄就是 routes 配置數組中的對象副本 (還有在 children 數組)。
+
+```js
+const router = new VueRouter({
+  routes: [
+    // 下面的對象就是路由記錄
+    { path: '/foo', component: Foo,
+      children: [
+        // 這也是個路由記錄
+        { path: 'bar', component: Bar }
+      ]
+    }
+  ]
+})
+
+```
+
+## 單頁面多router區域
+
+```vue
+<router-view></router-view>
+<router-view name="left"></router-view>
+<router-view name="right"></router-view>
+```
+
+```js
+{
+    path: '/',
+    name: 'Count',
+    // 多個頁面的component 要變成 components
+    components: {
+        default:Count,
+        left:Left,
+        right:Right
+    }
+}
+```
+
+## router 切換的動畫效果
+
+```vue
+<transition name="fade" mode="out-in">
+    <router-view></router-view>
+</transition>
+```
+
+```js
+.fade-enter{
+    opacity: 0px;
+}
+.fade-leave{
+    opacity: 1px;
+}
+.fade-enter-active{
+    transition:all .3s;
+}
+.fade-leave-active{
+    opacity: 0;
+    transition:all .3s;
+}
+```
+
+## 404頁面處理
+
+```vue
+<!-- 404 Page -->
+<template>
+    <div>{{msg}}</div>
+</template>
+<script>
+    export default {
+        data() {
+            return {
+                msg: '404 page'
+            }
+        }
+    }
+</script>
+```
+
+```js
+{
+    path:'*',
+    component:Error
+}
+```
+
+
+
 ## 嵌套路由和編程式導航
 
 ### 設定嵌套
@@ -62,22 +240,23 @@ methods: {
 >   甚至是一個方法，動態返回重定向目標：
 
 ```js
-{ path: '/dynamic-redirect/:id?',
-      redirect: to => {
-        const { hash, params, query } = to
-        if (query.to === 'foo') {
-          return { path: '/foo', query: null }
+{ 
+    path: '/dynamic-redirect/:id?',
+        redirect: to => {
+            const { hash, params, query } = to
+            if (query.to === 'foo') {
+                return { path: '/foo', query: null }
+            }
+            if (hash === '#baz') {
+                return { name: 'baz', hash: '' }
+            }
+            if (params.id) {
+                return '/with-params/:id'
+            } else {
+                return '/bar'
+            }
         }
-        if (hash === '#baz') {
-          return { name: 'baz', hash: '' }
-        }
-        if (params.id) {
-          return '/with-params/:id'
-        } else {
-          return '/bar'
-        }
-      }
-    }
+}
 ```
 
 

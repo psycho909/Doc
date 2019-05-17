@@ -429,3 +429,145 @@ ol li:before{
 </div>
 ```
 
+### background-blend-mode 濾鏡模式
+
+```css
+div{
+    background: url('https://bennettfeely.com/clippy/pics/pittsburgh.jpg'), linear-gradient(45deg, #3023AE 0%, #FF0099 100%);
+    background-blend-mode: overlay,luminosity,screen,luminosity;
+    background-size: cover;
+}
+```
+
+
+
+## CSS Smooth Scroll滑順的滾動效果
+
+>   `scroll-behavior: smooth`
+>
+>   可搭配`a href=“#web”`to`div#web`，去做到滑順的滾動效果
+>
+>   不支援IE
+
+```css
+scroll-behavior: smooth;
+```
+
+```css
+* {
+    padding: 0;
+    margin: 0;
+}
+ul {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(50%);
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+}
+ul li {
+    list-style: none;
+}
+ul li a {
+    display: block;
+    text-decoration: none;
+    height: 30px;
+    font-size: 24px;
+    background: #fff;
+    width: 140px;
+    color: #262626;
+    margin: 4px 0;
+    padding-left: 15px;
+    text-transform: uppercase;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    line-height: 30px;
+}
+ul li a:hover {
+    background: #333;
+    text-decoration: none;
+    color: #fff;
+}
+
+#container {
+    width: 100%;
+    height: 100vh;
+    scroll-behavior: smooth;
+    overflow-Y: scroll;
+
+#container div {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+#container div#web {
+    background-color: #00ced1;
+}
+#container div#dev {
+    background-color: #f05855;
+}
+```
+
+```html
+    <ul>
+        <li class="list-elem" id=""><a href="#web">Web</a></li>
+        <li class="list-elem" id=""><a href="#dev">Dev</a></li>
+    </ul>
+
+    <div id="container">
+        <div id="web">
+            <h1>WEB</h1>
+        </div>
+        <div id="dev">
+            <h1>DEV</h1>
+        </div>
+    </div>
+```
+
+## CSS Masking Cliping
+
+![](C:\Users\PC\Desktop\Doc\images\css-mask-clip-path-3.png)
+
+>   **剪切**需要一个剪切路径，剪切路径可以是一个**闭合矢量路径**、**形状**或**多边形**；剪切路径是一个区域，该区域**内部**的所有内容都可以显示出来，外部的所有内容将被剪切掉，在页面上不可见。
+>
+>   **遮罩**需要一个高亮或Alpha遮罩层，将源和遮罩层合在一起会创建一个缓冲区域，在合层阶段之前，亮度和Alpha遮罩会影响这个**缓冲区**的透明度，从而实现完全或部分遮罩源的部分。
+
+**注意**：虽然遮罩提供了许多增强图形效果的可能性，并且通常对内容的可见部分提供了更多的控制，但是剪切路径可以执行得更好，基本形状可以更容易插值。
+
+### Masking
+
+>   `chrome`需加上`-webkit-`
+
+```css
+-webkit-mask-repeat: no-repeat;
+-webkit-mask-position: center;
+-webkit-mask-size: cover;
+```
+
+```css
+background: linear-gradient(45deg, red 0%, green 100%);
+-webkit-mask-image: url("./images/mask1.png");
+```
+
+## Cliping
+
+*   clip-path:用來繪製圖形
+*   clip-rule:用來確定定點是否位於圖形元素創建的剪貼區域形狀內的算法
+*   clipPath:是SVG中的一個標籤元素，可以用於clip-path的url()中，當作剪切路徑源
+
+```css	
+div:nth-of-type(1) img{
+    clip-path: circle(40%);
+}
+div:nth-of-type(2) img{
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+```
+
+```html
+<div><img src="https://bennettfeely.com/clippy/pics/pittsburgh.jpg" alt=""></div>
+<div><img src="https://bennettfeely.com/clippy/pics/pittsburgh.jpg" alt=""></div>
+```
+
