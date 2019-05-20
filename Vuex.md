@@ -502,12 +502,12 @@ export default {
     msg: String
   },
   computed:{
+    ...mapState({
+		count:state=>state.user.count
+    }),
     ...mapGetters({
       count:'users/count',
       isEvenOrOdd:"users/isEvenOrOdd"
-    }),
-    ...mapState({
-		count:state=>state.user.count
     })
   },
   methods:{

@@ -1168,6 +1168,8 @@ import Broken from './component/Broken'
 
 # redux-saga
 
+## 初始化
+
 ```js
 npm i --save redux-saga
 ```
@@ -1275,9 +1277,9 @@ function* hellosaga(){
 
 `takeLatest()`監聽，指運行一次，如果有其他也同時在運行時，只運行最後一次觸發
 
-`put()`可發送action
+`put()`put函數是用來發送action的 effect，你可以簡單的**把它理解成為redux框架中的dispatch函數**，當put一個action後，reducer中就會計算新的state並返回，**注意：** **put 也是阻塞 effect**
 
-`call()`當要調用promise的地方，使用call()，會有更好的測試效果
+`call()`可以理解為實行一個異步函數,是阻塞型的，只有運行完後面的函數，才會繼續往下；在這裡可以片面的理解為async中的await！但寫法直觀多了！
 
 ```js
 import {delay} from 'redux-saga'

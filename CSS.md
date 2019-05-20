@@ -381,6 +381,14 @@ img{
 
 ## CSS Background 屬性
 
+### Background-position
+
+background-position 的計算公式
+
+percentX = positionX /（容器寬度 - 圖片寬度）;
+
+percentY = positionY /（容器寬度 - 圖片寬度）;
+
 ### **Background Clip**
 
 >   background-clip 顧名思義，背景剪切，用來設置元素的背景（背景圖片或顏色）是否延伸到邊框下面。

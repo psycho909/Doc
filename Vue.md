@@ -212,7 +212,7 @@ updata_username () {
 },
 ```
 
-## Vue.$set
+## Vue.$set(目標,key,value)
 > 假設資料結構並非一開始所定義的，可以使用 `$set` 來加入新增的屬性。
 ```javascript
     data:{
@@ -221,8 +221,8 @@ updata_username () {
             age:"100"
         }
     }
-    var vm=this;
-    vm.$set(vm.info,"sex","male");
+    this.$set(this.info,"sex","male");
+	Vue.set(this.info,"sex","male")
     //可在info裡設置sex
 ```
 ## Vue 動態組件 :is
@@ -818,11 +818,6 @@ created(){
         that.initScroll()
     })
 }
-```
-## Vue.set(target,key,value) 設置新的字段
-```javascript
-// this.food 裡面沒有 count
-Vue.set(this.food,'count',1);
 ```
 ## 數組改變監測
 

@@ -219,4 +219,40 @@
 
 `<animateTransform>`的效果為旋轉（`rotate`），這時`from`和`to`屬性值有三個數字，第一個數字是角度值，第二個值和第三個值是旋轉中心的坐標。`from="0 200 200"`表示開始時，角度為0，圍繞`(200, 200)`開始旋轉；`to="360 400 400"`表示結束時，角度為360，圍繞`(400, 400)`旋轉。 
 
-## JavaScript 操作
+## 圖片模糊效果+遮罩清晰效果
+
+filter效果:`feGaussianBlur`模糊效果，`stdDeviation`參數模糊程度
+
+```html
+<filter id="filter2">
+    <feGaussianBlur stdDeviation="5" />
+</filter>
+```
+
+1.  第一層圖片image對應`filter="url(#filter)"`那一層，達到模糊效果
+2.  `mask`對應`filter`那一層，並第二層圖片對應`mask="url(#mask)"`那一層，達到遮罩清晰效果
+
+```html
+        <svg class="blur" width="100%">
+            <image filter="url(#filter)" xlink:href="https://images.pexels.com/photos/249798/pexels-photo-249798.png" width="100%" height="100%"></image>
+            <filter id="filter">
+                <feGaussianBlur stdDeviation="5" />
+            </filter>
+            <mask id="mask">
+                <circle cx="-50%" cy="-50%" r="80" fill="white" filter="url(#filter)" />
+            </mask>
+            <image xlink:href="https://images.pexels.com/photos/249798/pexels-photo-249798.png" width="100%" height="100%" mask="url(#mask)"></image>
+        </svg>
+```
+
+```js
+$(".pic").mousemove(function(e){
+    e.preventDefault();
+    var upX=e.clientX;
+    var upY=e.clientY;
+    var mask=$("#mask circle")[0];
+    mask.setAttribute("cy",(upY-5)+"px");
+    mask.setAttribute("cx",(upX-5)+"px");
+})
+```
+

@@ -40,6 +40,117 @@
 
 ```
 
+## keep-alive
+
+頁面做緩存，增加效能，主要用於保留組件狀態或避免重新渲染
+
+```vue
+<keep-alive>
+    <router-view></router-view>
+</keep-alive>
+```
+
+### 方法1 按需keep-alive
+
+1.  寫2個`keep-alive`
+
+```vue
+<keep-alive>
+    <!-- 需要缓存的视图组件 -->
+  <router-view v-if="$route.meta.keepAlive">
+  </router-view>
+</keep-alive>
+
+<!-- 不需要缓存的视图组件 -->
+<router-view v-if="!$route.meta.keepAlive">
+</router-view>
+
+```
+
+2.  在`route.js`裡定義需要緩存的組件
+
+```js
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      meta:{
+        keepAlive:false
+      },
+      component: Home
+    },
+    {
+      path: '/about/:userId',
+      name: 'about',
+      meta:{
+        keepAlive:false
+      },
+      component: () => import('./views/About.vue')
+    },
+    {
+      path:"/test",
+      name:"test",
+      meta:{
+        keepAlive:true
+      },
+      component:()=>import("./views/Test.vue")
+    }
+  ]
+})
+```
+
+### 方法2 按需keep-alive :include
+
+*   Props:
+    *   include:字符串或正則，只要名稱匹配的組件會被緩存
+    *   exclude:字符串或正則，只要名稱匹配的組件都不會被緩存
+
+`keep-alive`組件如果設置了 `include` ，就只有和 `include` 匹配的組件會被緩存，
+
+```vue
+<keep-alive>
+    <!-- 需要緩存的視圖組件 -->
+  <router-view :include="include" v-if="$route.meta.keepAlive">
+  </router-view>
+</keep-alive>
+
+<!-- 不需要緩存的視圖組件 -->
+<router-view v-if="!$route.meta.keepAlive">
+</router-view>
+```
+
+讓我們在app.vue裡監聽路由的變化,
+
+```js
+export default {
+  name: "app",
+  data: () => ({
+    include: []
+  }),
+  watch: {
+    $route(to, from) {
+      //如果 要 to(進入) 的頁面是需要 keepAlive 緩存的，把 name push 進 include數組
+      if (to.meta.keepAlive) {
+        !this.include.includes(to.name) && this.include.push(to.name);
+      }
+      //如果 要 form(離開) 的頁面是 keepAlive緩存的，
+      //再根據 deepth 來判斷是前進還是後退
+      //如果是後退
+      if (from.meta.keepAlive && to.meta.deepth < from.meta.deepth) {
+        var index = this.include.indexOf(from.name);
+        index !== -1 && this.include.splice(index, 1);
+      }
+    }
+  }
+};
+
+```
+
+
+
+
+
 ## Router 構建選項
 
 ### routes
@@ -189,7 +300,10 @@ const router = new VueRouter({
       name: 'about',
       component:()=>import('./views/About.vue'),
       children:[
-        {name:"cookBook",path:"cook_book",component:()=>import('./views/CookBook.vue')}
+        {
+            name:"cookBook",
+            path:"cook_book",
+            component:()=>import('./views/CookBook.vue')}
       ]
 }
 ```
@@ -228,13 +342,21 @@ methods: {
 >   重定向也是通過 `routes` 配置來完成
 
 ```js
-{name:'default',path:'*',redirect: '/index'},
+{
+    name:'default',
+    path:'*',
+    redirect: '/index'
+},
 ```
 
 >   重定向的目標也可以是一個命名的路由：
 
 ```js
-{name:'default',path:'*',redirect: {name:'index'}}
+{
+    name:'default',
+    path:'*',
+    redirect: {name:'index'}
+}
 ```
 
 >   甚至是一個方法，動態返回重定向目標：
@@ -265,8 +387,7 @@ methods: {
 
 ### $router
 
-1.  meta
-2.  跳頁功能
+1.  跳頁功能
 
 ### $route
 
@@ -274,6 +395,7 @@ methods: {
 2.  query
 3.  fullPath
 4.  path
+5.  meta
 
 ## 動態路由
 
@@ -373,7 +495,7 @@ this.$router.push({name:'home'})
 
 ## 響應路由參數的變化
 
-beforeRouteUpdate
+### $route(to,from)
 
 ```vue
 export default {
@@ -387,7 +509,7 @@ export default {
   },
   watch:{
 	//to表示你將要去的路由對象, from表示你從哪個路由來
-    '$route'(to,from){
+    $route(to,from){
       if(to.params.id == 1){
         this.allAbout="第1頁"
       }
@@ -398,6 +520,8 @@ export default {
   }
 }
 ```
+
+### beforeRouteUpdate
 
 或者使用 2.2 中引入的 `beforeRouteUpdate` [導航守衛](https://link.juejin.im/?target=https%3A%2F%2Frouter.vuejs.org%2Fzh%2Fguide%2Fadvanced%2Fnavigation-guards.html)：
 
@@ -426,7 +550,9 @@ export default {
 
 ## 全局守衛
 
->   全局守衛，每次使用router時都會調用
+>   全局守衛，需再router配置的下方註冊。
+>
+>   全局守衛，每次使用router時都會調用。
 
 1.  router.beforeEach 全局前置守衛 進入路由之前
 2.  router.beforeResolve 全局解析守衛(2.5.0+) 在beforeRouteEnter調用之後調用
