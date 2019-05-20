@@ -324,6 +324,61 @@ ol li:before{
 
 ```
 
+## CSS img
+
+### filter
+
+單純對圖片做色彩濾鏡效果
+
+* grayscale(0~100%):灰階
+* sepia(0~100%):懷舊
+* saturate(1~100%):飽和
+* hue-rotate(0deg – 360deg):色相旋轉
+* invert(1~100%):負片
+* opacity(0~1):不透明
+* brightness(1~100%:亮度
+* contrast(1~100%:對比
+* blur(0~100px):模糊
+* drop-shadow(5px 5px 5px #333):下拉陰影
+
+```css
+img{
+    filter:saturate(50%);
+}
+```
+
+### mix-blend-mode
+
+需有背景，去做搭配的濾鏡效果
+
+* multiply :色彩增值
+* screen :濾色
+* overlay:覆蓋
+* darken:變暗
+* lighten:變亮
+* color-dodge:加亮顏色
+* color-burn:加深顏色
+* hard-light:實光
+* soft-light:柔光
+* difference:差異
+* exclusion:排除
+* hue:色相
+* saturation:飽和度
+* color:顏色
+* luminosity:明度
+
+```css
+div{
+    background: linear-gradient(to bottom,blue 0%,green 100%);
+}
+img{
+    display: block;
+    mix-blend-mode: multiply;
+}
+```
+
+
+
 ## CSS Background 屬性
 
 ### **Background Clip**

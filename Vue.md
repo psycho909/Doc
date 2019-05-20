@@ -1286,52 +1286,57 @@ process.env.VUE_APP_API
 
 ## Vue優化方式
 
-1.  ### 使用v-if代替v-show
+### 1.使用v-if代替v-show
 
-2.  ### v-for必須加上key，並避免同時使用v-if
+### 2.v-for必須加上key，並避免同時使用v-if
 
-    1.  為了過濾一個列表中的項目 比如 `v-for="user in users" v-if="user.isActive"`。在這種情形下，請將 `users`替換為一個計算屬性 (比如`activeUsers`)，讓其返回過濾後的列表
-    2.  為了避免渲染本應該被隱藏的列表 比如 `v-for="user in users" v-if="shouldShowUsers"`。這種情形下，請將 `v-if` 移動至容器元素上 (比如 ul, ol)
+1.  為了過濾一個列表中的項目 比如 `v-for="user in users" v-if="user.isActive"`。在這種情形下，請將 `users`替換為一個計算屬性 (比如`activeUsers`)，讓其返回過濾後的列表
+2.  為了避免渲染本應該被隱藏的列表 比如 `v-for="user in users" v-if="shouldShowUsers"`。這種情形下，請將 `v-if` 移動至容器元素上 (比如 ul, ol)
 
-3.  ### 異步路由
+### 3.對路由組件進行懶加載
 
-    1.  使用異步路由可以根據URL自動加載所需頁面的資源，並且不會造成頁面阻塞，較適用於移動端頁面，建議主頁面直接import，非主頁面使用異步路由
-
-        ```vue
-        {
-          path: '/order',
-          component: () => import('./views/order.vue')
-        }
-        ```
-
-4.  ### 異步組件
+1.  使用異步路由可以根據URL自動加載所需頁面的資源，並且不會造成頁面阻塞，較適用於移動端頁面，建議主頁面直接import，非主頁面使用異步路由
 
     ```vue
-    <template>
-      <div>
-        <HellowWorld v-if="showHello" />
-      </div>
-    </template>
-    <script>
-    export default {
-      components: { HellowWorld: () => import('../components/HelloWorld.vue') },
-      data() {
-        return {
-          showHello: false
-        }
-      },
-      methods: {
-        initAsync() {
-          addEventListener('scroll', (e) => {
-            if (scrollY > 100) {
-              this.showHello = true
-            }
-          })
-        }
-      }
+    {
+      path: '/order',
+      component: () => import('./views/order.vue')
     }
-    </script>
-    
     ```
 
+### 4.異步組件
+
+```vue
+<template>
+  <div>
+    <HellowWorld v-if="showHello" />
+  </div>
+</template>
+<script>
+export default {
+  components: { HellowWorld: () => import('../components/HelloWorld.vue') },
+  data() {
+    return {
+      showHello: false
+    }
+  },
+  methods: {
+    initAsync() {
+      addEventListener('scroll', (e) => {
+        if (scrollY > 100) {
+          this.showHello = true
+        }
+      })
+    }
+  }
+}
+</script>
+
+```
+
+### 5.
+
+```js
+
+```
 
