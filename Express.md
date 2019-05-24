@@ -70,7 +70,105 @@ npm install --save express-art-template
 app.engine("art",require("express-art-template"))
 ```
 
+## POST請求 使用`body-parser`
 
+```js
+npm i body-parser -S
+```
+
+```js
+var bodyParser = require('body-parser');
+var urlencodedParser = bodyParser.urlencoded({
+    extended:false
+})
+app.get("/",(req,res)=>{
+    res.render("login.art",{
+        title:"這事登入頁面"
+    })
+})
+
+app.post('/',urlencodedParser,(req,res)=>{
+    // 接收數據
+    console.log(req.body)
+    // 處理數據後處理next的問題
+    res.redirect("/")
+})
+```
+
+## 中間件
+
+*   執行任何代碼
+*   對請求和響應對象進行更改。
+*   結束請求響應週期。
+*   調用堆棧中的下一個中間件。
+
+### 中間件的數據是可以傳輸的
+
+```js
+app.use((req,res,next)=>{
+    console.log("路過---------")
+    next()
+})
+app.get("/",(req,res,next)=>{
+    req.title="這事登入頁面";
+    next();
+},(req,res,next)=>{
+    console.log(req.title)
+    res.render("login.art",{
+        title:req.title
+    })
+})
+```
+
+應用級中間件
+
+```js
+//沒有掛載路徑的中間件，應用的每個請求都會執行該中間件
+app.use((req,res,next)=>{
+    console.log("Time",Date.now())
+    next()
+})
+
+//掛載至 /user/:id 的中間件，任何指向 /user/:id 的請求都會執行它
+app.use('/user/:id',function(req,res,next){
+    console.log("Request Type:",req.method);
+    next();
+})
+
+//路由和句柄函數（中間件系統），處理指向/user/:id 的GET請求
+app.get('/user/:id',function(req,res,next){
+    res.send("USER");
+})
+
+
+
+```
+
+
+
+## express 錯誤處理
+
+```js
+app.use(logErrors)
+app.use(clientErrorHandler)
+app.use(errorHandler)
+
+function logErrors (err, req, res, next) {
+  console.error(err.stack)
+  next(err)
+}
+function clientErrorHandler (err, req, res, next) {
+  if (req.xhr) {
+    res.status(500).send({ error: 'Something failed!' })
+  } else {
+    next(err)
+  }
+}
+function errorHandler (err, req, res, next) {
+  res.status(500)
+  res.render('error', { error: err })
+}
+```
 
 
 
