@@ -30,31 +30,34 @@ const Example=()=>{
 }
 
 ```
-
+### 異步state
 ```react
-const SuperButton=(props)=>{
-    const {onClick,children}=props
-    const onclickHere=onClick;
-    return <button onClick={onclickHere}>{children}</button>
-}
+const App = () => {
+  const [count, setCount] = React.useState(0);
 
-const UseStateSample=()=>{
-    const [count,setCount]=useState(0)
+  const handleIncrease = () => {
+    setTimeout(() => setCount(state => state + 1), 1000);
+  };
 
-    const increased=()=>{
-        setCount(count=>count+1)
-    }
-    const decreased=()=>{
-        setCount(count-1)
-    }
-    return (
-        <p>
-            <SuperButton onClick={decreased}>-</SuperButton>
-            <b>{count}</b>
-            <SuperButton onClick={increased}>+</SuperButton>
-        </p>
-    )
-}
+  const handleDecrease = () => {
+    setTimeout(() => setCount(state => state - 1), 1000);
+  };
+
+  return (
+    <div>
+      Count: {count}
+      <hr />
+      <div>
+        <button type="button" onClick={handleIncrease}>
+          Increase
+        </button>
+        <button type="button" onClick={handleDecrease}>
+          Decrease
+        </button>
+      </div>
+    </div>
+  );
+};
 ```
 
 ```react
