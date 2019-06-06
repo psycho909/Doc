@@ -70,6 +70,27 @@ const UseState=()=>{
 }
 ```
 
+### useState Callback
+
+```js
+const UseStateCallback=()=>{
+  const [count,setCount]=React.useState(0);
+  React.useEffect(()=>{
+    if(count > 1){
+      console.log("over 1 reached")
+    }else{
+      console.log("No reached")
+    }
+  },[count])
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={()=>setCount(count+1)}>Increment</button>
+    </div>
+  )
+}
+```
+
 
 
 ## useContext
@@ -680,6 +701,87 @@ const User = () => {
 export default User
 
 ```
+
+## useContext + useReducer 取代 redux
+
+```jsx
+const MyContent = React.createContext()
+
+const MyProvider=(props)=>{
+  const initialState={
+    Books:["Dan Brown:Inferno"]
+  }
+  const reducer=(state,action)=>{
+    switch(action.type){
+      case "ADD_BOOK":
+          return {
+            ...state,
+            Books:[...state.Books,action.payload]
+          };
+      default:
+          return state;
+    }
+  }
+  const [state,dispatch]=React.useReducer(reducer,initialState)
+
+  return (
+    <MyContent.Provider value={{state,dispatch}}>
+      {props.children}
+    </MyContent.Provider>
+  )
+
+}
+
+const Display=()=>{
+  const {state}=React.useContext(MyContent)
+  return (
+    <ul>
+      {state.Books.map((book,i)=>{
+        return <li key={i}>{book}</li>
+      })}
+    </ul>
+  )
+}
+
+const AddBook=()=>{
+  const {dispatch}=React.useContext(MyContent);
+  const [book,setBook]=React.useState("")
+
+  const Add=()=>{
+    dispatch({
+      type:"ADD_BOOK",
+      payload:book
+    })
+    setBook("")
+  }
+  const handleChange=(e)=>{
+    setBook(e.target.value)
+  }
+  return (
+    <div>
+      <input type="text" onChange={handleChange} value={book} />
+      <button onClick={Add}>AddBook</button>
+    </div>
+  )
+}
+```
+
+```jsx
+const App = () => {
+    return (
+        <div>
+          <MyProvider>
+            <Display/>
+            <AddBook/>
+          </MyProvider>
+        </div>
+    )
+}
+```
+
+
+
+
 
 ## useMemo()
 
