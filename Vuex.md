@@ -239,7 +239,19 @@ store.getters
 import {mapeState} from 'vuex'
 
 computed:{
+    // 數組寫法
     ...mapState(['name']),
+    
+    mapState({
+        // 箭頭函數
+        count:state=>state.count,
+        // 傳字符串參數'count' 等同於'state => state.count'
+        count:"count",
+        // 在使用state中的數據時,如果依賴組件內部的數據,必須使用常規函數
+        count(state){
+            return state.count+this.msg
+        }
+    })
     getname(){
 		return this.name
 	}

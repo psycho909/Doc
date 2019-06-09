@@ -18,9 +18,9 @@
 
 ### shouldComponentUpdate(nextProps,nextState)
 
-> 在組件準備更新之前調用，可以控制組件是否進行更新，返回 true 時組件更新，返回 false 組件不更新。
-
-> return true 會執行更新，return false不會執行更新
+* 在組件準備更新之前調用，可以控制組件是否進行更新，返回 true 時組件更新，返回 false 組件不更新。
+* return true 會執行更新，return false不會執行更新。
+* 不常使用。
 
 ```react
   shouldComponentUpdate(nextProps,nextState){
@@ -40,7 +40,39 @@
 
 ### componentDidUpdate(prevProps, prevState, snapshot)
 
-> 在更新發生之後立即被調用。這個生命週期在組件第一次渲染時不會觸發。
+> 在更新發生之後立即被調用。
+>
+> 這個生命週期在組件第一次渲染時不會觸發。
+
+##### 使用案例:
+
+獲取頁面及元素的高度
+
+```js
+// 這個生命週期獲取不到高度，可以在元素更新後獲取
+componentDidMount(){
+    
+}
+// 首次不會觸發，更新後比較
+componentDidUpdate(prevProps,prevState,snapshot){
+    let height=this.state.height || this.refDom.getBoundingClientRect()['height']+'px'
+    // 判斷state是否有值，沒有就先設置
+    if(!this.state.height){
+        this.setState({
+            height,
+            domHeight:this.props.isAnimation?height:0
+        })
+    }
+    // 判斷isAnimation是否相同，相同則不更新數據
+    if(this.props.isAnimation !== prevProps.isAnimation){
+        this.setState({
+            domHeight:this.props.isAnimation?height:0
+        })
+    }
+}
+```
+
+
 
 ## Unmounting
 
@@ -54,6 +86,47 @@
 
 >**注意：** componentWillMount()、componentWillUpdate()、componentWillReceiveProps() 即將被廢棄，請不要再在組件中進行使用。因此本文不做講解，避免混淆。
 
+## 捕獲所有組件報錯
+
+###  static getDerivedStateFromError()
+
+### componentDidCatch() 
+
+那麼它就變成一個錯誤邊界。==**當拋出錯誤後，請使用 static getDerivedStateFromError() 渲染備用 UI ， 使用 componentDidCatch() 打印錯誤信息**==
+
+```react
+class ErrorBoundary extends React.Component{
+    state={
+        hasError:false
+    }
+    static getDerivedStateFromError(error){
+        return {
+            hasError:true
+        }
+    }
+    componentDidCatch(error,info){
+		alert(error,info
+    }
+    render(){
+        if(this.state.hasError){
+            return <h1>Wrong.</h1>
+        }
+        return (
+			this.props.children
+        )
+    }
+}
+
+export default ErrorBoundary
+```
+
+```react
+// 調用
+<ErrorBoundary>
+	<ChildComponent />
+</ErrorBoundary>
+```
+
 
 
 # 新的生命週期
@@ -63,7 +136,6 @@
 1.  用來取代`componentWillReceiveProps`
 2.  不可以直接訪問`this.state`&`this.props`
 3.  兩個參數`nextProps`&`prevState`
-4.  不常使用
 
 > 在每次調用 render 方法之前調用。包括初始化和後續更新時。
 
@@ -108,6 +180,39 @@ static getDerivedStateFromProps(nextProps, prevState) {
 }
 
 ```
+
+### 使用案例
+
+```react
+class ChildInex extneds React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            num:props.count
+        }
+    }
+    
+    static getDerivedStateFromProps(props,state){
+        // 父組件的props賦值給子組件的state,但是父子組件不是雙向數據流，不會同時改變數據
+        // 需要使用這個生命週期去監聽父組件的props是否發生變化，類似vue的watch，如果發生變化，就賦值給子組件的state
+        if(props.count !== state.num){
+            return {
+                num:props.count
+            }
+        }
+        return null;
+    }
+    render(){
+        return (
+        	<div>
+            	{this.state.num}
+            </div>
+        )
+    }
+}
+```
+
+
 
 ## getSnapshotBeforeUpdate(prevProps, prevState)+componentDidUpdate
 
