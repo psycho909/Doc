@@ -142,6 +142,32 @@ import NoMath from './Error'
 </Switch>
 ```
 
+## Route
+
+>   主要職責是當Route的位置和路徑匹配的時候渲染對應的ui
+
+#### component
+
+>   component 一個react 組件，將在`path`匹配的時候自動渲染
+
+```react
+<Route exact path="/about/:name" component={About} />
+```
+
+#### render
+
+>   func 通過編寫一個方法，方法返回一個react dom ,當 path匹配的時候自動渲染
+
+```react
+<Route path='/hello/:name' render={({match}) => {
+            return <div>hello {match.params.name}</div>
+  }} />
+```
+
+#### exact
+
+>   bool 如果為true，則僅在路徑與location.pathname完全匹配時才匹配。
+
 ## `render func`
 
 可以對於`Route`進行公能力增強
