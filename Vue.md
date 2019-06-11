@@ -1267,7 +1267,7 @@ mounted(){
 
 ## 監聽某個元素的尺寸變化
 
-```vue
+```js
 // 安裝resize-detector
 cnpm i --save resize-detector
 
