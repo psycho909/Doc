@@ -631,6 +631,8 @@ const router = new VueRouter({
 ```
 ## 路由組件內的守衛
 
+在用vue實現界面的時候，想在beforeRouteEnter鉤子函數中去獲取數據，然後通過next方法設置到跳轉頁面的實例中使用
+
 1.  beforeRouteEnter 進入路由前
 2.  beforeRouteUpdate (2.2) 路由復用同一個組件時
 3.  beforeRouteLeave 離開當前路由時
@@ -640,6 +642,9 @@ const router = new VueRouter({
 ```js
 beforeRouteEnter (to, from, next) {
   // 在路由獨享守衛後調用 不！能！獲取組件實例 `this`，組件實例還沒被創建
+    next(vm=>{
+        
+    })
 },
 
 beforeRouteUpdate (to, from, next) {
@@ -665,6 +670,17 @@ console.log('在路由獨享守衛後調用');
   next(vm => {
     // 通過 `vm` 訪問組件實例`this` 執行回調的時機在mounted後面，
   })
+}
+```
+
+### beforeRouteUpdate(to,from,next)
+
+例如About組件有二級導航，在切換二級導航的時候，對應的內容是在變化;但是About組件是復用的，只會生成一次，切換二級導航時，就會觸發`beforeRouteUpdate`
+
+```js
+beforeRouteUpdate(to,from,next){
+    console.log('beforeRouteUpdate')
+    next()
 }
 ```
 
