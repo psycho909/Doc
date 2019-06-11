@@ -257,10 +257,6 @@ new Vue({
     }
 });
 ```
-****
-## Vue <Template> </Template>
-> 可做不可見的包裹元素
-
 ## Lifecycle生命週期
 ### `beforeCreate()`
 1. 在初始化vue instance並開啟整個Lifecycle後，資料綁定與事件配置之前。目前階段還無法調用$data。
@@ -621,12 +617,19 @@ Vue.nextTick().then(function() {
 
 
 
-## Slot
-> 基本上分為三種 slot
-1. Single Slot
-1. Named Slot
-1. Scoped Slot
+## v-slot 2.6
+
+使用`slot`插槽使`組件`可以更靈活的使用
+
+1.  父組件在使用子組件`slot`，並在子組件內定義`template`，並定義`slot-scope`
+2.  在子組件已定義的`slot`綁定`自定義屬性`
+3.  `#`為`v-slot`縮寫
+
 ### Default Slot && Named Slot
+
+1.  `v-slot:default`  匿名插槽
+2.  `v-slot:nav` 可縮寫 `#nav` 具名插槽
+
 ```vue
 // Child.vue
 <template>
@@ -637,6 +640,9 @@ Vue.nextTick().then(function() {
 		<header class="header">
 			<slot name="header"></slot>
 		</header>
+        <main>
+    		<slot>默認值SLOT</slot>
+    	</main>
     </div>
 </template>
 <script>
@@ -663,17 +669,36 @@ Vue.nextTick().then(function() {
         <template #header >
             <h1>My name is Header slot! by {{user}}</h1>
         </template>
+		<template v-slot:default>
+			<p>我是匿名SLOT</p>
+		</template>
       </Child>
   </div>
 </template>
 ```
-### Slot-Scope
+### Slot-Scope 作用域插槽
 
->   使用`slot`插槽使`組件`可以更靈活的使用
+1.  重點是`slotProps`接取子組件裡`:text="nameText"`類似屬性的數據
+2.  `slotProps`可以隨意命名
 
-1.  父組件在使用子組件`slot`，並在子組件內定義`template`，並定義`slot-scope`
-2.  在子組件已定義的`slot`綁定`自定義屬性`
-3.  `#`為`v-slot`縮寫
+```vue
+// Parent.vue
+<template>
+  <div class="hello">
+      <Child>
+        <template #header="slotProps">
+            <h1>{{slotProps.text}}</h1>
+        </template>
+        <template #default="slotProps">
+            <h2>{{slotProps.defaulttext}}</h2>
+        </template>
+        <template #main="slotProps">
+            <div>{{slotProps.movie['name']}}</div>
+        </template>
+      </Child>
+  </div>
+</template>
+```
 
 ```vue
 // child
@@ -705,26 +730,10 @@ Vue.nextTick().then(function() {
 </script>
 ```
 
-```vue
-// Parent.vue
-<template>
-  <div class="hello">
-      <Child>
-        <template #header="slotProps">
-            <h1>{{slotProps.text}}</h1>
-        </template>
-        <template #default="slotProps">
-            <h2>{{slotProps.defaulttext}}</h2>
-        </template>
-        <template #main="slotProps">
-            <div>{{slotProps.movie['name']}}</div>
-        </template>
-      </Child>
-  </div>
-</template>
-```
+
 
 ## transition動畫效果
+
 > 淡入、淡出
 ```css
 /*
@@ -1254,6 +1263,29 @@ mounted(){
         }
     })
 }
+```
+
+## 監聽某個元素的尺寸變化
+
+```vue
+// 安裝resize-detector
+cnpm i --save resize-detector
+
+// 引入
+import { addListener, removeListener } from 'resize-detector'
+
+// 使用
+addListener(this.$refs['dashboard'], this.resize) // 監聽
+removeListener(this.$refs['dashboard'], this.resize) // 取消監聽
+
+// 一般我們會對回調函數進行去抖
+methods: {
+    // 這裡用了lodash的debounce
+    resize: _.debounce(function (e) {
+      console.log('123')
+    }, 200)
+}
+
 ```
 
 

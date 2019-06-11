@@ -494,7 +494,7 @@ export default new Vuex.Store({
 })
 ```
 
-## 使用modules
+## 使用modules模塊
 
 ```vue
 <template>
