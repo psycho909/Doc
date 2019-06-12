@@ -15,38 +15,11 @@ import './mock/mock'
 
 ```js
 Mock.mock( rurl, rtype, template|function( options ){ })
-```
 
-## rtype獲取(get|post|delete|put)
-
-```js
 Mock.mock('/api/data', 'post', function(options) {
     return options
 })
-$.ajax({
-    url: 'hello.json',
-    dataType: 'json',
-    data: {
-        foo: 1,
-        bar: 2,
-        faz: 3
-    }
-}).done((data)=>{
-    console.log(data)
-})
-===========================================
-{
-    url:'/api/data',
-    type:'post',
-    body: data:{
-		foo:1,
-         bar:2,
-         faz:3
-    }
-}
 ```
-
-
 
 ## Template產生
 
@@ -147,6 +120,8 @@ Random.cword( pool, min, max )
 ## Mock實例
 
 ```js
+import Mock from 'mockjs'
+
 // Mock.Random 是一個工具類，用於生成各種隨機數據
 var Random=Mock.Random;
 
@@ -167,6 +142,9 @@ let list=(options)=>{
     let rtype=options.type.toLowerCase()
     switch(rtype){
         case "get":
+            return {
+                data:arr
+            }
             break;
         case "post":
             // options.body 獲取 post的數據
@@ -175,21 +153,68 @@ let list=(options)=>{
             arr=arr.filter((v)=>{
                 return v.id != id
             })
+            return {
+                data:arr
+            }
             break;
         default:
-    }
-    return {
-        data:arr
     }
 }
 
 Mock.mock('/api/data',/get|post/i,list)
+```
 
-=============================================
-
+```js
 this.axios.get('/api/data')
 .then((res)=>{
     console.log(res.data)
+})
+```
+
+## Mock範例
+
+### 創建Mock.js
+
+```js
+// 在src -> mock/mock.js
+import Mock from 'mockjs'
+
+export default Mock.mock('/api/users','get', {
+    'result|5-15': [
+        {
+            id: '@guid',
+            username: '@name',
+            'gender|1': ['male', 'female'],
+            age: '@integer(18,100)',
+            'device|1': ['IOS', 'Android', 'PC']
+        }
+    ]
+})
+```
+
+```js
+{
+  "result|5-15":[
+    {
+      "id":"@guid",
+      "username": "@name",
+      "gender|1":['male','female'],
+      "age":"@integer(18,100)",
+      "device|1":['IOS','Android','PC']
+    }
+  ]
+}
+```
+
+### 使用Mock.js
+
+```js
+// 引入剛剛創建的Mock.js
+import Mock from '../mock/mock'
+
+axios.get("/api/users")
+.then(res=>{
+    res.data.result
 })
 ```
 

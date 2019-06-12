@@ -573,4 +573,66 @@ echo 'hello, '.$_SESSION['user_id'];
 ### header already sent問題出現
 > `session`&`cookie`都要放在頁面最上方，如果沒放在最上方會出現header already sent問題出現
 
-> 
+## PDO
+
+### 連接
+
+```php
+$host = 'localhost';
+$db   = 'theitstuff';
+$user = 'root';
+$pass = 'root';
+$charset = 'utf8mb4';
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$conn = new PDO($dsn, $user, $pass);
+```
+
+### 一個簡單的 SQL 查詢
+
+```php
+$q = $conn->query('SELECT name, age FROM students');
+$arr=[];
+while ($row = $q->fetch()){
+    $arr[]=$row;
+}
+```
+
+### 預處理語句
+
+#### 位置參數
+
+```php
+$name="LBJ";
+$subject="LAKER";
+$scroe="100";
+$q1=$conn->prepare("insert into demo.result(name,subject,score) values(?,?,?)");
+$q1->bindParam(1,$name);
+$q1->bindParam(2,$subject);
+$q1->bindParam(3,$scroe);
+$q1->execute();
+```
+
+#### 命名參數
+
+```php
+$name="LBJ";
+$subject="LAKER";
+$scroe="100";
+$q1=$conn->prepare("insert into demo.result(name,subject,score) values(:name,:subject,:scroe)");
+$q1->bindParam(":name",$name);
+$q1->bindParam(":subject",$subject);
+$q1->bindParam(":scroe",$scroe);
+$q1->execute();
+```
+
+### 獲取數據
+
+```php
+$q=$conn->prepare("select * from demo.result");
+$q->execute();
+
+$arr=[];
+$result=$q->fetchAll(PDO::FETCH_ASSOC);
+var_dump($result);
+```
+
