@@ -1,3 +1,21 @@
+## Animation
+
+同時設置`rotate(-360deg)` `rotate(360deg)`不同方向兩個`rotate()`可以造成緩慢的旋轉
+
+```css
+@keyframes airball {
+    0% {
+        transform: scale(1.01) rotate(-360deg) translateX(3px) translateY(3px) rotate(360deg);
+    }
+
+    100% {
+        transform: scale(1.01) rotate(0deg) translateX(3px) translateY(3px) rotate(0deg);
+    }
+}
+```
+
+
+
 ## CSS變量
 
 `.box`如果有變量設定`--color`時顏色為orange，沒有則red
