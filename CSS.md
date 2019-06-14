@@ -652,3 +652,53 @@ div:nth-of-type(2) img{
 <div><img src="https://bennettfeely.com/clippy/pics/pittsburgh.jpg" alt=""></div>
 ```
 
+CSS 黏黏球
+
+1.  容器設定高對比:`filter:contrast(10%)`
+2.  物體使用模糊:`filter:blur(5px)`
+
+```css
+.effect {
+    width: 400px;
+    height: 400px;
+    padding-top: 50px;
+    filter: contrast(10);
+    background: #fff;
+}
+
+.blackball {
+    width: 100px;
+    height: 100px;
+    background: black;
+    padding: 10px;
+    border-radius: 50%;
+    margin: 0 auto;
+    z-index: 1;
+    filter: blur(5px);
+    color:#fff;
+}
+
+.redball {
+    width: 60px;
+    height: 60px;
+    background: #f00;
+    padding: 10px;
+    border-radius: 50%;
+    position: absolute;
+    top: 70px;
+    left: 50px;
+    z-index: 2;
+    filter: blur(5px);
+    animation: rball 6s infinite;
+}
+```
+
+
+
+```html
+<div class="effect">
+   <div class="blackball">blackball</div>
+   <div class="redball"></div>
+</div>
+```
+
