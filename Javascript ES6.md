@@ -257,3 +257,48 @@ var arr=new Array(6).fill(0);
 // [0,0,0,0,0,0]
 ```
 
+## new URLSearchParams() 解析URL
+
+### basic
+
+```js
+var url = '?name=LBJ&skill=MVP&year=2019';
+var searchParams=new URLSearchParams(url);
+for(var u of searchParams){
+    console.log(u)
+}
+// ["name", "LBJ"]
+// ["skill", "MVP"]
+// ["year", "2019"]
+```
+
+### set,get
+
+```js
+searchParams.set("team","LAKER");
+searchParams.get("team")
+// "LAKER"
+```
+
+### has
+
+```js
+searchParams.has("team");
+// true
+```
+
+### delete
+
+```js
+searchParams.delete("team");
+searchParams.has("team");
+// false
+```
+
+### 轉換字符串
+
+```js
+searchParams.toString();
+// "name=LBJ&skill=MVP&year=2019"
+```
+
