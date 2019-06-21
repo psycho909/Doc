@@ -195,6 +195,6 @@ git log --pretty=oneline // 只顯示commit的ID與描述
 git reset --hard ORIG_HEAD // 在進行reset或其他危險操作，git會把資訊保留在這這
 *******
 git reset --hard HEAD // 回退到最近的一個版本
-git rest --hard HEAD^ // 回到上一步
+git reset --hard HEAD^ // 回到上一步
 git reset --hard commit_id // 根據commit_id回退到指定版本
 ```
