@@ -1292,21 +1292,28 @@ methods: {
 
 ## Vue Cli 3.x
 
-## 環境變量`env`使用
+## ENV 環境變量`env`使用
 
 在根目錄建立:
 
-1.  開發用:`.env.development`
-2.  生產用:`.env.production`
+1.  `.env`:在所有的環境中被載入
+2.  開發用:`.env.development`模式用於 `vue-cli-service serve`
+3.  生產用:`.env.production`模式用於 `vue-cli-service build` 和 `vue-cli-service test:e2e`
+4.  意模式不同於 `NODE_ENV`，一個模式可以包含多個環境變量。也就是說，每個模式都會將 `NODE_ENV`的值設置為模式的名稱——比如在 development 模式下 `NODE_ENV` 的值會被設置為 `"development"`
 
 ```js
+// .env.development
+
+NODE_ENV=development
 // 名稱一定得命名 VUE_APP_XXX
 VUE_APP_API=../api/brand_api.php
+VUE_APP_TITLE=My App
 ```
 
 ```js
 // 使用
 process.env.VUE_APP_API
+console.log(process.env.VUE_APP_API)
 ```
 
 
@@ -1361,9 +1368,162 @@ export default {
 
 ```
 
-### 5.
+### 5.打包優化 使用CDN
+
+#### 方法一:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>VUE后台管理系统</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.runtime.min.js"></script>
+<script src="https://unpkg.com/vuex@3.0.1/dist/vuex.min.js"></script>
+<script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+</body>
+
+</html>
+
+
+```
 
 ```js
+// vue.config.js
+
+module.exports = {
+    baseUrl: process.env.NODE_ENV === "production" ? "./" : "/",
+    outputDir: process.env.outputDir,
+    configureWebpack: {
+        externals: {
+            vue: "Vue",
+            vuex: "Vuex",
+            "vue-router": "VueRouter",
+            "element-ui": "ELEMENT"
+        }
+    }
+};
+```
+
+#### 方法二:
+
+```js
+// vue.config.js  修改
+const path = require('path')
+
+function resolve(dir) {
+  return path.join(__dirname, './', dir)
+}
+
+// cdn预加载使用
+const externals = {
+  'vue': 'Vue',
+  'vue-router': 'VueRouter',
+  'vuex': 'Vuex',
+  'axios': 'axios',
+  'element-ui': 'ELEMENT',
+  'js-cookie': 'Cookies',
+ 'nprogress': 'NProgress'
+}
+
+const cdn = {
+  // 开发环境
+  dev: {
+    css: [
+      'https://unpkg.com/element-ui/lib/theme-chalk/index.css',
+      'https://cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css'
+    ],
+    js: []
+  },
+  // 生产环境
+  build: {
+    css: [
+      'https://unpkg.com/element-ui/lib/theme-chalk/index.css',
+      'https://cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css'
+    ],
+    js: [
+      'https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js',
+      'https://cdn.jsdelivr.net/npm/vue-router@3.0.1/dist/vue-router.min.js',
+      'https://cdn.jsdelivr.net/npm/vuex@3.0.1/dist/vuex.min.js',
+      'https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js',
+      'https://unpkg.com/element-ui/lib/index.js',
+      'https://cdn.bootcss.com/js-cookie/2.2.0/js.cookie.min.js',
+      'https://cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js'
+    ]
+  }
+}
+
+module.exports = {
+  // 修改webpack config, 使其不打包externals下的资源
+  configureWebpack: config => {
+    const myConfig = {}
+    if (process.env.NODE_ENV === 'production') {
+      // 1. 生产环境npm包转CDN
+      myConfig.externals = externals
+    }
+    if (process.env.NODE_ENV === 'development') {
+      /**
+       * 关闭host check，方便使用ngrok之类的内网转发工具
+       */
+      myConfig.devServer = {
+        disableHostCheck: true
+      }
+    }
+    return myConfig
+  }
+}
+
+```
+
+```html
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+
+  <!-- 使用CDN加速的CSS文件，配置在vue.config.js下 -->
+  <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.css) { %>
+  <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="preload" as="style">
+  <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="stylesheet">
+  <% } %>
+
+  <!-- 使用CDN加速的JS文件，配置在vue.config.js下 -->
+  <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.js) { %>
+  <link href="<%= htmlWebpackPlugin.options.cdn.js[i] %>" rel="preload" as="script">
+  <% } %>
+
+  <title>vue-project-demo</title>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but vue-project-demo doesn't work properly without JavaScript enabled. Please enable it to
+      continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- 使用CDN加速的JS文件，配置在vue.config.js下 -->
+  <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.js) { %>
+  <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
+  <% } %>
+  <!-- built files will be auto injected -->
+</body>
+
+</html>
 
 ```
 
