@@ -282,8 +282,13 @@ const router = new VueRouter({
 
 ```js
 {
+  name:"404",
+  path:"/404",
+  component:()=>import('@/views/404Page.vue')
+},
+{
     path:'*',
-    component:Error
+    redirect:'/404'
 }
 ```
 
@@ -383,7 +388,7 @@ methods: {
 
 
 
-## this.$router && this.$route 
+## this.$router && this.$route  差別
 
 ### $router
 
@@ -493,11 +498,11 @@ this.$router.push({name:'home'})
 
 為此我們有很多種方法可以植入路由的導航過程：**全局的, 單個路由獨享的, 或者組件級**
 
-## 響應路由參數的變化
+## 響應路由參數的變化`$route()` && `beforeRouteUpdate()`
 
 ### $route(to,from)
 
-```vue
+```js
 export default {
   data(){
     return {
@@ -525,7 +530,7 @@ export default {
 
 或者使用 2.2 中引入的 `beforeRouteUpdate` [導航守衛](https://link.juejin.im/?target=https%3A%2F%2Frouter.vuejs.org%2Fzh%2Fguide%2Fadvanced%2Fnavigation-guards.html)：
 
-```vue
+```js
 export default {
   data(){
     return {
@@ -734,4 +739,63 @@ router.beforeEach(to, from, next){
 }
 
 ```
+
+## Vue 實現前進刷新，後退不刷新的效果
+
+### 需求一:
+
+在一個列表頁中，第一次進入的時候，請求獲取數據。 
+點擊某個列表項，跳到詳情頁，再從詳情頁後退回到列表頁時，不刷新。 
+也就是說從其他頁面進到列表頁，需要刷新獲取數據，從詳情頁返回到列表頁時不要刷新。
+
+```vue
+// app.vue
+<keep-alive include="list">
+    <router-view/>
+</keep-alive>
+```
+
+假設列表頁為`list.vue`,詳情頁為`detail.vue`,這兩個都是子組件。 
+ 我們在 keep-alive 添加列表頁的名字，緩存列表頁。 
+ 然後在列表頁的 created 函數裡添加ajax請求，這樣只有第一次進入到列表頁的時候才會請求數據，當從列表頁跳到詳情頁，再從詳情頁回來的時候，列表頁就不會刷新。 
+
+### 需求二:
+
+在需求一的基礎上，再加一個要求： 
+可以在詳情頁中刪除對應的列表項，這時返回到列表頁時需要刷新重新獲取數據。 
+我們可以在路由配置文件上對 `detail.vue` 增加一個 `meta` 屬性。
+
+```js
+{
+    path:'/detail',
+    name:'detail',
+    component:() => import('../view/detail.vue'),
+    meta:{ isRefresh:true }
+}
+```
+
+這個 `meta` 屬性，可以在詳情頁中通過 `this.$route.meta.isRefresh` 來讀取和設置。 設置完這個屬性，還要在 `App.vue` 文件裡設置 `watch` 一下 `$route` 屬性。
+
+```js
+// app.vue
+watch:{
+    $route(to, from) {
+        const fname = from.name
+        const tname = to.name
+        if (from.meta.isRefresh || (fname != 'detail' && tname == 'list')) {
+            // 在這裡重新請求數據
+            from.meta.isRefresh = false
+        }
+    }
+}
+```
+
+這樣就不需要在列表頁的 `created` 函數裡用 ajax 來請求數據了，統一放在 `App.vue` 裡來處理。
+
+觸發請求數據有兩個條件：
+
+1. 從其他頁面（除了詳情頁）進來列表時，需要請求數據。
+2. 從詳情頁返回到列表頁時，如果詳情頁 `meta` 屬性中的 `isRefresh` 為 `true`，也需求重新請求數據。
+
+當我們在詳情頁中刪除了對應的列表項時，就可以將詳情頁 `meta` 屬性中的 `isRefresh` 設為 `true`。這時再返回到列表頁，頁面會重新刷新。
 
