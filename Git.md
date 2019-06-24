@@ -67,6 +67,9 @@ git remote -v
 ```git
 git push <remote name> <branch name>
 git push origin master
+
+// 只要加上了 --force 或是 -f 參數，它就會強迫硬推上去，把之前的內容蓋掉
+git push -f origin master
 ```
 ## 刪除遠端Branch - git push <remote name> :<branch name>
 ```git
