@@ -1527,3 +1527,42 @@ module.exports = {
 
 ```
 
+## Vue deploy Github
+
+### Step1
+
+```js
+// vue.config.js
+module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'?'/my-project/':'/'
+}
+```
+### Step2
+
+```js
+npm run build
+```
+
+### Step3
+
+```js
+#!/usr/bin/env sh 
+ 
+# abort on errors 
+set -e 
+ 
+# build 
+npm run build 
+ 
+# navigate into the build output directory 
+cd dist 
+ 
+git init 
+git add -A 
+git commit -m 'deploy' 
+ 
+git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages 
+ 
+cd - 
+```
+
