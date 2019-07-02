@@ -163,7 +163,7 @@ actions: {
   }
 }
 ```
-## Promise後dispatch
+## 延時改變 Promise後dispatch
 
 >   當一個 action 返回 **Promise** 時，`store.dispatch` 可以處理返回（return）的 **Promise** ：
 
@@ -185,6 +185,11 @@ actions: {
         })
     }
 }
+
+// 组件里 1s之后变值
+store.dispatch('waitIncrement').then(() => { ... })
+// 或者
+store.dispatch('incrementAsync')
 ```
 
 ## 在 actions 中使用 async / await

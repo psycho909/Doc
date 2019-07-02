@@ -38,6 +38,27 @@
 }
 ```
 
+### JS控制CSS變量
+
+```css
+.boxs{
+    width: 330px;
+    height: 330px;
+    --bg-color:blue;
+    background-color: var(--bg-color,red);
+}
+```
+
+```js
+// 獲取CSS var
+getComputedStyle(document.querySelector('.boxs')).getPropertyValue('--bg-color')
+
+// 設置CSS var
+document.querySelector('.boxs').style.setProperty('--bg-color','green')
+```
+
+
+
 ## CSS 3D 
 
 ### Card翻轉

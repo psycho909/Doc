@@ -917,7 +917,7 @@ Vue.use(Loading)
 
 ```
 
-## Vue bulid後的問題
+## Vue2.0 bulid後的問題
 
 ### 增加自定義路徑
 
@@ -1314,6 +1314,103 @@ VUE_APP_TITLE=My App
 // 使用
 process.env.VUE_APP_API
 console.log(process.env.VUE_APP_API)
+```
+
+## Vue Component 好的寫法
+
+###  Lazy Loading / Async Components
+
+```vue
+<template>
+  <section>
+    <editor></editor>
+  </section>
+</template>
+
+<script>
+export default {
+  name: 'dashboard',
+  components: {
+    'Editor': () => import('./Editor')
+  }
+}
+</script>
+```
+
+### Required Props
+
+```vue
+<template>
+  <section>
+    <editor></editor>
+  </section>
+</template>
+
+<script>
+export default {
+  name: 'dashboard',
+  props:{
+	enabled:{},
+    isAdmin:{
+    	required:true
+    }
+  },
+  components: {
+    'Editor': () => import('./Editor')
+  }
+}
+</script>
+```
+
+### Trigger Custom Events with `$emit`
+
+```vue
+<template>
+  <section>
+    <button @click="onClick">Save</button>
+  </section>
+</template>
+
+<script>
+export const SAVE_EVENT = 'save';
+export default {
+  name: 'triggerEvent',
+  methods: {
+    onClick() { 
+      this.$emit(SAVE_EVENT);
+    }
+  }
+}
+</script>
+```
+
+```vue
+<template>
+  <section>
+  <p v-show="showSaveMsg">Thanks for Listening for the saved event</p>
+  <trigger-event @save="onSave"></trigger-event>
+  </section>
+</template>
+
+<script>
+export default {
+  name: 'TriggerEvent',
+  data(){
+    return {
+      showSaveMsg: false
+    }
+  },
+  components:{
+    //You can find Trigger Custom Events in VueJs https://gist.github.com/eabelard/36ebdc8367bfeff75387cc863c810f65 
+    TriggerEvent: () => import('./TriggerEvent')
+  },
+  methods: {
+    onSave() { 
+        this.showSaveMsg = true;
+    }
+  }
+}
+</script>
 ```
 
 
