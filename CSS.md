@@ -358,10 +358,20 @@ ol li:before{
    <source media="(min-width: 800px)" srcset="https://picsum.photos/800/400?image=1066">
    <source media="(min-width: 600px)" srcset="https://picsum.photos/600/600?image=1065">
   <source srcset="https://picsum.photos/400/200?image=1064 ">
-   <img src="https://picsum.photos/1200/600?image=1069" alt="A photo of London by night">
+   <img src="https://picsum.photos/1200/600?image=1069" srcset="https://picsum.photos/1200/600?image=1069" alt="A photo of London by night">
 </picture>
 
 ```
+
+```html
+<picture>
+    <source media="(mix-width:768px)" srcset="https://picsum.photos/1200/600?image=1068">
+    <source media="(max-width:768px)" srcset="https://picsum.photos/1200/600?image=1067">
+    <img srcset="https://picsum.photos/1200/600?image=1068" src="https://picsum.photos/1200/600?image=1068" alt="">
+</picture>
+```
+
+
 
 ## CSS img
 
