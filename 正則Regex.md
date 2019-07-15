@@ -12,6 +12,7 @@
 - `?` : 比對前一個字元 , 零次或一次 , 等於{0,1}
 - `+` : 比對前一個字元 , 一次或更多次 , 也等於 {1,}
 - `|` : 或者 , 等於OR , 邏輯運算子(Logical Operators)
+- `{}`:/.{6,}/，任何一個字元，至少要 >= 6
 
 ## 符號對照
 
@@ -84,4 +85,14 @@ var str2 = 'foobaz';
 | exp1(?!=exp2) | 後瞻斷言，匹配exp1，但後面不能是exp2<br/>如匹配姓zhao，但名字不叫xianlie的人：/zhao(?!xianlie)/ |
 
 
+
+## HTML From表單使用正則
+
+```html
+<input type="password"
+       name="pw"
+       pattern=".{6,}"
+       title="請輸入6個以上字符..."
+       >
+```
 
