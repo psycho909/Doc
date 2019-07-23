@@ -80,3 +80,49 @@ if (isset($_POST['upload'])) {
 }
 ```
 
+## step3 後端接收資料夾權限設定 `0777`
+
+# 多張圖片上傳給後端
+
+## step1 前端傳送
+
+```html
+<form action="" method="POST" enctype="multipart/form-data">
+    <input id="pic" ref="pic" type="file" name="files[]" multiple />
+    <button @click="imageUpload">上傳圖片</button>
+</form>
+```
+
+```js
+imageUpload(e){
+    e.preventDefault()
+
+    var imgFile=this.$refs.pic.files;
+    var formData=new FormData();
+    for(var i=0;i<imgFile.length;i++){
+        formData.append("pic[]",imgFile[i]);
+    }
+
+    axios({
+        url:"./api/imageUpload.php",
+        method:"POST",
+        data:formData
+    }).then((data)=>{
+        this.$refs.pic.value="";
+        alert("上傳成功")
+    })
+}
+```
+
+## step2 後端接收
+
+```php
+$image=$_FILES['pic'];
+
+$len=count($image['name']);
+
+for($i=0;$i<$len;$i++){
+    move_uploaded_file($image['tmp_name'][$i],"../images/".$image['name'][$i]);
+}
+```
+
