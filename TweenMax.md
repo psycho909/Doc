@@ -4,19 +4,19 @@
 
 ```js
  var demo={
-                int:20
-            }
-            $('.box').html(demo.int)
-            TweenMax.to(demo,8,{
-                int:0,
-                onUpdate:function(){
-                    $('.box').html(Math.ceil(demo.int))
-                },
-                onComplete:function(){
-                    $('.box').html("Done")
-                },
-                ease:Power4.easeOut
-            })
+     int:20
+ }
+ $('.box').html(demo.int)
+TweenMax.to(demo,8,{
+    int:0,
+    onUpdate:function(){
+        $('.box').html(Math.ceil(demo.int))
+    },
+    onComplete:function(){
+        $('.box').html("Done")
+    },
+    ease:Power4.easeOut
+})
 ```
 
 
@@ -30,6 +30,17 @@ TweenMax.staggerTo(el,0.5,{
             transform:"translate(0px)",
             opacity:1
         },0.2)
+```
+
+### 多個依序執行
+
+```js
+var t=new TimelineMax();
+t.staggerTo(".box",1,{
+    cycle:{
+        x:[100,300,300]
+    }
+},1)
 ```
 
 
@@ -137,5 +148,23 @@ tl.to(".box7",1,{opacity:1})
 tl.to(".box8",1,{opacity:1})
 tl.to(".box9",1,{opacity:1})
 tl.to(".box10",1,{opacity:1})
+```
+
+## 回調函數
+
+```js
+    var t=new TimelineMax();
+    t.to(".box",1,{
+        x:100,
+        onStart:function(){
+            console.log("onStart")
+        },
+        onUpdate:function(){
+            console.log("onUpdate")
+        },
+        onComplete:function(){
+            console.log("onComplete")
+        }
+    },1)
 ```
 
