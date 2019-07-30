@@ -633,3 +633,63 @@ const makeResult=(total,cur,around=2)=>{
         }
 ```
 
+## Array扁平化
+
+### ES2019 array.flat();
+
+```js
+const nested = [ ['📦', '📦'], ['📦']];
+
+const flattened = nested.flat();
+
+console.log(flattened);
+// ['📦', '📦', '📦']
+```
+
+```js
+const twoLevelsDeep = [[1, [2, 2], 1]];
+
+// depth = 1
+twoLevelsDeep.flat()
+// [1, [2, 2], 1]
+
+// depth = 2
+twoLevelsDeep.flat()
+// [1, 2, 2, 1]
+```
+
+```js
+const veryDeep = [[1, [2, 2, [3,[4,[5,[6]]]]], 1]];
+
+veryDeep.flat(Infinity);
+// [1, 2, 2, 3, 4, 5, 6, 1]
+```
+
+### ES6方法
+
+```js
+const oneLevelDeep = [[1, 2], [3]];
+
+const flattend=[].concat(...oneLevelDeep)
+```
+
+### Older Brower
+
+```js
+const oneLevelDeep = [ [1, 2], [3]];
+
+const flattend=[].concat.apply([],oneLevelDeep)
+```
+
+### 多層
+
+```js
+var arr1 = [1,2,3,[1,2,3,4, [2,3,4]]];
+
+function flattenDeep(arr){
+    return arr.reduce((acc,val)=>{
+        return Array.isArray(val)?acc.concat(flattenDeep(val)):acc.concat(val)
+    },[])
+}
+```
+
