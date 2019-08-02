@@ -724,8 +724,6 @@ CSS 黏黏球
 }
 ```
 
-
-
 ```html
 <div class="effect">
    <div class="blackball">blackball</div>
@@ -733,3 +731,13 @@ CSS 黏黏球
 </div>
 ```
 
+## CSS Ratio比例
+
+| **aspect ratio** | **padding-top value** |
+| ---------------- | --------------------- |
+| 1:1              | 100%                  |
+| 4:3              | 75%                   |
+| 3:2              | 66.66%                |
+| 8:5              | 62.5%                 |
+| 16:9             | 56.25%                |
+| 2:1              | 50%                   |
