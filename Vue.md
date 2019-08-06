@@ -370,18 +370,21 @@ new Vue({
 ## v-model雙向綁定
 > 单个复选框，绑定到布尔值
 > 多个复选框，绑定到同一个数组
-​```html
+>
+```html
 <!-- checkbox -->
 <input type="checkbox" id="jack" value="jack" v-model="checkedName">
 <label for="jack">jack</label>
 <input type="checkbox" id="John" value="John" v-model="checkedName">
 <label for="John">John</label>
 <div>{{checkedName}}</div>
+
 <!-- radio -->
 <input type="radio" id="one" name="number" v-bind:value="one" v-model="picked">
 <label for="one">One</label>
 <input type="radio" id="two" name="number" value="two" v-model="picked">
 <label for="two">Qwo</label>
+
 <div>{{picked}}</div>
 <!-- select -->
 <select v-model="selected">
@@ -391,7 +394,7 @@ new Vue({
 </select>
 <span>{{selected}}</span>
 ```
-​```javascript
+```javascript
 new Vue({
     el:"#app",
     data:{
@@ -404,6 +407,7 @@ new Vue({
     }
 })
 ```
+
 ### 修饰符
 1. `v-model.number=""`，可以自动将用户的输入值转为数值类型
 1. `v-model.trim=""`，如果要自动过滤用户输入的首尾空白字符
@@ -412,7 +416,7 @@ new Vue({
 
 ### 父組件向子組件傳數據(1) / props
 > 第一步先在子組件，props自定義屬性
-```javascript
+​```javascript
 export default {
     name: 'Header-view',
     data() {
@@ -431,7 +435,7 @@ export default {
 }
 ```
 > 第二步在父組件使用子組件自定義的屬性傳參
-```html
+​```html
 <HeaderView msg="父組件向子組件傳參"></HeaderView>
 ```
 ### 父組件向子組件傳數據(2) / props
@@ -720,12 +724,61 @@ Vue.nextTick().then(function() {
                 defaultText:"child default text",
                 nameText:"child Name text",
                 movies:[
-                    {"name":"粽邪","country":"TW"},
-                    {"name":"棒邪","country":"TW"},
-                    {"name":"復仇者聯盟4","country":"USA"},
+                    {"name":"AA","country":"TW"},
+                    {"name":"BB","country":"TW"},
+                    {"name":"CC","country":"USA"},
                 ]
             }
         }
+    }
+</script>
+```
+
+#### example2
+
+```vue
+<template>
+    <titled>
+        <template #header="slotProps">
+    <div>{{slotProps.user.firstname}}</div>
+        </template>
+        <template #btn="{alertText}">
+    <button @click="alertText">Click ME!</button>
+        </template>
+    </titled>
+</template>
+<script>
+    import titled from '@/components/titled.vue';
+    export default{
+        components:{titled}
+    }
+</script>
+```
+
+```vue
+<template>
+	<div>
+        <header>
+            <slot name="header" :user="user">{{user.lastname}}</slot>
+    	</header>
+        <slot name="btn" :alertText="alertText"></slot>
+    </div>
+</template>
+<script>
+    export default {
+    	data(){
+                return {
+                    user:{
+                        firstname:"Mr",
+                        lastname:"Chen"
+                    }
+                }
+            },
+            methods:{
+                alertText(){
+                    console.log(123)
+                }
+            }
     }
 </script>
 ```
