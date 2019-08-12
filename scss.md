@@ -48,7 +48,7 @@ $boolean:true;
 }
 
 ```
-## @for $i from <start> through <end>
+## @for $i from  1 through 4
 ```scss
 // 1 <= 10
 
@@ -58,7 +58,7 @@ $boolean:true;
     }
 }
 ```
-## @for $i from <start> to<end>
+## @for $i from 1 to 4
 
 ```scss
 // 1 < 10
