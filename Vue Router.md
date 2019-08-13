@@ -19,6 +19,24 @@
 <router-link :to="{name:'cookBook',query:{plan:123}}">查看食譜</router-link>
 ```
 
+當你點擊`<router-link>`時，這個方法會在內部調用，所以說，點擊`<router-link :to="...">`等同於調用`router.push(...)` 
+
+```js
+// 字符串
+router.push('home')
+
+// 对象
+router.push({ path: 'home' })
+
+// 命名的路由
+router.push({ name: 'user', params: { userId: '123' }})
+
+// 带查询参数，变成 /register?plan=private
+router.push({ path: 'register', query: { plan: 'private' }})
+```
+
+
+
 ### tag
 
 >   更換標籤屬性預設`a`標籤
@@ -175,6 +193,76 @@ declare type RouteConfig = {
   pathToRegexpOptions?: Object; // 編譯正則的選項
 }
 ```
+
+### router props
+
+#### By Boolean
+
+```js
+// router.js
+{
+  path: '/products/:id?',
+  name: 'products',
+  component: () => import(/* webpackChunkName: "products" */ './views/Products.vue'),
+  props: true,
+},
+```
+
+```vue
+// Products.vue
+<template>
+  <div>
+    <h1>Products</h1>
+    <h2>{{ product }}</h2>
+  </div>
+</template>
+
+<script>
+let products = {
+  0: 'Shoes',
+  1: 'T-Shirts',
+  2: 'Pants',
+};
+
+let product = function() {
+  return products[this.id] || 'N/A';
+};
+
+export default {
+  name: 'Products',
+  props: [
+    'id'
+  ],
+  computed: {
+    product,
+  },
+};
+</script>
+```
+
+#### By Object
+
+```js
+{
+  path: '/products/:id?',
+  name: 'products',
+  component: () => import(/* webpackChunkName: "products" */ './views/Products.vue'),
+  props: { id: 1 },
+},
+```
+
+#### By Function
+
+```js
+{
+  path: '/products/:id?',
+  name: 'products',
+  component: () => import(/* webpackChunkName: "products" */ './views/Products.vue'),
+  props: route => ({ id: route.params.id }),
+},
+```
+
+
 
 ## 路由對象屬性
 

@@ -13,9 +13,20 @@ module.expors={
 ## 路徑修改
 
 ```js
-module.expors={
-    publicPath:'./', // 檔案路徑修改
-    productionSourceMap:false, // 不產生map檔案
+module.exports = {
+    //部署应用包时的基本 URL
+    publicPath: process.env.NODE_ENV === 'production' ? '/online/' : './',
+    //当运行 vue-cli-service build 时生成的生产环境构建文件的目录
+    outputDir: 'dist',
+    //放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录
+    assetsDir: 'assets',
+    // eslint-loader 是否在保存的时候检查 安装@vue/cli-plugin-eslint有效
+    lintOnSave: true,
+    //是否使用包含运行时编译器的 Vue 构建版本。设置true后你就可以在使用template
+    runtimeCompiler: true,
+    // 生产环境是否生成 sourceMap 文件 sourceMap的详解请看末尾  
+    productionSourceMap: false,
+
 }
 
 ```
@@ -53,8 +64,6 @@ module.exports = {
 ```json
 // vue.config.js
 module.exports = {
-    // baseUrl從 Vue CLI 3.3 起已棄用，請使用publicPath。
-    // baseUrl:'./', 
     // 配置sub-path後訪問路徑為https://xxx-path/sub-path/#/
     publicPath: process.env.NODE_ENV === 'production' ? '/sub-path/' : '/',
     // 輸出文件路徑，默認為dist
