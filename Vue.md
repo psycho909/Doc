@@ -1,5 +1,68 @@
 ----------
+## class 與 style
+
+### class
+
+```vue
+// isText is true class is txt
+// 數組內使用合併使用Obj格式
+// activeClass:"active"
+// 三元運算符
+
+<div :class="[{ txt: isText },activeClass,isText?center:'']">{{txt}}</div>
+
+// HTML
+<div class="txt active center">123</div>
+```
+
+```js
+data(){
+    return {
+        isText:true,
+        activeClass:"active",
+        center:"center"
+    }
+}
+```
+
+```css
+.txt{
+  color:red;
+}
+.active{
+  border-bottom:1px solid blue;
+}
+.center{
+  margin: 0 auto;
+}
+```
+
+### style
+
+```vue
+<div :style="[baseStyles,marginBottom]">{{txt}}</div>
+
+// HTML
+<div style="width: 100px; margin-bottom: 24px;">123</div>
+```
+
+```js
+data(){
+    return {
+        baseStyles:{
+            width:"100px"
+          },
+          marginBottom:{
+            marginBottom:"24px"
+          }
+    }
+}
+```
+
+
+
 ## 使用於父子組件通信`$on(eventName)`和`$emit(eventName)`
+
 ----------
 > `$on(eventName)`監聽事件
 > `$emit(eventName)`可用於觸發事件 
