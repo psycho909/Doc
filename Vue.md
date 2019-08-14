@@ -328,7 +328,7 @@ new Vue({
 ```js
 watch:{
     item:{
-        handel(newValue,oldValue){
+        handler(newValue,oldValue){
             
         },
         immediate:true,
@@ -566,7 +566,30 @@ destory(){
 }
 ```
 
+### Vue EvebtBus 小問題 - 多次觸發
 
+#### 方法1:
+
+在每次調用方法前先解綁事件( bus.$off )，然後在重新綁定( bus.$on )
+
+```js
+this.$off("helloBus")
+this.$eventBus.$on('helloBus',function(data){
+    console.log("toHelloBus: "+data)
+})
+```
+
+#### 方法2:
+
+```js
+npm i -S vue-happy-bus
+
+// main.js
+import BusFactory from 'vue-happy-bus'
+Vue.prototype.$BusFactory=BusFactory;
+```
+
+每個使用`Bus`的組件中都要在data中註冊這個事件`Bus:this.$BusFactory(this)`這樣才能調用其中這個this指向vue原型
 
 ## Vue.extend 和 Vue.component差別
 
