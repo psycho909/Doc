@@ -351,6 +351,12 @@ ol li:before{
 
 ### picture
 
+> 我們可以使用Picturefill來讓一些還不支援<picture>標籤的瀏覽器也能支援它。
+
+```html
+https://cdnjs.cloudflare.com/ajax/libs/picturefill/3.0.3/picturefill.min.js
+```
+
 ```html
 <picture>
    <source media="(min-width: 1200px)" srcset="https://picsum.photos/1200/600?image=1068">
