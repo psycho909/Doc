@@ -365,9 +365,12 @@ ol li:before{
 
 ```html
 <picture>
-    <source media="(mix-width:768px)" srcset="https://picsum.photos/1200/600?image=1068">
-    <source media="(max-width:768px)" srcset="https://picsum.photos/1200/600?image=1067">
-    <img srcset="https://picsum.photos/1200/600?image=1068" src="https://picsum.photos/1200/600?image=1068" alt="">
+    <source media="(max-width:768px)" srcset="https://placehold.it/768">
+    <source media="(max-width:900px)" srcset="https://placehold.it/900">
+    <source media="(max-width:1000px)" srcset="https://placehold.it/1000">
+
+    <source media="(mix-width:1200px)" srcset="https://placehold.it/1200">
+    <img srcset="https://placehold.it/1200" src="https://placehold.it/1200">
 </picture>
 ```
 
