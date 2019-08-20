@@ -1,4 +1,4 @@
-## 產生文章
+## 產生文章s
 
 ```js
 http://api.icndb.com/jokes/random/3
