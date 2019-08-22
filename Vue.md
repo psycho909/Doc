@@ -59,6 +59,95 @@ data(){
 }
 ```
 
+## 表單控制
+
+### 1.單選框
+
+```vue
+<div class="radio-group">
+    <input type="radio" name="sex" v-model="add" value="男">男
+    <input type="radio" name="sex" v-model="add" value="女">女
+    <h1>{{add}}</h1>
+</div>
+```
+
+```js
+data(){
+    return {
+        add:""
+    }
+}
+```
+
+### 2.多選框
+
+#### 單選checkbox
+
+```vue
+<div class="checkbox-group">
+    <input type="checkbox" v-model="agree">
+    <div>{{ag()}}</div>
+</div>
+```
+
+```js
+data(){
+    return {
+        agree:""
+    }
+},
+methods:{
+    ag(){
+        return this.agree?"同意":"不同意"
+    }
+}
+```
+#### 多選checkbox 使用數組
+
+```vue
+<div class="checkbox-group2">
+    <template v-for="hobby in hobbys">
+<input type="checkbox" v-model="info" :value="hobby.value">{{hobby.name}}
+    </template>
+    <p>{{info}}</p>
+</div>
+```
+
+```js
+data(){
+    return {
+        info:["book"],
+        hobbys:[
+          {name:"讀書",value:"book"},
+          {name:"唱歌",value:"song"},
+          {name:"跑步",value:"run"},
+          {name:"遊戲",value:"game"}
+        ]
+    }
+}
+```
+
+選擇select
+
+```vue
+<div id="example-5">
+    <select v-model="selectInfo">
+        <option disabled value="請選擇">請選擇</option>
+        <option v-for="o in options" :value="o">{{o}}</option>
+    </select>
+    <span>Selected: {{ selectInfo }}</span>
+</div>
+```
+
+```js
+data(){
+    return {
+        options:["角色1","角色2","角色3"],
+        selectInfo:"請選擇"
+    }
+}
+```
+
 
 
 ## 使用於父子組件通信`$on(eventName)`和`$emit(eventName)`
