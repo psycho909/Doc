@@ -219,7 +219,58 @@ computed:{
 ```html
 <div class="text">{{tipCompu}}</div>
 ```
+### getter
+
+```vue
+computed:{
+    tipCompu:{
+		get(){
+			return (this.something*2)*3;
+		}
+	}
+}
+```
+
+### setter
+
+```vue
+<div id="demo">
+    <p> {{ fullName }} </p>
+    <input type="text" v-model="fullName">
+    <input type="text" v-model="firstName">
+    <input type="text" v-model="lastName">
+</div>
+```
+
+```js
+data: {
+    firstName: 'zhang',
+    lastName: 'san'
+  },
+  computed: {
+    fullName: {
+      //getter 方法
+        get(){
+            console.log('computed getter...')
+            return this.firstName + ' ' + this.lastName
+        }，
+   //setter 方法
+        set(newValue){
+            console.log('computed setter...')
+            var names = newValue.split(' ')
+            this.firstName = names[0]
+            this.lastName = names[names.length - 1]
+            return this.firstName + ' ' + this.lastName
+        }
+      
+    }
+  },
+```
+
+
+
 ## Filters使用
+
 > `filter`只是格式化並顯示在畫面上，並不會去改掉預設資料，而`computed`則是會產生一個新的屬性出來。
 >
 > 如果要寫複雜的`filter`函數，以`computed`寫為主
