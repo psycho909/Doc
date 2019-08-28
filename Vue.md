@@ -526,6 +526,12 @@ new Vue({
 ## Watch vs Computed
 > 雖然在大多數情況下，`Computed` 更合適，但有時仍需要使用 `Watch`。
 > 當你需要響應更改的數據執行非同步或複雜的計算時，Watch 就非常有用。
+### watch與computed的set函數的比較
+
+> vuex 接收 的computed ，用set監測不到變化，必須要用watch才可以生效；（原理：實質沒有改變computd的值，只是改變了get的return值 => 組件外的訪問）
+
+> v-model 改變的computed，用watch監測不到變化，必須要用computed對象中的set函數方法才能監測得到（原理：相當於每次改變了computed自身的值 => 組件內的訪問）
+
 ## Watch
 
 ```js
@@ -1107,9 +1113,9 @@ created(){
     })
 }
 ```
-## 數組改變監測
+## data資料改變監測
 
-### 替換方法
+### 數組替換方法
 
 - push()
 - pop()
