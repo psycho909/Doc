@@ -969,6 +969,7 @@ Vue.nextTick().then(function() {
 #### example2
 
 ```vue
+// Parent
 <template>
     <titled>
         <template #header="slotProps">
@@ -988,6 +989,7 @@ Vue.nextTick().then(function() {
 ```
 
 ```vue
+// child
 <template>
 	<div>
         <header>
@@ -998,6 +1000,7 @@ Vue.nextTick().then(function() {
 </template>
 <script>
     export default {
+        name:"titled",
     	data(){
                 return {
                     user:{
