@@ -1,20 +1,33 @@
 ## 計算 rem
 
-### JS方法
+### JS方法1
 
 ```js
 const oHtml=document.getElementByTagName('html')[0];
-const width=oHtml.clientWidth;
+const aWidth=oHtml.clientWidth;
 
 // 320px的螢幕基準像素 12px
-oHtml.style.fontSize=12*(width/12)+'px';
+oHtml.style.fontSize=12*(aWidth/320)+'px';
 ```
 
 * 這樣iphone8（375px）下html的font-size 就是14.0625px，iphone8p下font-size就是15.525px。
-
 * 如果在iphone8（375px）下設置元素font-size為 1.7066rem， 效果跟設置其font-size為 24px 是一樣的(24 / 14.0625 = 1.7066)。
-
 * 使用JS來獲取屏幕寬度的好處在於可以100%適配所有的機型寬度，因為其元素的基準尺寸是直接算出來的。
+
+### JS方法2
+
+```js
+var oHTML=document.querySelector("html");
+// 當前螢幕寬度
+var aWidth=oHTML.clientWidth;
+
+// 設計稿: 375px
+// 默認大小: 16px
+
+oHTML.style.fontSize=(aWidth/375)*16+"px";
+```
+
+
 
 ### 媒體查詢
 
