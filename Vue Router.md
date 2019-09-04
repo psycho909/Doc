@@ -645,7 +645,7 @@ export default {
 
 >   全局守衛，需再router配置的下方註冊。
 >
->   全局守衛，每次使用router時都會調用。
+>   任何一个路由进入都可以先拦截,然后根据添加跳转不同的路由。
 
 1.  router.beforeEach 全局前置守衛 進入路由之前
 2.  router.beforeResolve 全局解析守衛(2.5.0+) 在beforeRouteEnter調用之後調用
