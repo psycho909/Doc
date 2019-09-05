@@ -52,7 +52,7 @@ shim: {
     //加載不支持AMD庫有依賴狀態
     'backbone': {
         deps: ['underscore', 'jquery'],//依賴的模塊
-        exports: 'Backbone'ㄝ//全局變量作為模塊對象
+        exports: 'Backbone'//全局變量作為模塊對象
         init:function($){//初始化函數，返回的對象代替exports作為模塊對象
             return $;
         }

@@ -519,6 +519,7 @@ export default {
     msg: String
   },
   computed:{
+    // 方法一
     ...mapState({
 		count:state=>state.user.count
     }),
@@ -526,14 +527,19 @@ export default {
       count:'users/count',
       isEvenOrOdd:"users/isEvenOrOdd"
     })
+    // 方法二
+    ...mapState('user',['count']),
+    ...mapGetters('user',['count','isEvenOrOdd'])
   },
   methods:{
+    // 方法一
     ...mapActions({
       increment:"users/increment",
       decrement:"users/decrement",
       incrementAsync:"users/incrementAsync"
     })
-
+	// 方法二
+    ...mapActions('user',['increment','decrement','incrementAsync'])
   }
 }
 </script>

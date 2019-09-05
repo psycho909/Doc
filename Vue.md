@@ -116,7 +116,7 @@ methods:{
 ```js
 data(){
     return {
-        info:["book"],
+        info:[],
         hobbys:[
           {name:"讀書",value:"book"},
           {name:"唱歌",value:"song"},
@@ -127,7 +127,7 @@ data(){
 }
 ```
 
-選擇select
+### 3.選擇select
 
 ```vue
 <div id="example-5">
