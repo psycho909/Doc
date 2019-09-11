@@ -473,6 +473,8 @@ new Vue({
 ### `mounted()`
 1. el被剛創建好的vm.$el替換取代，並且掛載到vm上。目前階段已被DOM綁定。
 1. 應用場景：對後端發出請求或讀取新資料
+1. 在生命週期當中只執行一次，在DOM渲染完成之後只會執行一次
+1. 當數據再傳遞過來時候，這鉤子函數就不會再觸發了
 ### `beforeUpdate()`
 1. 在資料更新時調用，Virtual DOM重新render與patch之前，可以在這個階段變更資料狀態。目前階段還不會繪製view。
 ### `updated()`
@@ -490,15 +492,27 @@ new Vue({
 3.  **關於dom的操作要放在mounted裡面**，在mounted前面訪問dom會是undefined。
 4.  每次進入/離開組件都要做一些事情，用什麼鉤子：
 
--   不緩存：
+- 不緩存：
 
-    進入的時候可以用`created`和`mounted`鉤子，離開的時候用`beforeDestory`和`destroyed`鉤子,`beforeDestory`可以訪問`this`，`destroyed`不可以訪問`this`。
+  進入的時候可以用`created`和`mounted`鉤子，離開的時候用`beforeDestory`和`destroyed`鉤子,`beforeDestory`可以訪問`this`，`destroyed`不可以訪問`this`。
 
--   緩存了組件：
+- 緩存了組件：
 
-    緩存了組件之後，再次進入組件不會觸發`beforeCreate`、`created` 、`beforeMount`、 `mounted`，**如果你想每次進入組件都做一些事情的話，你可以放在activated進入緩存組件的鉤子中**。
+  緩存了組件之後，再次進入組件不會觸發`beforeCreate`、`created` 、`beforeMount`、 `mounted`，**如果你想每次進入組件都做一些事情的話，你可以放在activated進入緩存組件的鉤子中**。
 
-    同理：離開緩存組件的時候，`beforeDestroy`和`destroyed`並不會觸發，可以使用`deactivated`離開緩存組件的鉤子來代替
+  同理：離開緩存組件的時候，`beforeDestroy`和`destroyed`並不會觸發，可以使用`deactivated`離開緩存組件的鉤子來代替
+
+### 注意事項2
+
+> 當需要在`mounted`設置DOM的計算寬度時，必須是有DOM節點並且已經被渲染
+
+介面中先組件渲染 -> 數據後續才有 -> 有了數據之後(ajax) -> 再傳遞給組件 -> 組件渲染顯示
+
+1. 檢查先創建了組件還是先有數據
+2. 但當在`Ajax`獲取數據渲染後的DOM`mounted`獲取不到DOM，因為組件先創建了，裡面還沒有數據
+3. 在生命週期當中只執行一次，在DOM渲染完成之後只會執行一次
+4. 當數據再傳遞過來時候，這鉤子函數就不會再觸發了。
+5. `beforeUpdate`監控數據的變化，當ajax獲取數據完成之後，當數據發生改變就會去更新DOM，`beforeUpdate`就在更新的時候去執行，就可以去獲取以獲取數據的DOM
 
 ## 觸發鉤子的完整順序
 
@@ -809,6 +823,8 @@ Vue.prototype.$BusFactory=BusFactory;
 > 應用場景：需要在視圖更新之後，基於新的視圖進行操作。 
 >
 > 可以使用Vue.nextTick取得更新後的 DOM。
+>
+> this.$nextTick 確保DOM已經渲染完成之後，再去做一些事情
 ```html
  <div id="app">
   <input ref="input" v-show="inputShow">
