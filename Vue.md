@@ -532,6 +532,48 @@ new Vue({
 12.  `activated`:進入緩存組件，進入a的嵌套子組件(如果有的話)。
 13.  執行`beforeRouteEnter`回調函數`next`。
 
+## 監聽子組件的生命週期函數
+
+有時，需要在父組件監聽子組件掛載後`mounted`，做一些邏輯處理。
+
+例如：
+加載遠端組件時，想抓取組件從遠端加載到掛載的耗時。
+
+`@hook`可以监听到子组件的生命周期钩子函数(`created`, `updated`等等). 例如: 
+
+```vue
+// Parent.vue
+<template>
+  <Child v-bind="$props" v-on="$listeners" @hook:mounted="doSomething"> </Child>
+</template>
+<script>
+  import Child from "./Child";
+  export default {
+    props: {
+      title: {
+        required: true,
+        type: String
+      }
+    }
+    components: {
+      Child
+    },
+    methods: {
+      doSomething(){
+        console.log("child component has mounted!");
+      }
+    }
+  };
+</script>
+
+作者：James Zhang
+链接：https://juejin.im/post/5d790819e51d453b5e465bc7
+来源：掘金
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+```
+
+
+
 ## 比較 Filters 和 Computed
 1. Filters 主要用於簡單的文字格式處理，需要在應用程式中重複使用。
 1. Computed 適合較複雜的資料處理與轉換。
