@@ -3,7 +3,7 @@
 ### JS方法1
 
 ```js
-const oHtml=document.getElementByTagName('html')[0];
+const oHtml=document.getElementsByTagName('html')[0];
 const aWidth=oHtml.clientWidth;
 
 // 320px的螢幕基準像素 12px
