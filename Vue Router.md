@@ -274,7 +274,7 @@ export default {
 
 一個 key/value 對象，包含了動態片段和全匹配片段，如果沒有路由參數，就是一個空對象。
 
-### `$router.query`
+### `$route.query`
 
 一個 key/value 對象，表示 URL 查詢參數。例如，對於路徑 /foo?user=1，則有 $route.query.user == 1，如果沒有查詢參數，則是個空對象。
 
