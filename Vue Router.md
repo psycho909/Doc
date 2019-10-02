@@ -19,6 +19,35 @@
 <router-link :to="{name:'cookBook',query:{plan:123}}">查看食譜</router-link>
 ```
 
+```js
+export default new Router({
+    mode:"history",
+    routes:[
+        {
+            // <router-link v-bind:to="home">Home</router-link>
+            path:"/cookBook",
+            name:"cookBook",
+            component:()=>import('./views/CookBook.vue')
+        },
+        {
+            // <router-link :to="{name:'cookBook',params:{userId:123}}">查看食譜</router-link>
+            path:"/cookBook/:id",
+            name:"cookBook",
+            component:()=>import('./views/CookBook.vue')
+        },
+        {
+            // <router-link :to="{name:'cookBook',query:{plan:123}}">查看食譜</router-link>
+            // 這邊直接不用做配置，可以自動拆分問號後方的組合
+            path:"/cookBook",
+            name:"cookBook",
+            component:()=>import('./views/CookBook.vue')
+        }
+    ]
+})
+```
+
+
+
 當你點擊`<router-link>`時，這個方法會在內部調用，所以說，點擊`<router-link :to="...">`等同於調用`router.push(...)` 
 
 ```js
