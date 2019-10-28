@@ -248,6 +248,12 @@ var {hostname:domain, pathname:path} = location;
 Array.from(new Array(N),(v,i)=>i)
 ```
 
+```js
+Array.from(new Array(6),(v,i)=>i)
+
+[0, 1, 2, 3, 4, 5]
+```
+
 
 
 ### `new Array().fill()自動產生多個預設array`
