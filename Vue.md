@@ -591,13 +591,13 @@ new Vue({
 ## Watch
 
 ```js
-watch:{
-    item:{
-        handler(newValue,oldValue){
-            
+watch: {
+    someData: {
+        handle(newVal, oldVal) {
+            // 監聽變量變化的處理函數
         },
-        immediate:true,
-        deep:true
+        deep: true, // 是否深度監聽，例如對象某些屬性的變化
+        immediate: true // 是否在第一次賦值時執行
     }
 }
 ```

@@ -1,4 +1,4 @@
-# 不要在使用v-for的同一元素上使用v-if
+## 不要在使用v-for的同一元素上使用v-if
 
 ```vue
 <ul>
@@ -12,9 +12,29 @@
 </ul>
 ```
 
-## **化繁為簡的Watchers**
+## 得一起使用v-for、v-if
 
->   首先，在watchers中，可以直接使用函數的字面量名稱；其次，聲明immediate:true表示創建組件時立馬執行一次。
+很多場景下，在列表渲染的組件中需要判斷每一項的某些屬性的值來決定是否顯示或者是否有某個不一樣效果，官方教程不推薦在同一個組件中同時使用 `v-for` 和 `v-if`，我通常會在外層增加一個 `<template>` 使用 `v-for`，將 `v-if` 和 `key` 值寫在實際需要渲染的組件中。
+
+```vue
+// Test.vue
+<template>
+    <div>
+        <template v-for="(item, index) in datas">
+            <span v-if="item.name" :key="index">
+                {{ item.name }}
+            </span>
+            <p v-else>暂无数据</p>
+        </template>
+    </div>
+</template>
+```
+
+
+
+## **化繁為簡的watch**
+
+>   首先，在watch中，可以直接使用函數的字面量名稱；其次，聲明immediate:true表示創建組件時立馬執行一次。
 
 ```js
 created(){
