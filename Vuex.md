@@ -524,8 +524,8 @@ export default {
 		count:state=>state.user.count
     }),
     ...mapGetters({
-      count:'users/count',
-      isEvenOrOdd:"users/isEvenOrOdd"
+      count:'user/count',
+      isEvenOrOdd:"user/isEvenOrOdd"
     })
     // 方法二
     ...mapState('user',['count']),
@@ -534,9 +534,9 @@ export default {
   methods:{
     // 方法一
     ...mapActions({
-      increment:"users/increment",
-      decrement:"users/decrement",
-      incrementAsync:"users/incrementAsync"
+      increment:"user/increment",
+      decrement:"user/decrement",
+      incrementAsync:"user/incrementAsync"
     })
 	// 方法二
     ...mapActions('user',['increment','decrement','incrementAsync'])
