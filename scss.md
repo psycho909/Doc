@@ -172,6 +172,24 @@ background:nth($colors,1);
 
 
 
+## List
+
+```scss
+$roles:('王族','妖精','法師','黑暗妖精','暗黑騎士','槍手','龍鬥士','騎士');
+```
+
+```scss
+@each $role in $roles{
+    &[data-role="#{$role}_1"]{
+        &:before{
+            background-image: url('../images/#{$role}_1.png');
+        }
+    }
+}
+```
+
+
+
 ## Maps
 
 ```scss
