@@ -1,3 +1,15 @@
+## “user-scalable=no”屬性被iOS Safari ignore的解決方法
+
+### 以CSS touch-action: manipulation禁止double-tap手勢
+
+```css
+html, body {
+  touch-action: manipulation;
+}
+```
+
+
+
 ## Animation
 
 同時設置`rotate(-360deg)` `rotate(360deg)`不同方向兩個`rotate()`可以造成緩慢的旋轉
