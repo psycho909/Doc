@@ -38,3 +38,13 @@
 }
 ```
 
+### 選擇第N個
+
+#### 1.第五個就變色
+
+```css
+.num5 li:nth-of-type(3n+2){
+    background-color: orange;
+}
+```
+
