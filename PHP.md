@@ -474,7 +474,34 @@ use \Taker\Classroom\Say as Classroom;
 Say::hi();
 Classroom::welcome();
 ```
+## html當成一般的php程式一樣放在程式中
+
+```php
+<?php
+  echo <<<EOT
+  	<div>This is HTML</div>
+  EOT;
+?>
+```
+
+```php
+function echo_card($title = "Default Title", $desc = "Default Description", $img = "/images/fallback.jpg") {
+   $html = <<<"EOT"
+      <div class="card">
+         <img src="$img" alt="">
+         <h2>$title</h2>
+         <p>$desc</p>
+      </div>
+EOT;
+
+   echo $html;
+}
+```
+
+
+
 ## PHP validaing
+
 ```php
 if(filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
     echo 'email ok!';
