@@ -31,7 +31,7 @@ export default new Router({
         },
         {
             // <router-link :to="{name:'cookBook',params:{userId:123}}">查看食譜</router-link>
-            path:"/cookBook/:id",
+            path:"/cookBook/:userId",
             name:"cookBook",
             component:()=>import('./views/CookBook.vue')
         },
