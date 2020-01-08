@@ -594,18 +594,45 @@ router.beforeEach((to,from,next)=>{
 
 ## vue 路由的跳转
 
-### `$router.push()`` $router.replace() ``$router.go()`
+### `$router.push()`  ` $router.replace()` `$router.go()`
 
-### $router.push()
+### $router.push(location, onComplete?, onAbort?)
+
+想要導航到不同的 URL，則使用 `router.push` 方法。這個方法會向 history 棧添加一個新的記錄，所以，當用戶點擊瀏覽器後退按鈕時，則回到之前的 URL。
 
 >   可達到跳頁功能
 
 ```js
-this.$router.push('home')
-this.$router.push({name:'home'})
+// 字符串
+router.push('home')
+
+// 對象
+router.push({ path: 'home' })
+
+// 命名的路由
+router.push({ name: 'user', params: { userId: '123' }})
+
+// 帶查詢參數，變成 /register?plan=private
+router.push({ path: 'register', query: { plan: 'private' }})
 ```
 
+ ```js
+const userId = '123'
+router.push({ name: 'user', params: { userId }}) // -> /user/123
+router.push({ path: `/user/${userId}` }) // -> /user/123
+// 這裡的 params 不生效
+router.push({ path: '/user', params: { userId }}) // -> /user
+ ```
+
+### $router.replace(location, onComplete?, onAbort?)
+
+跟 `router.push` 很像，唯一的不同就是，它不會向 history 添加新記錄，而是跟它的方法名一樣 —— 替換掉當前的 history 記錄。
+
 >    router.replace(location) = = = window.history.replaceState
+
+### $router.go()
+
+這個方法的參數是一個整數，意思是在 history 記錄中向前或者後退多少步，類似 `window.history.go(n)`
 
 >    $router.go(n) = = = window.history.go
 
