@@ -44,6 +44,19 @@
 >
 > 這個生命週期在組件第一次渲染時不會觸發。
 
+使用`componentDidUpdate`最一般的情况就是管理第三个的UI组件，以及和本地UI元素交互。比如你使用了Chart库之后：
+
+```js
+componentDidUpdate(prevProps, prevState) {
+  // 如果数据发生变化，则更新图表
+  if(prevProps.data !== this.props.data) {
+    this.chart = c3.load({
+      data: this.props.data
+    });
+  }
+}
+```
+
 ##### 使用案例:
 
 獲取頁面及元素的高度

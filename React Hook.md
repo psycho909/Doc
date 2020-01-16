@@ -231,7 +231,7 @@ export default UseContextOpenButton
 1.  **useEffect 什麼時候執行？** 它會在組件 mount 和 unmount 以及每次重新渲染的時候都會執行，也就是會在 componentDidMount、componentDidUpdate、componentWillUnmount 這三個時期執行。
 2.  第一個參數為`componentDidMount`、`componentWillUnmount`
 3.  第二個參數為`componentDidUpdate`
-4.  第二個參數陣列在每次`useEffect `會去比較這個參數陣列裡面的值，跟上次傳入的做比較，如果一樣的話就不會去執行`useEffects`裡面的函式，如果傳入空陣列，代表每次傳入的時候都是空陣列，只有在第一次`render`的時候會執行。
+4.  第二個參數陣列在每次`useEffect `會去比較這個參數陣列裡面的值，跟上次傳入的做比較，如果一樣的話就不會去執行`useEffects`裡面的函式，如果傳入`空陣列`，代表每次傳入的時候都是`空陣列`，只有在第一次`render`的時候會執行。
 5.  `componentWillUnmount `的執行`useEffect `傳入一個函式，可以在`return `另外一個函式，另外一個函式就會在清理函式，在`componentWillUnmount`執行
 6.  `useEffect`或做 四件事情:
     1.  會判斷這次輸入的陣列是否跟上一次一樣，如果一樣才會繼續
@@ -249,6 +249,47 @@ useEffect(
 ,[])
 // [] => componentDidUpdate
 ```
+### 基礎使用
+
+空的陣列永遠都會是一樣的不會改變，因此這個 effect 只會觸發一次，看到這裡有沒有覺得這個特性很像某個生命週期函式啊？沒錯，就是元件渲染後會觸發且只會觸發一次的 `componentDidMount !`
+
+```js
+ useEffect(() => {
+    console.log('This is like componentDidMount')
+    return () => {
+      console.log('This is like componentWillUnmount')
+    };
+  }, []);
+```
+
+### 第二個參數使用
+
+```js
+function App() {
+    const [count, setCount] = React.useState(0)
+
+    React.useEffect(() => {
+        console.log('This is like componentDidUpdate, I will be triger whenever count state change')
+    }, [count])
+
+    const increment = () => {
+        setCount(count + 1)
+    }
+    const decrement = () => {
+        setCount(count - 1)
+    }
+    return (
+        <div className="App">
+            <p>You clicked {count} times</p>
+            <button onClick={increment}>+</button>
+            <button onClick={decrement}>-</button>
+        </div>
+    )
+}
+```
+
+
+
 ### Basic 不清理副作用
 
 #### 使用class
