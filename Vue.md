@@ -428,6 +428,102 @@ updata_username () {
 	Vue.set(this.info,"sex","male")
     //可在info裡設置sex
 ```
+## `$attrs`和`$listenter`
+
+平常在實作 Vue 組件之間的資料傳遞大部分都是透過 `props` 及 `$emit`，或是直接經由 Vuex 進行狀態管理，而除了這兩種方法，還有另外一種做法是透過 `$attrs` 及 `$listenter`。
+
+### $attrs
+
+当一个组件没有声明任何 **prop** 时，这里会包含所有父作用域的绑定 (class 和 style 除外)，并且可以通过 **v-bind="$attrs"** 传入内部组件——在创建高级别的组件时非常有用。
+
+```vue
+    <div id="app">
+        <test2 :data1="data1" :data2="data2"></test2>
+    </div>
+
+    <template id="test2">
+        <div class="test">
+            {{data1}} - {{$attrs}}
+        </div>
+    </template>
+```
+
+```js
+        Vue.component("test2",{
+            template:"#test2",
+            props:['data1'],
+            mounted(){
+                this.$emit("event1")
+            }
+        })
+        new Vue({
+            el:"#app",
+            data:{
+                data1:"Hello World1",
+                data2:"Hello World2"
+            }
+        })
+```
+
+
+
+### $listeners
+
+父組件可以透過 `$listeners` 取得所有子組件 `$emit` 打出來的事件
+
+```vue
+    <div id="app">
+        <test2 :data1="data1" :data2="data2" @event1="ev1" @event2="ev2"></test2>
+    </div>
+
+    <template id="test2">
+        <div class="test">
+            {{data1}} - {{$attrs}}
+            <test3 v-bind="$attrs" v-on="$listeners"></test3>
+        </div>
+    </template>
+
+    <template id="test3">
+        <div class="test">
+            {{data2}}
+        </div>
+    </template>
+```
+
+```js
+        Vue.component("test2",{
+            template:"#test2",
+            props:['data1'],
+            mounted(){
+                this.$emit("event1","1231231")
+            }
+        })
+        Vue.component("test3",{
+            template:"#test3",
+            props:['data2'],
+            mounted(){
+                this.$emit("event2","21321123123")
+            }
+        })
+        new Vue({
+            el:"#app",
+            data:{
+                data1:"Hello World1",
+                data2:"Hello World2"
+            },
+            methods:{
+                ev1(data){
+                    console.log("ev1",data)
+                },
+                ev2(data){
+                    console.log("ev2",data)
+                }
+            }
+        })
+```
+
+
+
 ## Vue 動態組件 :is
 
 ```html
