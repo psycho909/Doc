@@ -36,6 +36,14 @@ app.use(express.static('./public'))
 app.use('/static/', express.static('./public'))
 ```
 
+### 方法四:
+
+```js
+app.use(express.static(__dirname+"/static"));
+```
+
+
+
 ## express结合art-template模板引擎
 
 ### art-template寫法
@@ -69,6 +77,15 @@ npm install --save express-art-template
 ```js
 app.engine("art",require("express-art-template"))
 ```
+
+### 安裝ejs
+
+```js
+app.set("views",path.join(__dirname,'views'));
+app.set("view engine",'ejs')
+```
+
+
 
 ## POST請求 使用`body-parser`
 
