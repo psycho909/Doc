@@ -775,14 +775,20 @@ export default (state=defaultState,action)=>{
 
 ```react
 // App.js
+import store from './store'
 
 constructor(props){
     super(props)
     // store.getState()，可以獲取store的資料
     this.state=store.getState();
     
-    // 訂閱store，每次store變更時會調動handleStorageChange
+    // 方法1:訂閱store，每次store變更時會調動handleStorageChange
     store.subscribe(this.handleStorageChange)
+    
+    // 方法2:訂閱store，每次store變更時會調動
+    store.subscribe(()=>{
+    	this.setState(store.getState())
+    });
 }
 handleInputChange=(e)=>{
     const action={
@@ -820,23 +826,28 @@ export default (state=defaultState,action)=>{
 
 ```js
 // 創建 actionTypes.js
-export const SEARCH_FOCUS="search_focus"
+export const CHANGE_INPUT_VALUE="change_input_value"
 ```
 
 ```js
 // 創建 actionCreator
-import {SEARCH_FOCUS} from './store/actionTypes'
+import {CHANGE_INPUT_VALUE} from './store/actionTypes'
 // 必須返回對象
-export const searchFocus=()=>({
-    type:SEARCH_FOCUS
+export const ChangeInputValueAction=(value)=>({
+    type:CHANGE_INPUT_VALUE,
+    value
 })
 ```
 ```js
 // './store/reducer'
-import {SEARCH_FOCUS} from './store/actionTypes'
+import {CHANGE_INPUT_VALUE} from './store/actionTypes'
 export default (state=defaultState,action)=>{
-    if(actio.type === SEARCH_FOCUS){
-        
+    if(actio.type === CHANGE_INPUT_VALUE){
+        const newState = JSON.parse(JSON.stringify(state))
+        console.log(action.value)
+        newState.inputValue = action.value
+        console.log(newState.inputValue)
+        return newState
     }
     return state
 }
@@ -844,9 +855,10 @@ export default (state=defaultState,action)=>{
 
 ```js
 // App.js
-import {searchFocus} from './store/actionCreator'
-handleSearchFocus(){
-    store.dispatch(searchFocus())
+import {ChangeInputValueAction} from './store/actionCreator'
+handleInputChange=(e)=>{
+    const action=ChangeInputValueAction(e.target.value)
+    store.dispatch(action)
 }
 ```
 
