@@ -3,6 +3,8 @@
 
 ### class
 
+#### example1 使用對象
+
 ```vue
 // isText is true class is txt
 // 數組內使用合併使用Obj格式
@@ -36,6 +38,42 @@ data(){
   margin: 0 auto;
 }
 ```
+
+#### example2 使用條件判斷
+
+```html
+<div class="box" :class="bg ? 'red' : 'green'">This is how you add static classess</div>
+```
+
+```js
+data(){
+    return {
+        bg:true
+    }
+}
+```
+
+#### example3 使用數組
+
+```html
+<div :class="['box',bg ? 'red' : 'green']">This is how you add static classess</div>
+```
+
+#### example4 使用計算屬性
+
+```html
+<div class="box" :class="bg">背景</div>
+```
+
+```js
+computed:{
+    bg(){
+    	return this.darkMode?"dark-theme":"light-theme"
+    }
+},
+```
+
+
 
 ### style
 
@@ -361,6 +399,8 @@ template: '#modal',
 ```
 ## `Props`由外部傳遞內部使用
 > 由`外部元件`傳入`內部元件`
+#### 一般使用
+
 ```javascript
 //外層元件傳入 接收方法使用v-bind
 <mymain v-bind:my_listdata="listData"></mymain>
@@ -376,7 +416,37 @@ Vue.component('mymain',function(){
     porps:['my_listdata']
 })
 ```
+#### 推薦使用
+
+```html
+<Btn class="btn" txt="按鈕"></Btn>
+```
+
+```html
+<template id="Btn">
+    <button>
+        {{txt}}
+    </button>
+</template>
+```
+
+```js
+Vue.component("Btn",{
+    template:"#Btn",
+    props:{
+        txt:{
+            type:String,
+            required:true,
+            validator:function(value){
+                return ["按鈕"].indexOf(value) !== -1
+            }
+        }
+    }
+})
+```
+
 ## `emit`由內部傳遞外部
+
 > 一開始需要一個事件接收器<br>
 > 外部元件接收
 ```html
