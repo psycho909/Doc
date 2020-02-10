@@ -964,6 +964,77 @@ created(){
 }
 ```
 
+#### 在html使用
+
+```vue
+<div id="app">
+    <test></test>
+    <button @click="myEvent">$ON</button>
+</div>
+<template id="test">
+    <div class="test">
+        <button @click="eventBus">EVENT BUS</button>
+        <test-child></test-child>
+    </div>
+</template>
+<template id="test-child">
+    <div class="test">
+        test-child - {{msg}}
+    </div>
+</template>
+```
+
+
+
+```js
+// 先創建Bus
+var Bus = new Vue();
+```
+
+```js
+
+Vue.component("test", {
+    template: "#test",
+    methods: {
+        eventBus() {
+            Bus.$emit("tobus", "TOBUS")
+        }
+    }
+})
+Vue.component("test-child", {
+    template: "#test-child",
+    mounted() {
+        Bus.$on("tobus", (data) => {
+            this.msg = data
+        })
+    },
+    data() {
+        return {
+            msg: ""
+        }
+    }
+})
+new Vue({
+    el: "#app",
+    data: {
+        data1: "Hello World1",
+        data2: "Hello World2"
+    },
+    mounted() {
+        Bus.$on("tobus", (data) => {
+            console.log(data)
+        })
+    },
+    methods: {
+        myEvent() {
+            console.log(123)
+        }
+    }
+})
+```
+
+
+
 ### Vue EventBus在router間傳遞的問題
 
 > 因為vue-router在切換時，先加載新的組件，等新的組件渲染好但是還沒掛在前，銷毀舊的組件，然後再掛載組件
