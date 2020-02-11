@@ -759,7 +759,7 @@ new Vue({
 ```js
 watch: {
     someData: {
-        handle(newVal, oldVal) {
+        handler(newVal, oldVal) {
             // 監聽變量變化的處理函數
         },
         deep: true, // 是否深度監聽，例如對象某些屬性的變化
@@ -768,7 +768,7 @@ watch: {
 }
 ```
 
-### handle
+### handler
 
 返回變更前跟後的資料
 
