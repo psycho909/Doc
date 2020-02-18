@@ -1145,6 +1145,7 @@ const reminders=(state=read_cookie("reminders") || [],action={})=>{
 
 ```js
 // ./component/ErrorBoundary
+import React from 'react';
 
 class ErrorBoundary extends React.Component{
     state={
@@ -1167,6 +1168,8 @@ class ErrorBoundary extends React.Component{
         }
     }
 }
+
+export default ErrorBoundary
 ```
 
 ```js
