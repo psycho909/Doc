@@ -146,7 +146,7 @@ import NoMath from './Error'
 
 >   主要職責是當Route的位置和路徑匹配的時候渲染對應的ui
 
-#### component
+### component
 
 >   component 一個react 組件，將在`path`匹配的時候自動渲染
 
@@ -154,7 +154,7 @@ import NoMath from './Error'
 <Route exact path="/about/:name" component={About} />
 ```
 
-#### render
+### render
 
 >   func 通過編寫一個方法，方法返回一個react dom ,當 path匹配的時候自動渲染
 
@@ -164,9 +164,25 @@ import NoMath from './Error'
   }} />
 ```
 
-#### exact
+### exact
 
 >   bool 如果為true，則僅在路徑與location.pathname完全匹配時才匹配。
+
+### After React Router 5 : Route引用組件
+
+```react
+<Route path="/">
+  <Home />
+</Route>
+```
+
+```react
+<Route path="/">
+  <h2>Home</h2>
+</Route>
+```
+
+
 
 ## `render func`
 
@@ -192,6 +208,70 @@ const User=(props)=>{
   )
 }
 ```
+
+### After Router 5 : useParams
+
+```react
+// xxxx/users/chen
+//
+<Route path="/users/:name"  component={User}/>
+
+import { useParams, Route } from 'react-router-dom';
+
+function Profile() {
+  const { name } = useParams();
+  return <p>{name}'s Profile</p>;
+}
+
+function Dashboard() {
+  return (
+    <>
+      <nav>
+        <Link to={`/profile/ann`}>Ann's Profile</Link>
+      </nav>
+      <main>
+        <Route path="/profile/:name">
+          <Profile />
+        </Route>
+      </main>
+    </>
+  );
+}
+```
+
+### After Router 5 : useParams,useRouteMatch,useLocation
+
+```react
+/*
+/post/:slug
+/post/hello-world
+*/
+
+import React from "react";
+import { useParams,useRouteMatch,useLocation } from "react-router-dom";
+
+
+const Post = props => {
+  const location = useLocation();
+  const { slug } = useParams();
+  const match = useRouteMatch('/post/:slug');
+    
+  console.log(location); 
+  // {pathname: "/post/hello-world", search: "", hash: "", state: undefined, key: "evxcjk"}
+  console.log(slug); // hello-world
+  console.log(match.params); // { slug: "hello-world" }
+
+  return (
+    <div className="post-content-view">
+          
+    </div>
+  );
+};
+
+export default Post;
+```
+
+
 
 ## `query string`
 
@@ -259,6 +339,19 @@ handleClick(){
     this.props.history.push('/')
 }
 ```
+
+### After Router 5 : useHistory
+
+```react
+import { useHistory } from 'react-router-dom';
+
+function Home() {
+  const history = useHistory();
+  return <button onClick={() => history.push('/profile')}>Profile</button>;
+}
+```
+
+
 
 ## `withRouter`
 
