@@ -1146,7 +1146,80 @@ Vue.nextTick().then(function() {
 
 ```
 
+## 非同步組件
 
+- **工廠函數**
+- **Promise**
+- **物件**
+
+### **工廠函數**
+
+`1` 秒之後頁面就會取得組件而進行渲染
+
+```js
+Vue.component('async-component-factory-function', (resolve, reject) => {
+  setTimeout(() => {
+    resolve({
+      template: '<div>Async Component</div>'
+    });
+  }, 1000);
+});
+```
+
+### `Promise`
+
+```js
+Vue.component('async-component-promise', () => new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve({
+      template: '<div>Async Component Promise</div>'
+    });
+    // reject('Error!!!');
+  }, 1000);
+}));
+```
+
+### **物件**
+
+- `component` : 非同步組件。
+- `loading` : 在非同步組件載入前渲染於頁面的組件。
+- `error` : 載入錯誤時的組件。
+- `delay` : 在 `delay` 多久後顯示等待組件。
+- `timeout` : 超過 `timeout` 時間後渲染錯誤組件。
+
+```js
+const LoadingComponent = {
+  template: '<div>Loading...</div>'
+};
+const ErrorComponent = {
+  template: '<div>Error!!!</div>'
+};
+Vue.component('async-component-object', () => ({
+    // 需要加載的組件 (應該是一個 `Promise` 對象)
+    // component: import('./MyComponent.vue'),
+    component: new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve({
+                template: '<div>Async Component Object</div>'
+            });
+            // reject('Error!!!');
+        }, 5000);
+    }),
+    // 異步組件加載時使用的組件
+    loading: LoadingComponent,
+    // 加載失敗時使用的組件
+    error: ErrorComponent,
+    // 展示加載時組件的延時時間。默認值是 200 (毫秒)
+    delay: 3000,
+    // 如果提供了超時時間且組件加載也超時了，
+    // 則使用加載失敗時使用的組件。默認值是：`Infinity`
+    timeout: 6000
+}));
+```
+
+- 在 `5` 秒載入組件。
+- `3` 秒後顯示等待組件 `LoadingComponent` 。
+- 如果超過 `6` 秒，顯示錯誤組件 `ErrorComponent` 。
 
 ## v-slot 2.6
 
