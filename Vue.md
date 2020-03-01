@@ -397,7 +397,39 @@ template: '#modal',
     }
 };
 ```
+## 客製組件的 `v-model`
+
+在子組件的實體中設定 `model` 物件，這個物件有兩個屬性 `prop` 及 `event` :
+
+- `prop` : `v-model` 目標屬性。
+- `event` : `v-model` 監聽的事件。
+
+設定好 `model` 的 `prop` 及 `event` 後，就可以依照原生的 `checkbox` 勾選值去改變 `model`值。
+
+```js
+Vue.component('base-checkbox', {
+  model: {
+    prop: 'checked', // 預設為 value
+    event: 'change' // 預設為 input
+  },
+  props: ['checked', 'label'], // 跟 value 一樣， v-model 的 prop : cheked 要設定在 props 中
+  template: `
+    <label>
+      <input
+        type="checkbox"
+        :checked="checked"
+        @change="$emit('change', $event.target.checked)"
+      >
+      {{label}}
+    </label>
+  `
+});
+```
+
+
+
 ## `Props`由外部傳遞內部使用
+
 > 由`外部元件`傳入`內部元件`
 #### 一般使用
 
