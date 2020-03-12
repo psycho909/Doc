@@ -71,7 +71,7 @@ document.querySelector('.boxs').style.setProperty('--bg-color','green')
 
 
 
-## CSS 3D 
+## CSS 3D Flipping Card
 
 ### Card翻轉
 
