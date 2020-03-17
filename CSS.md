@@ -762,3 +762,23 @@ CSS 黏黏球
 | 8:5              | 62.5%                 |
 | 16:9             | 56.25%                |
 | 2:1              | 50%                   |
+
+## 移動端注意事項
+
+### 移动端可点击元素去处默认边框
+
+```css
+-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+```
+
+### 屏蔽 Webkit 移动浏览器中元素高亮效果
+
+```css
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+```
+
