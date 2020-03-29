@@ -107,6 +107,30 @@ handleOnDelete(index){
 </div>
 ```
 
+### props驗證
+
+```react
+import PropTypes from "prop-types"
+const MyButton=(props)=>{
+    return (
+        <TouchableOpacity onPress={props.myOnPress}>
+            <Text>
+                {props.myTitle}
+            </Text>
+        </TouchableOpacity>
+    )
+}
+
+MyButton.propTypes={
+    myTitle:PropTypes.string.isRequired,
+    myOnPress:PropTypes.func
+}
+
+MyButton.defaultProps={
+    myTitle:"Hello"
+}
+```
+
 
 
 ## REF
