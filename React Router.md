@@ -111,6 +111,16 @@ isActive（func）：判斷鏈接是否激活的額外邏輯的功能；
 <NavLink
 	exact
     to="/home"
+    activeClassName="selected"
+    activeStyle={{
+        fontWeight: "bold",
+        color: "red"
+    }}
+    isActive={(match,location)=>{
+        if(!match) return false;
+        const eventID=parseInt(match.params.eventID);
+        return !isNaN(eventID) && eventID % 2 === 1;
+    }}
 >
 Home    
 </NavLnk>
@@ -131,6 +141,8 @@ Home
 
 ## `404`
 
+方法1
+
 ```react
 // 建立一個 404 component
 // 在 Route 最後一個 放置
@@ -140,6 +152,26 @@ import NoMath from './Error'
 	...
 	<Route component={NoMath} /> 
 </Switch>
+```
+
+方法2
+
+```react
+import React from 'react';
+const NotFound = () => {
+  return (
+    <div>
+        <h1>
+            Page Not Found
+        </h1>
+    </div>
+    );
+};
+export default NotFound;
+
+<Route path="*">
+    <NotFound></NotFound>
+</Route>
 ```
 
 ## Route

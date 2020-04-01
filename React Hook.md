@@ -253,6 +253,22 @@ useEffect(
 
 空的陣列永遠都會是一樣的不會改變，因此這個 effect 只會觸發一次，看到這裡有沒有覺得這個特性很像某個生命週期函式啊？沒錯，就是元件渲染後會觸發且只會觸發一次的 `componentDidMount !`
 
+```react	
+// componentDidMount
+// 只要做執行的動作時只要用useEffect
+useEffect(()=>{})
+
+// componentDidUpdate
+// []裡面的矩陣，是用來比對和原來的參數有沒有什麼不同，有不同才去做render和執行useEffect
+useEffect(()=>{},[])
+
+// componentWillUnmount
+// 可以做清除effect的步驟
+useEffect(()=>{return()=>()})
+```
+
+
+
 ```js
  useEffect(() => {
     console.log('This is like componentDidMount')
