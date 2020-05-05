@@ -92,3 +92,65 @@ peopleRef.orderByChild('weight').startAt(3500).endAt(4500).once('value', (snapsh
 ```javascript
 
 ```
+
+## Cloud Firestore
+
+### 調用順序:
+
+```
+建立Ref=>調用方法(get,add)=>整合為payload=>commit
+```
+
+### 建立Reference:
+
+```js
+const Ref = db.collection("Articles")
+```
+
+### 讀取資料
+
+```js
+const Ref = db.collection("Articles")
+const result = await Ref.get()
+result.forEach(art=>{
+    payload.push({id:art.id,...art.data()})
+})
+```
+
+### 建立資料
+
+有`add`和`set`
+
+add會自動生成id
+
+set會需要建立一個doc，並給他一個id，並去尋找，如果沒有相同id，就會去生成一個。(可用於自己建立id的內容去使用)
+
+```js
+const Ref = db.collection("Articles")
+let addRef = Ref.add({
+  name: 'Tokyo',
+  country: 'Japan'
+})
+
+commit("addArticle",{id:addRef.id,...payload})
+```
+
+### 更新資料
+
+update會把你設定的資料去做比對，如果有差異的資料才會重新去複寫
+
+set會把你原本的資料去刪除，然後在把全部的資料覆蓋上去(大量資料更新時使用)
+
+```js
+const Ref = db.collection("Articles").doc("<id>")
+const result=await Ref.update(<new Article>) // 與下方的set二選一
+const result=await Ref.set(<new Article>)
+```
+
+### 刪除資料
+
+```js
+const docRef=db.collection("Articles").doc("<id>");
+await docRef.delete()
+```
+
