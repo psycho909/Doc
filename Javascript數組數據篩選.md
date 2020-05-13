@@ -154,15 +154,3 @@ var joinOnce = users.filter((v,i)=> users.every((x,j)=>(i===j) === (v.id === x.i
 console.log(joinOnce)
 ```
 
-## 前端 input 輸入框可能被攻擊的幾種方式及防範
-
-```js
-var escapeHTML=str=>str.replace(/[&<>'"]/g,tag=>({
-    	'&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        "'": '&#39;',
-        '"': '&quot;'
-    }[tag]||tag)
-```
-
