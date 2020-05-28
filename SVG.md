@@ -219,7 +219,7 @@
 
 `<animateTransform>`的效果為旋轉（`rotate`），這時`from`和`to`屬性值有三個數字，第一個數字是角度值，第二個值和第三個值是旋轉中心的坐標。`from="0 200 200"`表示開始時，角度為0，圍繞`(200, 200)`開始旋轉；`to="360 400 400"`表示結束時，角度為360，圍繞`(400, 400)`旋轉。 
 
-## 圖片模糊效果+遮罩清晰效果
+## 圖片模糊效果+遮罩清晰效果 不兼容IE9
 
 filter效果:`feGaussianBlur`模糊效果，`stdDeviation`參數模糊程度
 
@@ -233,7 +233,7 @@ filter效果:`feGaussianBlur`模糊效果，`stdDeviation`參數模糊程度
 2.  `mask`對應`filter`那一層，並第二層圖片對應`mask="url(#mask)"`那一層，達到遮罩清晰效果
 
 ```html
-        <svg class="blur" width="100%">
+        <svg class="pic" width="100%">
             <image filter="url(#filter)" xlink:href="https://images.pexels.com/photos/249798/pexels-photo-249798.png" width="100%" height="100%"></image>
             <filter id="filter">
                 <feGaussianBlur stdDeviation="5" />
@@ -254,5 +254,41 @@ $(".pic").mousemove(function(e){
     mask.setAttribute("cy",(upY-5)+"px");
     mask.setAttribute("cx",(upX-5)+"px");
 })
+```
+
+## SVG 多張圖拼接
+
+1. 先在`illustrator `上畫好每一塊的路徑，在每一塊的路徑上修改名稱，並在每一塊路徑上面添加 `物件`  ->`圖樣`
+
+2. 開啟SVG修改
+
+```html
+<!-- 圖片 -->
+<defs>
+    <pattern id="新增圖樣" data-name="新增圖樣" width="109" height="109" patternUnits="userSpaceOnUse" viewBox="0 0 109 109">
+      <rect width="109" height="109" style="fill: none"/>
+      <rect width="50" height="50"/>
+    </pattern>
+  </defs>
+<!-- 區塊 -->
+<path d="M150,14.4l44.06,89.27L292.58,118l-71.29,69.49,16.83,98.12L150,239.28,61.88,285.6l16.83-98.12L7.42,118l98.52-14.32Z" transform="translate(-7.42 -14.4)" style="fill: url(#新增圖樣)"/>
+```
+
+修改成
+
+```html
+<!-- 切好圖片 在每一塊路徑上做一塊 圖樣樣式 -->
+        <!-- width 100% height 100% -->
+        <pattern id="image-01" patternUnits="objectBoundingBox" patternContentUnits="userSpaceOnUse" width="100%" height="100%">
+            <!-- 放入圖片 設定好寬度 -->
+            <!-- 可製作圖片雪碧圖 -->
+            <image xlink:href="images15th-sm/images-sm-01.png" width="152" height="118" x="0" y="0" />
+        </pattern>
+```
+
+製作圖片變化
+
+```js
+$("#image-01 image").attr("y",-($("#image-01 image").height()/2))
 ```
 
