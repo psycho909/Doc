@@ -135,7 +135,7 @@ img {
 </div>
 ```
 
-## 響應式 Iframe
+## 響應式 Iframe(Youtube)
 
 ### CSS
 
@@ -208,6 +208,56 @@ $( window ).resize( function () {
   });
 // 調整大小以適應頁面加載上的所有iframe。
 }).resize();
+```
+
+## 影片背景1
+
+```css
+.video-bg{
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: auto;
+    min-width: 100%;
+    height: auto;
+    min-height: 100%;
+}
+```
+
+## 影片背景2
+
+```css
+.home__video-container {
+    z-index: -1;
+    width: 100%;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.home__video-container.video {
+    height: 0;
+    padding-bottom: 56.25%;
+}
+@media (min-aspect-ratio: 16 / 9) { 
+    .home .home__video-container { 
+        height: 300%; 
+        top: -100%; 
+    } 
+}
+
+@media (max-aspect-ratio: 16 / 9) { 
+    .home .home__video-container { 
+        width: 300%; 
+        left: -100%; 
+    } 
+}
 ```
 
 
