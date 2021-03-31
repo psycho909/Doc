@@ -133,6 +133,44 @@ https://codepen.io/onionegg/pen/jvqQXr/?utm_source=Google&utm_medium=keyword&utm
 
 ## FB標準事件
 
+1. 廣告管理員
+2. 事件管理工具
+3. 像素
+4. 安裝【像素程式碼】類似安裝GA
+5. 像素編號【343788242861821】
+6. 已用過怎麼找【像素程式碼】【來自新網站】【手動安裝程式碼】【複製程式碼】
+7. 事件分析最多要等20分鐘才會出現
+
+https://developers.facebook.com/docs/facebook-pixel/implementation/conversion-tracking/#custom-events
+
+## 事件基本使用
+
+### 標準事件
+
+https://developers.facebook.com/docs/facebook-pixel/reference#standard-events
+
+> 所有標準事件皆透過呼叫像素的 `fbq('track')` 函式來進行追蹤，並使用事件名稱和 JSON 物件（選用）作為其參數。
+
+```js
+fbq('track', 'ViewContent');
+```
+
+### 事件傳遞屬性
+
+```js
+fbq('track', 'Purchase', {currency: "USD", value: 30.00});
+```
+
+### 自訂事件
+
+您可以透過呼叫像素的 `fbq('trackCustom')` 函式來追蹤自訂事件，並使用自訂事件名稱和 JSON 物件（選用）作為其參數。如同標準事件，您可以在網頁開啟和關閉 `<body>` 標籤之間的任何位置呼叫 `fbq('trackCustom')` 函式，不論是頁面載入時還是訪客執行動作時（例如點擊按鈕）。
+
+```js
+fbq('trackCustom', 'ShareDiscount', {promotion: 'share_discount_10%'});
+```
+
+
+
 https://www.facebook.com/business/help/402791146561655?helpref=faq_content
 
 | 網站動作     | 簡介                                                         | 標準事件程式碼                                            |
