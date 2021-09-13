@@ -1,5 +1,50 @@
 # konvajs
 
+####	匯入圖片
+
+```js
+var imageObj1 = new Image();
+imageObj1.src = "./images/cream.png";
+imageObj1.onload = function () {
+    var cream = new Konva.Image({
+        x: 0,
+        y: 0,
+        width: 515,
+        height: 247,
+        name: "cream rage",
+        id: "cream",
+        zIndex: 2,
+        src: "./images/cream.png",
+    });
+    cakeGroup.add(cream);
+    cream.image(imageObj1);
+};
+```
+
+#### 變形尺寸
+
+```js
+var trr = new Konva.Transformer({
+    nodes: [shape],
+    centeredScaling: true,
+});
+```
+
+#### 變形事件
+
+```js
+trr.on("transform", function (e) {
+    var width = e.target.width() * e.target.scaleX();
+    if (width > 200) {
+        trr.stopTransform();
+        var scaleX = 200 / e.target.width();
+        e.target.scaleX(scaleX);
+    }
+});
+```
+
+
+
 ```js
 白色
 247,244,223
@@ -43,8 +88,6 @@ stage.find(id)[0].getAttrs()
 ```js
 stage.find(id)[0].setAttrs(configs)
 ```
-
-
 
 #### 匯出base64
 
