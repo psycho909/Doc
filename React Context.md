@@ -1,3 +1,4 @@
+#react #js 
 ```js
 // hero.js
 export default [

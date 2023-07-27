@@ -1,3 +1,4 @@
+#js 
 # Javascript
 ## Ajax單次調用
 ```javascript

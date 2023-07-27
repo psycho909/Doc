@@ -1,3 +1,4 @@
+#js #jquery
 ```js
 (function ($) {
     var $window = $(window);

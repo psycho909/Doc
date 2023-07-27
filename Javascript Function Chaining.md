@@ -1,3 +1,4 @@
+#js 
 ```js
 var Obj={
     result:0,

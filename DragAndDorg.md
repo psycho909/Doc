@@ -1,3 +1,4 @@
+#js
 ## 拖動事件
 
 繼續之前，有必要先瞭解拖動時會觸發哪些事件。考慮拖動 Source Element，途中經過 Intermediate Element，最終進入 Target Element 並鬆開鼠標，則路徑上會觸發的事件如下圖所示：

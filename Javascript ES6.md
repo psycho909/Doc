@@ -1,3 +1,4 @@
+#js
 # ES6
 
 ## <span id="object">ES6遍歷`Object`的新方法</span>
@@ -71,7 +72,7 @@ Object.entries(data).map(([name,num])=>{
 //Name: cds              Num: 99/100
 //Name: swwwww           Num: 66/30
 ```
-## <span id="use-class">`Class`基礎物件導向</span>
+## <span id="use-class">Class基礎物件導向</span>
 ```javascript
 class Person{
     //需先使用constructor

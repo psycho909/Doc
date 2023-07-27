@@ -1,3 +1,4 @@
+#js #db #mongodb
 # MongoDB
 ```cmd
 mongod; // 1.啟動 mongo

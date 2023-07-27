@@ -1,3 +1,4 @@
+#git
 # Git 使用
 ## .gitignore 忽略文件
 > 使用.gitigonore進行設定，可選擇性不推送到遠端

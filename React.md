@@ -1,3 +1,4 @@
+#react #js 
 ## state,setState 注意事項
 
 ### 當setState不同步時，正確獲取state的方法

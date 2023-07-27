@@ -1,3 +1,4 @@
+#react #js #redux
 ## 文件結構
 
 ```js

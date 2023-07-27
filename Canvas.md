@@ -1,3 +1,4 @@
+#js #canvas
 # Canvas
 > 我们想要操作 canvas，首先需要获取这个 canvas 对象
 ```html

@@ -1,3 +1,4 @@
+#js
 1. Factory pattern
 2. Constructor pattern
 3. Prototype pattern

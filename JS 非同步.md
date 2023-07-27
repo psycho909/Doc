@@ -1,3 +1,4 @@
+#js
 ## 在非同步之下取值的問題
 ```js
 const fs=require("fs");

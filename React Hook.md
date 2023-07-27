@@ -1,3 +1,4 @@
+#react #js 
 # React Hook
 
 1.  useState()
@@ -9,7 +10,7 @@
 1.  **useState 什麼時候執行？** 它會在組件每次render的時候調用
 2.  類似`this.state`與`this.setState`的合體
 
-```react
+```jsx
 import React,{useState} from 'react'
 
 const Example=()=>{
@@ -31,7 +32,7 @@ const Example=()=>{
 
 ```
 ### 異步state
-```react
+```jsx
 const App = () => {
   const [count, setCount] = React.useState(0);
 
@@ -60,7 +61,7 @@ const App = () => {
 };
 ```
 
-```react
+```jsx
 const UseState=()=>{
   const [{count1,count2},setCount]=useState({count1:0,count2:1});
   return (
@@ -75,7 +76,7 @@ const UseState=()=>{
 
 ### useState Callback
 
-```js
+```jsx
 const UseStateCallback=()=>{
   const [count,setCount]=React.useState(0);
   React.useEffect(()=>{
@@ -239,7 +240,7 @@ export default UseContextOpenButton
     3.  執行裡面的內容
     4.  把`return`函式存下來讓下一次可以用
 
-```js	
+```jsx	
 useEffect(
 // componentDidMount
   
@@ -253,7 +254,7 @@ useEffect(
 
 空的陣列永遠都會是一樣的不會改變，因此這個 effect 只會觸發一次，看到這裡有沒有覺得這個特性很像某個生命週期函式啊？沒錯，就是元件渲染後會觸發且只會觸發一次的 `componentDidMount !`
 
-```react	
+```jsx	
 // componentDidMount
 // 只要做執行的動作時只要用useEffect
 useEffect(()=>{})
@@ -269,7 +270,7 @@ useEffect(()=>{return()=>()})
 
 
 
-```js
+```jsx
  useEffect(() => {
     console.log('This is like componentDidMount')
     return () => {
@@ -280,7 +281,7 @@ useEffect(()=>{return()=>()})
 
 ### 第二個參數使用
 
-```js
+```jsx
 function App() {
     const [count, setCount] = React.useState(0)
 
@@ -310,7 +311,7 @@ function App() {
 
 #### 使用class
 
-```react
+```jsx
 class Example extends React.Component {
   constructor(props) {
     super(props);
@@ -343,7 +344,7 @@ class Example extends React.Component {
 
 #### 使用Hook
 
-```react
+```jsx
 import React, { useState, useEffect } from 'react';
 
 function Example() {
@@ -369,7 +370,7 @@ function Example() {
 
 #### 使用class
 
-```react
+```jsx
 class FriendStatus extends React.Component {
   constructor(props) {
     super(props);
@@ -408,7 +409,7 @@ class FriendStatus extends React.Component {
 
 #### 使用Hook
 
-```react
+```jsx
 import React, { useState, useEffect } from 'react';
 
 function FriendStatus(props) {
@@ -440,7 +441,7 @@ function FriendStatus(props) {
 
 ### example1
 
-```react
+```jsx
 import { useState, useEffect } from 'react';
 
 const App = () => {
@@ -484,7 +485,7 @@ const App = () => {
 ```
 ### example2
 
-```react
+```jsx
 const UseEffectSample=()=>{
     const [count,setCount]=useState(0);
 
@@ -506,7 +507,7 @@ const UseEffectSample=()=>{
 ```
 ### example3
 
-```react
+```jsx
 const UseEffect=()=>{
   const [state,setState]=useState({
     email:"",
@@ -537,7 +538,7 @@ const UseEffect=()=>{
 
 ### ##example4##
 
-```react
+```jsx
 import React,{Fragment,useState,useEffect} from 'react'
 import axios from 'axios'
 
@@ -614,7 +615,7 @@ export default User
 
 ### example1
 
-```react
+```jsx
 
 const UseRefSample=()=>{
   const inputRef=useRef();
@@ -631,7 +632,7 @@ const UseRefSample=()=>{
 ```
 ### example2
 
-```react
+```jsx
 const UseRefSample=()=>{
   const displayAreaRef=useRef();
   useEffect(()=>{
@@ -657,7 +658,7 @@ const UseRefSample=()=>{
 
 ### example3
 
-```react
+```jsx
 import React, {useRef,useEffect} from 'react'
 
 const UseRefFocus = ()=>{
@@ -675,7 +676,7 @@ export default UseRefFocus
 
 ### example4
 
-```react
+```jsx
 import React, {useRef,useState} from 'react'
 
 const UseRefTimer = ()=>{
@@ -701,7 +702,7 @@ export default UseRefTimer
 
 ### exapmle5 `ref`組件傳遞`forwardRef()`
 
-```react
+```jsx
 import React, {
     Component,
     useState,
@@ -736,7 +737,7 @@ const Input = forwardRef(({value, handleChange}, ref) => (
 
 ## useReducer
 
-```react
+```jsx
 const counterReducer=(state,action)=>{
   switch(action.type){
     case "INCREMENT":
@@ -777,7 +778,7 @@ const UseReducer=(props)=>{
 
 結合`useState`、`useEffect`、`useReducer`共同完成一個呼叫`BLOG API`的範例
 
-```react
+```jsx
 import React,{Fragment,useState,useEffect,useReducer} from 'react'
 import axios from 'axios'
 
@@ -977,7 +978,7 @@ const App = () => {
 
 ## useMemo()
 
-```react
+```jsx
 import React, { useEffect } from "react";
 
 let count = 0;

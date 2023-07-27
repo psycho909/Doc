@@ -1,3 +1,4 @@
+#js #mysql #db
 # MySQL
 
 ## 基本指令
